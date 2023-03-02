@@ -1,0 +1,72 @@
+<app-menu></app-menu>
+<!-- <div *ngIf="!(doneLoading | async); else finishedLoading" class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <h1 style="color: gold;">Loading World...</h1>
+    <div class="mt-3 spinner-border text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<ng-template #finishedLoading> -->
+    <div style="background-image: url({{currentStage.picture}});height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;">
+        <div class="flex">
+            <div class="flexItemA">
+                <h1 class="stageName">{{currentStage.name}}</h1>
+                <button *ngIf="currentStage.canRest" type="button" class="btn btn-success btn-lg mb-1 btnGeneral btnRest" title="Hopefully no one ambushes you..."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3e/Clock_JE3_BE3.gif" style="width:32px">Rest</button>
+                <button *ngIf="currentStage.canRefill" type="button" class="btn btn-primary btn-lg mb-1 btnGeneral" title="Replenish your thirst and any empty glass bottles you have."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png" style="width:32px">Refill</button>
+                <button *ngIf="currentStage.canCraft" type="button" class="btn btn-warning btn-lg mb-1 btnGeneral btnCraft" title="Craft items using materials."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Crafting_Table_JE4_BE3.png" style="width:32px">Craft</button>
+                <button *ngIf="currentStage.canRepair" type="button" class="btn btn-secondary btn-lg mb-1 btnGeneral" title="Repair your tools and weapons."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png" style="width:32px">Repair</button>
+                <button *ngIf="currentStage.canCook" type="button" class="btn btn-success btn-lg mb-1 btnGeneral" title="Cook food or smelt ores."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5c/Lit_Furnace_(S)_JE4.png" style="width:32px">Cook</button>
+                <button type="button" class="btn btn-danger btn-lg mb-1 btnGeneral" title="Need to empty your pockets?"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Lava_Bucket_JE2_BE2.png" style="width:32px">Trash</button>
+            </div>
+            <div class="flexItemB">
+                <button [disabled]="currentStage.numChests == 0" type="button" class="btn btn-success btn-lg mb-1 btnAction btnLoot" title="Let's see what this place has to offer...">
+                    <div>
+                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/26/Emerald_JE3_BE3.png" style="width: 64px">
+                    </div>
+                    <div>
+                        Loot Chests
+                    </div>                
+                    <div>
+                        ({{currentStage.numChests}} remaining)
+                    </div>
+                </button>
+
+                <button *ngIf="currentStage.canFish" type="button" class="btn btn-primary btn-lg mb-1 btnAction btnFish" title="Try your luck!">
+                    <div>
+                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Raw_Cod_JE4_BE2.png" style="width: 64px">
+                    </div>
+                    <div>
+                        Fish
+                    </div>                
+                    <div>
+                        ({{currentStage.numFish}} tries left)
+                    </div>
+                </button>
+
+                <button *ngIf="currentStage.canDig" type="button" class="btn btn-dark btn-lg mb-1 btnAction" title="Watch out for zombies!">
+                    <div>
+                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4a/Skeleton_Skull_(8).png" style="width: 64px">
+                    </div>
+                    <div>
+                        Dig
+                    </div>       
+                    <div>
+                        ({{currentStage.numGraves}} tries left)
+                    </div>         
+                </button>
+
+                <button *ngIf="currentStage.canFarm" type="button" class="btn btn-success btn-lg mb-1 btnAction btnFarm" title="Harvest some crops!" (click)="harvest()">
+                    <div>
+                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Wheat_JE2_BE2.png" style="width: 64px">
+                    </div>
+                    <div>
+                        Harvest
+                    </div>       
+                    <div>
+                        ({{currentStage.numCrops}} tries left)
+                    </div>         
+                </button>
+
+            </div>
+        </div>
+    </div>
+<!-- </ng-template> -->

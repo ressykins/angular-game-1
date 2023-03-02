@@ -1,0 +1,184 @@
+.nav-item {
+    margin-left: 20px;
+}
+
+.navbar {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-45%, -45%);
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 25px;
+    background: rgb(34, 34, 34)
+}
+
+.inventoryBtn {
+    color: lightgray;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.healthBar {
+    color: red;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hungerBar {
+    color:greenyellow;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.thirstBar {
+    color:cyan;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.inventoryBtn:hover, .selected {
+    text-shadow: 0 0 32px white;
+}
+
+.healthBar:hover {
+    text-shadow: 0 0 32px red;
+}
+
+.hungerBar:hover {
+    text-shadow: 0 0 32px greenyellow;
+}
+
+.thirstBar:hover {
+    text-shadow: 0 0 32px cyan;
+}
+
+.status {
+    color:yellow;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.status:hover {
+    text-shadow: 0 0 32px yellow;
+}
+
+.Healthy {
+    color:lime;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.Healthy:hover {
+    text-shadow: 0 0 32px lime;
+}
+
+.Dead {
+    color:crimson;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.Dead:hover {
+    text-shadow: 0 0 32px crimson;
+}
+
+/* .flex-container {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 444px;
+    overflow-y: auto;
+}
+
+.flex-item {
+    border: 2px solid white;
+    border-radius: 10px;
+    width: 128px;
+    height: 128px;
+    justify-content:center;
+    margin: 10px;
+} */
+
+.grid-container {
+    display: grid;
+    padding: 10px;
+    /* border: 2px solid white; */
+    grid-template-columns: auto auto auto;
+    height: 468px;
+    width: 468px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.grid-item {
+    border: 2px solid white;
+    margin: 10px;
+    width: 128px;
+    height: 128px;
+    border-radius: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.inventoryItem {
+    width: 96px;
+    height: 96px;
+}
+
+.closeInventory {
+    cursor: pointer;
+    float: right;
+    padding-right: 20px;
+}
+
+.closeInventory:hover {
+    text-shadow: 0 0 10px red;
+}
+
+.dropdown-menu {
+    color: lightgray;
+    margin-right: 10px;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+img {
+    transition: .2s;
+    margin: 10px;
+}
+
+img:hover {
+    transform: scale(1.2);
+}
+
+.Common {
+    border: 2px solid lightgray !important;
+}
+
+.Uncommon {
+    border: 2px solid green !important;
+}
+
+.Rare {
+    border: 2px solid blue !important;
+}
+
+.Epic {
+    border: 2px solid violet !important;
+}
+
+.Legendary {
+    border: 2px solid orange !important;
+}

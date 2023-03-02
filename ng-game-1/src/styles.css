@@ -1,0 +1,11 @@
+* {
+    font-family: 'MinecraftiaRegular';
+    font-weight: normal;
+    font-style: normal;                                           
+}
+
+html, body {
+    background-color: rgb(49, 49, 49) !important;
+    height: 100%;
+}
+

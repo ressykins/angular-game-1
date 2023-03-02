@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row text-center mt-5" *ngIf="!adventureStarted; else configureCharacter">
+      <h1>Mine<span style="color:red">Z</span></h1>
+      <div class="col-xl-4 offset-xl-4 mt-3">
+        <input type="text" class="form-control mb-3" placeholder="Enter your name, survivor!" [(ngModel)]="survivorName">
+        <div class="mb-3">
+          <button type="button" class="btn btn-outline-warning btn-lg" (click)="startGame()" [disabled]="!survivorName">Start Adventure</button>
+        </div>
+      </div>
+      <h5>(For best experience, please play with full-screen browser)</h5>
+    </div>
+  
+    <ng-template #configureCharacter>
+      <div>
+        <div class="text-center mt-5">
+          <h2>Choose a Starting Kit</h2>
+          <button [disabled]="rerollsRemaining == 0" type="button" class="btn btn-outline-warning btn-lg mt-3" (click)="rerollKits()">Reroll ({{rerollsRemaining}} Remaining)</button>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm" *ngFor="let kit of kits | slice:0:3; let i=index">
+            <div class="card border-warning mb-3">
+              <div class="card-body text-center text-warning" (click)="selectKit(kit)">
+                <h2 class="card-title">{{kit.name}}</h2>
+                <p class="card-text"><i>{{kit.description}}</i></p>
+                <span *ngFor="let item of kit.inventory">
+                  <img class="{{item.rarity}}" src="{{item.picture}}" style="max-width:128px;padding:15px;" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+      
+        
+  </div>

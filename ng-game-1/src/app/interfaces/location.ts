@@ -1,0 +1,27 @@
+import { Item } from "./item";
+
+export interface Location {
+    name: string,
+    picture: string,
+    stage: number,
+    canRefill: boolean,
+    canCraft: boolean,
+    canCook: boolean,
+    canRepair: boolean,
+    canRest: boolean,
+    canFish: boolean,
+    canFarm: boolean,
+    canDig: boolean,
+    numChests: number,
+    numGraves?: number,
+    numFish?: number,
+    numCrops?: number,
+    nextStages?: number,
+    lootCivTier?: number,
+    lootFoodTier?: number,
+    lootToolTier?: number,
+    lootPotionTier?: number,
+    lootMilitaryTier?: number,
+    lootSpecial?: string,
+    events?: boolean,
+}

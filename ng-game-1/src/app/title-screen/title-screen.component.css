@@ -1,0 +1,59 @@
+h1 {
+    font-size: 100px;
+}
+
+.container {
+    color: lightgray !important;
+}
+
+.btn-outline-warning[disabled] {
+    border-color: gray;
+    color: gray;
+}
+
+.card {
+    background: none !important;
+    transition: 0.3s;
+    min-height: 400px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.card:hover {
+    cursor: pointer;
+    box-shadow: 0 0 30px rgb(251, 255, 8);
+}
+
+img {
+    transition: .2s;
+    margin: 10px;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
+
+.Common {
+    box-shadow: 0 0 10px lightgray;
+    border-radius: 15px;
+}
+
+.Uncommon {
+    box-shadow: 0 0 10px green;
+    border-radius: 15px;
+}
+
+.Rare {
+    box-shadow: 0 0 10px blue;
+    border-radius: 15px;
+}
+
+.Epic {
+    box-shadow: 0 0 10px violet;
+    border-radius: 15px;
+}
+
+.Legendary {
+    box-shadow: 0 0 10px orange;
+    border-radius: 15px;
+}

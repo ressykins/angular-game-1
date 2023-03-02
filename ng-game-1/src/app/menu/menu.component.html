@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand" style="margin-left:20px"><b>{{this.game.playerName}}</b></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <span class="healthBar" title="If this drops to 0, you will die! You can restore health by resting, eating food, or using potions."><b>Health:</b> {{this.game.playerHealth}}/100</span>
+        </li>
+        <li class="nav-item">
+            <span class="hungerBar" title="If this drops to 0, you will die! You can restore hunger by eating food."><b>Hunger:</b> {{this.game.playerHunger}}/100</span>
+        </li>
+        <li class="nav-item">
+            <span class="thirstBar" title="If this drops to 0, you will die! You can restore health by drinking liquids or eating specific food."><b>Thirst:</b> {{this.game.playerThirst}}/100</span>
+        </li>
+        <li class="nav-item">
+          <span class="status" title="How are you doing?"><b>Status: </b></span><span class="{{this.game.playerStatus.statusName}}" title="{{this.game.playerStatus.statusDescription}}">{{this.game.playerStatus.statusName}}</span>
+        </li>
+        <li class="nav-item">
+            <span [ngClass]="inventoryOpen ? 'inventoryBtn selected' : 'inventoryBtn'" title="Open your inventory." (click)="toggleInventory()"><b>Inventory</b></span>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="inventoryBtn nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Cheat.">
+            <strong>Debug</strong>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" (click)="debugChangeName()">
+              <strong>Change Name</strong>
+            </a>
+            <a class="dropdown-item" (click)="debugChangeValue('Health')">
+              <strong>Change Health</strong>
+            </a>
+            <a class="dropdown-item" (click)="debugChangeValue('Hunger')">
+              <strong>Change Hunger</strong>
+            </a>
+            <a class="dropdown-item" (click)="debugChangeValue('Thirst')">
+              <strong>Change Thirst</strong>
+            </a>
+            <a class="dropdown-item">
+              <strong>Change Status</strong>
+            </a>
+            <a class="dropdown-item">
+              <strong>Test Inventory</strong>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="centered" *ngIf="inventoryOpen">
+    <!-- <div class="flex-container">
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+    </div> -->
+
+    <h2 style="color:white;text-shadow: 0 0 1px black;">Inventory <span class="closeInventory" (click)="toggleInventory()">X</span></h2>
+    <div class="grid-container">
+      <ng-container *ngFor="let item of this.game.playerInventory">
+        <ng-container *ngIf="item; else emptySlot">
+          <div class="grid-item {{item.rarity}}">
+            <ng-container [ngSwitch]="item.type">
+              <img *ngSwitchCase="'Weapon'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+              <img *ngSwitchCase="'Button'" class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+              <img *ngSwitchCase="'Consumable'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO USE]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+              <img *ngSwitchDefault class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-template #emptySlot>
+          <div class="grid-item"></div>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
