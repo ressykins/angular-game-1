@@ -1,12 +1,116 @@
 import { Item } from "../interfaces/item";
+import { IronIngot, Leather, Stone } from "./materials";
 
 export const LeatherTunic: Item = {
     name: 'Leather Tunic',
-    description: '+3 Defense\n+6 Weight\n30 Durability',
+    description: '+3 Defense\n+3 Weight',
     type: 'Armor',
     rarity: 'Common',
-    weight: 6,
+    weight: 3,
     defense: 3,
-    durability: 30,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Leather_Tunic_JE4_BE2.png'
+    armorType: "body",
+    durability: 8,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Leather_Tunic_JE4_BE2.png',
+    components: [Leather, Leather, Leather]
+}
+
+export const LeatherCap: Item = {
+    name: 'Leather Cap',
+    description: '+1 Defense\n+1 Weight',
+    type: 'Armor',
+    rarity: 'Common',
+    weight: 1,
+    defense: 1,
+    armorType: "head",
+    durability: 5,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/de/Leather_Cap_JE4_BE2.png',
+    components: [Leather, Leather]
+}
+
+export const LeatherPants: Item = {
+    name: 'Leather Pants',
+    description: '+2 Defense\n+2 Weight',
+    type: 'Armor',
+    rarity: 'Common',
+    weight: 2,
+    defense: 2,
+    armorType: "legs",
+    durability: 7,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/06/Leather_Pants_JE4_BE2.png',
+    components: [Leather, Leather, Leather]
+}
+
+export const LeatherBoots: Item = {
+    name: 'Leather Boots',
+    description: '+1 Defense\n+1 Weight',
+    type: 'Armor',
+    rarity: 'Common',
+    weight: 1,
+    defense: 1,
+    armorType: "boots",
+    durability: 4,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/25/Leather_Boots_JE3_BE2.png',
+    components: [Leather, Leather]
+}
+
+export const ChainHelmet: Item = {
+    name: 'Chainmail Helmet',
+    description: '+3 Defense\n+2 Weight',
+    type: 'Armor',
+    rarity: 'Uncommon',
+    weight: 2,
+    defense: 3,
+    armorType: "head",
+    durability: 10,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/1e/Chainmail_Helmet_JE3_BE2.png',
+    components: [Stone, IronIngot]
+}
+
+export const ChainChestplate: Item = {
+    name: 'Chainmail Chestplate',
+    description: '+5 Defense\n+5 Weight',
+    type: 'Armor',
+    rarity: 'Uncommon',
+    weight: 5,
+    defense: 5,
+    armorType: "body",
+    durability: 14,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8e/Chainmail_Chestplate_JE3_BE2.png',
+    components: [Stone, Stone, IronIngot]
+}
+
+export const ChainLeggings: Item = {
+    name: 'Chainmail Leggings',
+    description: '+4 Defense\n+4 Weight',
+    type: 'Armor',
+    rarity: 'Uncommon',
+    weight: 4,
+    defense: 4,
+    armorType: "legs",
+    durability: 12,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/00/Chainmail_Leggings_JE2_BE2.png',
+    components: [Stone, Stone, IronIngot]
+}
+
+export const ChainBoots: Item = {
+    name: 'Chainmail Boots',
+    description: '+2 Defense\n+2 Weight',
+    type: 'Armor',
+    rarity: 'Uncommon',
+    weight: 2,
+    defense: 2,
+    armorType: "boots",
+    durability: 7,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/47/Chainmail_Boots_JE2_BE2.png',
+    components: [Stone, IronIngot]
+}
+
+export const ZombieHead: Item = {
+    name: 'Zombie Head',
+    description: '+3 Weight\n\nZombies are less likely to attack you',
+    type: 'Armor',
+    rarity: 'Epic',
+    weight: 3,
+    armorType: "head",
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e4/Zombie_Head_(8).png'
 }

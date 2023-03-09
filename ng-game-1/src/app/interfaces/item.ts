@@ -8,5 +8,7 @@ export interface Item {
     defense?: number,
     durability?: number,
     picture: string,
-    components?: Item[]
+    components?: Item[],
+    equipped?: boolean,
+    armorType?: string
 }

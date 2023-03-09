@@ -83,13 +83,32 @@ export const Button: Item = {
 }
 
 export const HealPotI: Item = {
-    name: 'Potion of Healing I',
-    description: '+40 Health\n+5 Thirst\n+1 Weight',
+    name: 'Healing Potion I',
+    description: '+40 Health\n+20 Thirst\n+1 Weight',
     type: 'Consumable',
     rarity: 'Uncommon',
     weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c2/Lingering_Potion_of_Healing_JE2_BE2.png'
+}
+
+export const HealPotII: Item = {
+    name: 'Healing Potion II',
+    description: '+60 Health\n+40 Thirst\n+1 Weight',
+    type: 'Consumable',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/72/Splash_Potion_of_Healing_JE2_BE2.png'
+}
+
+export const HealPotIII: Item = {
+    name: 'Healing Potion III',
+    description: '+80 Health\n+60 Thirst\n+1 Weight',
+    type: 'Consumable',
+    rarity: 'Epic',
+    weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/64/Potion_of_Healing.gif'
 }
+
 
 export const Cobweb: Item = {
     name: 'Cobweb',
@@ -109,4 +128,67 @@ export const WaterBottle: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/28/Potion_of_Absorption_BE2.png'
 }
 
+export const PoisonousPotato: Item = {
+    name: 'Poisonous Potato',
+    description: '-99 Health\n-99 Hunger\n+1 Weight\n\nWow you really should not eat this...',
+    type: 'Consumable',
+    rarity: 'Uncommon',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Poisonous_Potato_JE3_BE2.png'
+}
 
+export const BakedPotato: Item = {
+    name: 'Baked Potato',
+    description: '+40 Health\n+40 Hunger\n+1 Weight',
+    type: 'Consumable',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e0/Baked_Potato_JE4_BE2.png'
+}
+
+export const RawCod: Item = {
+    name: 'Raw Cod',
+    description: '+10 Health\n+10 Hunger\n+1 Weight',
+    type: 'Consumable',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Raw_Cod_JE4_BE2.png'
+}
+
+export const RawSalmon: Item = {
+    name: 'Raw Salmon',
+    description: '+10 Health\n+10 Hunger\n+1 Weight',
+    type: 'Consumable',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Raw_Salmon_JE2_BE2.png'
+}
+
+export const TropicalFish: Item = {
+    name: 'Tropical Fish',
+    description: '+10 Health\n+10 Hunger\n+1 Weight',
+    type: 'Consumable',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ad/Tropical_Fish_JE2_BE2.png'
+}
+
+export const Pufferfish: Item = {
+    name: 'Pufferfish',
+    description: '-100 Health\n-100 Hunger\n+1 Weight\n\nWanna throw your life away?',
+    type: 'Consumable',
+    rarity: 'Uncommon',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/02/Pufferfish_(item)_JE5_BE2.png'
+}
+
+
+
+export const RottenFlesh: Item = {
+    name: 'Rotton Flesh',
+    description: '+10 Health\n-20 Hunger\n+1 Weight\n\nAre you really that desperate...?',
+    type: 'Consumable',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ac/Rotten_Flesh_JE3_BE2.png'
+}

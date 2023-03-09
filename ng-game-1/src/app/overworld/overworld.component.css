@@ -87,3 +87,34 @@
 .btnFarm:hover {
     background-color: rgb(51, 1, 1) !important;
 }
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-45%, -45%);
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 25px;
+    width:500px;
+    text-align: center;
+}
+
+.Harvest {
+    background-color: rgb(92, 0, 0) !important;
+    color: white;
+}
+
+.Gravedigging {
+    background-color: rgb(33, 33, 33) !important;
+    color: white;
+}
+
+.lootImg {
+    transition: .2s;
+}
+
+.lootImg:hover {
+    transform: scale(1.1);
+}

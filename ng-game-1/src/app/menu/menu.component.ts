@@ -28,16 +28,16 @@ export class MenuComponent implements OnInit {
   public debugChangeValue(prop: string): void {
     switch(prop) {
       case 'Health':
-        let newHealth = prompt("Enter a new health value:", this.game.playerHealth.toString());
-        this.game.changeValue(parseInt(newHealth ?? this.game.playerHealth.toString(), 10), 'Health');
+        let newHealth = prompt("Enter a new health value:", this.game.$playerHealth.value.toString());
+        this.game.changeValue(parseInt(newHealth ?? this.game.$playerHealth.value.toString(), 10), 'Health');
         break;
       case 'Hunger':
-        let newHunger = prompt("Enter a new hunger value:", this.game.playerHunger.toString());
-        this.game.changeValue(parseInt(newHunger ?? this.game.playerHunger.toString(), 10), 'Hunger');
+        let newHunger = prompt("Enter a new hunger value:", this.game.$playerHunger.value.toString());
+        this.game.changeValue(parseInt(newHunger ?? this.game.$playerHunger.value.toString(), 10), 'Hunger');
         break;
       case 'Thirst':
-        let newThirst = prompt("Enter a new thirst value:", this.game.playerThirst.toString());
-        this.game.changeValue(parseInt(newThirst ?? this.game.playerThirst.toString(), 10), 'Thirst');
+        let newThirst = prompt("Enter a new thirst value:", this.game.$playerThirst.value.toString());
+        this.game.changeValue(parseInt(newThirst ?? this.game.$playerThirst.value.toString(), 10), 'Thirst');
         break;
       default: 
         alert('Huh? How did you get here?');

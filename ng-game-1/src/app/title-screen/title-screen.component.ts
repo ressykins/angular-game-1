@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Kit } from '../interfaces/kit';
-import { Apple, Bandage, Button, Cobweb, HealPotI, Milk } from '../items/consumables';
+import { Apple, Bandage, Button, Carrot, Cobweb, HealPotI, Milk, Potato } from '../items/consumables';
 import { Bow, EnchantedWoodenSword } from '../items/weapons';
 import { FishingRod, WoodenHoe, WoodenShovel } from '../items/tools';
 import { LeatherTunic } from '../items/armor';
-import { Diamond, GoldIngot, Gunpowder, IronIngot, Stick, Wheat } from '../items/materials';
+import { Diamond, GoldIngot, Gunpowder, IronIngot, Leather, Stick, StringItem, Wheat } from '../items/materials';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../game.service';
 import { Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class TitleScreenComponent {
     {
      name: 'Appler',
      description: 'Start with some food',
-     inventory: [Apple, Apple]
+     inventory: [Apple, Carrot, Potato]
     },
     {
       name: 'Warrior',
@@ -37,7 +37,7 @@ export class TitleScreenComponent {
     },
     {
       name: 'Medic',
-      description: 'Start with some healing supplies',
+      description: 'Start with some medical supplies',
       inventory: [Bandage, Milk]
     },
     {
@@ -72,7 +72,7 @@ export class TitleScreenComponent {
     },
     {
       name: 'Gravedigger',
-      description: 'Am I really going to defile this grave for money? Of course I am! ARGARGARGARG',
+      description: 'Am I really going to defile this grave for money?',
       inventory: [WoodenShovel, Cobweb]
     },
     {
@@ -83,7 +83,7 @@ export class TitleScreenComponent {
     {
       name: 'Crafter',
       description: 'Start off with some crafting materials',
-      inventory: [Stick, IronIngot, Gunpowder]
+      inventory: [Stick, Leather, StringItem]
     },
   ]
 

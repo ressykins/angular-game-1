@@ -9,6 +9,51 @@ export const Wheat: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Wheat_JE2_BE2.png'
 }
 
+export const Pumpkin: Item = {
+    name: 'Pumpkin',
+    description: '+2 Weight',
+    type: 'Material',
+    rarity: 'Uncommon',
+    weight: 2,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8e/Carved_Pumpkin_(S)_JE4.png'
+}
+
+export const RedMushroom: Item = {
+    name: 'Red Mushroom',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f2/Red_Mushroom_JE9.png'
+}
+
+export const BrownMushroom: Item = {
+    name: 'Brown Mushroom',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4f/Brown_Mushroom_JE9.png'
+}
+
+export const SugarCane: Item = {
+    name: 'Sugar Cane',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3a/Sugar_Cane_(item)_JE3_BE3.png'
+}
+
+export const NetherWart: Item = {
+    name: 'Nether Wart',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://wiki.hypixel.net/images/7/76/SkyBlock_items_enchanted_nether_wart.gif'
+}
+
 export const Diamond: Item = {
     name: 'Diamond',
     description: '+5 Weight',
@@ -58,9 +103,62 @@ export const GlassBottle: Item = {
     name: 'Glass Bottle',
     description: '+1 Weight',
     type: 'Material',
-    rarity: 'Rare',
+    rarity: 'Common',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fb/Glass_Bottle_JE2_BE2.png'
 }
 
+export const Stone: Item = {
+    name: 'Stone',
+    description: '+2 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 2,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Stone.png'
+}
+
+export const StringItem: Item = {
+    name: 'String',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/13/String_JE2_BE2.png'
+}
+
+export const Leather: Item = {
+    name: 'Leather',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6d/Leather_JE2_BE2.png'
+}
+
+export const Bone: Item = {
+    name: 'Bone',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft/images/2/25/BoneNew.png'
+}
+
+export const Bowl: Item = {
+    name: 'Bone',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/82/Bowl_JE2_BE2.png'
+}
+
+export const EnchantedBook: Item = {
+    name: 'Enchanted Book',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/55/Enchanted_Book.gif'
+}
 
