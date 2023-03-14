@@ -10,7 +10,7 @@
         <div class="flex">
             <div class="flexItemA">
                 <h1 class="stageName">{{currentStage.name}}</h1>
-                <button *ngIf="currentStage.canRest" type="button" class="btn btn-success btn-lg mb-1 btnGeneral btnRest" title="Hopefully no one ambushes you..."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3e/Clock_JE3_BE3.gif" style="width:32px">Rest</button>
+                <button *ngIf="currentStage.canRest" type="button" class="btn btn-success btn-lg mb-1 btnGeneral btnRest" title="Try and take a rest." (click)="rest()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3e/Clock_JE3_BE3.gif" style="width:32px">Rest</button>
                 <button *ngIf="currentStage.canRefill" type="button" class="btn btn-primary btn-lg mb-1 btnGeneral" title="Replenish your thirst and any empty glass bottles you have."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png" style="width:32px">Refill</button>
                 <button *ngIf="currentStage.canCraft" type="button" class="btn btn-warning btn-lg mb-1 btnGeneral btnCraft" title="Craft items using materials."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Crafting_Table_JE4_BE3.png" style="width:32px">Craft</button>
                 <button *ngIf="currentStage.canRepair" type="button" class="btn btn-secondary btn-lg mb-1 btnGeneral" title="Repair your tools and weapons."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png" style="width:32px">Repair</button>
@@ -18,7 +18,7 @@
                 <button type="button" class="btn btn-danger btn-lg mb-1 btnGeneral" title="Need to empty your pockets?"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Lava_Bucket_JE2_BE2.png" style="width:32px">Trash</button>
             </div>
             <div class="flexItemB">
-                <button [disabled]="currentStage.numChests == 0" type="button" class="btn btn-success btn-lg mb-1 btnAction btnLoot" title="Let's see what this place has to offer...">
+                <button [disabled]="currentStage.numChests == 0" type="button" class="btn btn-success btn-lg mb-1 btnAction btnLoot" title="Let's see what this place has to offer..." (click)="loot()">
                     <div>
                         <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/26/Emerald_JE3_BE3.png" style="width: 64px">
                     </div>
@@ -30,7 +30,7 @@
                     </div>
                 </button>
 
-                <button *ngIf="currentStage.canFish" type="button" class="btn btn-primary btn-lg mb-1 btnAction btnFish" title="Try your luck!">
+                <button [disabled]="!currentStage.numFish" *ngIf="currentStage.canFish" type="button" class="btn btn-primary btn-lg mb-1 btnAction btnFish" title="Try your luck!" (click)="fish()">
                     <div>
                         <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Raw_Cod_JE4_BE2.png" style="width: 64px">
                     </div>

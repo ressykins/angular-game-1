@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Kit } from '../interfaces/kit';
 import { Apple, Bandage, Button, Carrot, Cobweb, HealPotI, Milk, Potato } from '../items/consumables';
 import { Bow, EnchantedWoodenSword } from '../items/weapons';
-import { FishingRod, WoodenHoe, WoodenShovel } from '../items/tools';
+import { FishingRod, Hoe, Shovel, SmallBag } from '../items/tools';
 import { LeatherTunic } from '../items/armor';
-import { Diamond, GoldIngot, Gunpowder, IronIngot, Leather, Stick, StringItem, Wheat } from '../items/materials';
+import { Leather, Stick, StringItem, Wheat } from '../items/materials';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../game.service';
 import { Router } from '@angular/router';
@@ -68,17 +68,17 @@ export class TitleScreenComponent {
     {
       name: 'Farmer',
       description: 'Start with some farming stuff',
-      inventory: [Wheat, WoodenHoe]
+      inventory: [Wheat, Hoe]
     },
     {
       name: 'Gravedigger',
       description: 'Am I really going to defile this grave for money?',
-      inventory: [WoodenShovel, Cobweb]
+      inventory: [Shovel, Cobweb]
     },
     {
-      name: 'Socialite',
-      description: 'How is any of this going to help you survive though?',
-      inventory: [Diamond, GoldIngot]
+      name: 'Hiker',
+      description: 'Start off with some more inventory capacity',
+      inventory: [SmallBag]
     },
     {
       name: 'Crafter',

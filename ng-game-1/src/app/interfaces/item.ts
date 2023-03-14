@@ -4,11 +4,22 @@ export interface Item {
     type: string,
     rarity: string,
     weight: number,
+    picture: string,
+
+    combat?: boolean,
+    weapon?: string,
     damage?: number | number[],
     defense?: number,
     durability?: number,
-    picture: string,
+
     components?: Item[],
+
     equipped?: boolean,
-    armorType?: string
+    armorType?: string,
+
+    furnace?: boolean,
+    food?: string,
+    health?: number,
+    hunger?: number,
+    thirst?: number
 }

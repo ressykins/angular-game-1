@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
 import { Towns } from '../locations/towns';
 import { Location } from '../interfaces/location';
-import { WoodenHoe, WoodenShovel } from '../items/tools';
 import { Item } from '../interfaces/item';
 import { ZombieHead } from '../items/armor';
+import { IconPlayer, IconRest, IconZombie } from '../items/icons';
 
 export interface actionMessage {
   subject: string,
@@ -105,6 +105,98 @@ export class OverworldComponent implements OnInit {
       return false;
     }
   }
+
+  public fish(): boolean {
+    if (!this.currentStage.numFish) {
+      alert("There is nothing left to fish...");
+      return false;
+    } 
+    else {
+      for (let item of this.game.playerInventory) {
+        if (item.name == 'Fishing Rod') {
+          const rolledItem = this.game.rollFish();
+          console.log(rolledItem);
+
+          this.currentStage.numFish--;
+          if (item.durability) item.durability--;
+
+          this.clearMessage();
+          let newActionMessage: actionMessage = {
+            subject: 'Fishing',
+            description: 'You fished ' + rolledItem.name + '!',
+            item: rolledItem
+          }
+          this.currentMessage = newActionMessage;
+
+          return true;
+        }
+      }
+      alert('You need a fishing rod to fish!');
+      return false;
+    }
+  }
+
+  public loot(): boolean {
+    const roll: number = Math.floor(Math.random() * 101);
+    let rolledItem: Item;
+
+    if (roll < this.currentStage.lootCivWeight) rolledItem = this.game.rollCiv();
+    else if (roll < this.currentStage.lootFoodWeight) rolledItem = this.game.rollFood(this.currentStage.lootFoodTier);
+    else if (roll < this.currentStage.lootToolWeight) rolledItem = this.game.rollTools(this.currentStage.lootToolTier);
+    else if (roll < this.currentStage.lootPotionWeight) rolledItem = this.game.rollPots();
+    else rolledItem = this.game.rollMil(this.currentStage.lootMilitaryTier);
+    
+    console.log(rolledItem);
+    this.currentStage.numChests--;
+
+    this.clearMessage();
+    let newActionMessage: actionMessage = {
+      subject: 'Looting',
+      description: 'You found ' + rolledItem.name + '!',
+      item: rolledItem
+    }
+    this.currentMessage = newActionMessage;
+
+    return true;
+  }
+
+
+  public rest() {
+    const roll: number = Math.floor(Math.random() * 101);
+    console.log(this.game.$playerHealth.value + 10);
+    if (roll < 75)  {
+      this.game.changeValue(this.game.$playerHealth.value + 10, 'Health');
+      this.clearMessage();
+      let newActionMessage: actionMessage = {
+        subject: 'Rest',
+        description: 'You had a good rest.', 
+        item: IconRest
+      }
+      this.currentMessage = newActionMessage;
+    }
+    else if (roll < 95) {
+      this.game.changeValue(this.game.$playerHealth.value - 20, 'Health');
+      this.clearMessage();
+      let newActionMessage: actionMessage = {
+        subject: 'Danger',
+        description: 'While you were trying to sleep, a zombie attacked you!', 
+        item: IconZombie
+      }
+      this.currentMessage = newActionMessage;
+    }
+    else {
+      this.clearMessage();
+      let newActionMessage: actionMessage = {
+        subject: 'Danger',
+        description: 'While you were asleep, someone snuck into your bag and stole something!', 
+        item: IconPlayer
+      }
+      this.currentMessage = newActionMessage;
+    }
+    this.currentStage.canRest = false;
+  }
+
+
 
   public clearMessage(): void {
     this.currentMessage = null;

@@ -55,6 +55,11 @@
     background-color: rgb(172, 114, 172) !important;
 }
 
+.Rest {
+    background-color: plum !important;
+    color: white;
+}
+
 .btnCraft {
     color: white !important;
 }
@@ -111,10 +116,25 @@
     color: white;
 }
 
+.Fishing {
+    background-color: turquoise !important;
+    color: white;
+}
+
+.Looting {
+    background-color: yellowgreen !important;
+    color: white;
+}
+
 .lootImg {
     transition: .2s;
 }
 
 .lootImg:hover {
     transform: scale(1.1);
+}
+
+.Danger {
+    background-color: red !important;
+    color: white;
 }

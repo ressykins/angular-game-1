@@ -1,5 +1,9 @@
 import { Item } from "../interfaces/item";
 
+
+
+/// FARMING
+
 export const Wheat: Item = {
     name: 'Wheat',
     description: '+1 Weight',
@@ -54,14 +58,31 @@ export const NetherWart: Item = {
     picture: 'https://wiki.hypixel.net/images/7/76/SkyBlock_items_enchanted_nether_wart.gif'
 }
 
-export const Diamond: Item = {
-    name: 'Diamond',
-    description: '+5 Weight',
+export const CocoaBeans: Item = {
+    name: 'Cocoa Beans',
+    description: '+1 Weight',
     type: 'Material',
-    rarity: 'Legendary',
-    weight: 5,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ab/Diamond_JE3_BE3.png'
+    rarity: 'Uncommon',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft/images/a/af/CocoaBeans.png'
 }
+
+export const Sugar: Item = {
+    name: 'Sugar',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Sugar_JE2_BE2.png',
+    components: [SugarCane]
+}
+
+
+
+
+
+
+/// CRAFTING
 
 export const GoldIngot: Item = {
     name: 'Gold Ingot',
@@ -88,24 +109,6 @@ export const IronIngot: Item = {
     rarity: 'Uncommon',
     weight: 3,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fc/Iron_Ingot_JE3_BE2.png'
-}
-
-export const Gunpowder: Item = {
-    name: 'Gunpowder',
-    description: '+1 Weight',
-    type: 'Material',
-    rarity: 'Rare',
-    weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/40/Gunpowder_JE2_BE2.png'
-}
-
-export const GlassBottle: Item = {
-    name: 'Glass Bottle',
-    description: '+1 Weight',
-    type: 'Material',
-    rarity: 'Common',
-    weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fb/Glass_Bottle_JE2_BE2.png'
 }
 
 export const Stone: Item = {
@@ -144,8 +147,18 @@ export const Bone: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft/images/2/25/BoneNew.png'
 }
 
+
+export const EnchantedBook: Item = {
+    name: 'Enchanted Book\n\n Used to enchant tools and weapons',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/55/Enchanted_Book.gif'
+}
+
 export const Bowl: Item = {
-    name: 'Bone',
+    name: 'Bowl',
     description: '+1 Weight',
     type: 'Material',
     rarity: 'Common',
@@ -153,12 +166,48 @@ export const Bowl: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/82/Bowl_JE2_BE2.png'
 }
 
-export const EnchantedBook: Item = {
-    name: 'Enchanted Book',
+export const GlassBottle: Item = {
+    name: 'Glass Bottle',
+    description: '+1 Weight\n\n Can be filled up with water',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fb/Glass_Bottle_JE2_BE2.png'
+}
+
+export const Coal: Item = {
+    name: 'Coal',
+    description: '+1 Weight \n\n Fuel for furnaces',
+    type: 'Material',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Coal_JE4_BE3.png'
+}
+
+export const GlowstoneDust: Item = {
+    name: 'Glowstone Dust',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Epic',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/25/Glowstone_Dust_JE2_BE2.png'
+}
+
+export const RedstoneDust: Item = {
+    name: 'Redstone Dust',
     description: '+1 Weight',
     type: 'Material',
     rarity: 'Rare',
     weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/55/Enchanted_Book.gif'
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e1/Redstone_Dust_JE2_BE2.png'
+}
+
+export const Gunpowder: Item = {
+    name: 'Gunpowder',
+    description: '+1 Weight',
+    type: 'Material',
+    rarity: 'Uncommon',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/40/Gunpowder_JE2_BE2.png'
 }
 

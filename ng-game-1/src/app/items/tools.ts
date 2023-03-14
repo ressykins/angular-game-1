@@ -1,6 +1,12 @@
 import { combineLatest } from "rxjs";
 import { Item } from "../interfaces/item";
-import { Leather, Stick, StringItem } from "./materials";
+import { EnchantedBook, IronIngot, Leather, Stick, StringItem } from "./materials";
+import { Bandage, HealPotI, Milk } from "./consumables";
+
+
+
+
+/// Tools
 
 export const FishingRod: Item = {
     name: 'Fishing Rod',
@@ -13,8 +19,20 @@ export const FishingRod: Item = {
     components: [Stick, StringItem]
 }
 
-export const WoodenHoe: Item = {
-    name: 'Wooden Hoe',
+export const EnchantedFishingRod: Item = {
+    name: 'Enchanted Fishing Rod',
+    description: '+3 Weight\n\nCan be used to fish',
+    type: 'Tool',
+    rarity: 'Uncommon',
+    weight: 3,
+    durability: 10,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e0/Enchanted_Fishing_Rod.gif',
+    components: [FishingRod, EnchantedBook]
+}
+
+
+export const Hoe: Item = {
+    name: 'Hoe',
     description: '+3 Weight\n\nCan be used to harvest crops',
     type: 'Tool',
     rarity: 'Common',
@@ -24,16 +42,66 @@ export const WoodenHoe: Item = {
     components: [Stick, Stick]
 }
 
-export const WoodenShovel: Item = {
-    name: 'Wooden Shovel',
+export const EnchantedHoe: Item = {
+    name: 'Enchanted Hoe',
+    description: '+3 Weight\n\nCan be used to harvest crops',
+    type: 'Tool',
+    rarity: 'Uncommon',
+    weight: 3,
+    durability: 10,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2e/Enchanted_Wooden_Hoe.gif',
+    components: [Stick, Stick]
+}
+
+export const Shovel: Item = {
+    name: 'Shovel',
     description: '+3 Weight\n\nCan be used to dig up graves',
     type: 'Tool',
     rarity: 'Common',
     weight: 3,
     durability: 5,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/26/Wooden_Shovel_JE2_BE2.png',
-    components: [Stick, Stick]
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6c/Stone_Shovel_JE2_BE2.png',
+    components: [Stick, IronIngot]
 }
+
+export const EnchantedShovel: Item = {
+    name: 'Enchanted Shovel',
+    description: '+3 Weight\n\nCan be used to dig up graves',
+    type: 'Tool',
+    rarity: 'Uncommon',
+    weight: 3,
+    durability: 10,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8a/Enchanted_Stone_Shovel.gif',
+    components: [Shovel, EnchantedBook]
+}
+
+export const Pickaxe: Item = {
+    name: 'Pickaxe',
+    description: '+3 Weight\n\nCan be used to mine ore',
+    type: 'Tool',
+    rarity: 'Common',
+    weight: 3,
+    durability: 5,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d1/Iron_Pickaxe_JE3_BE2.png',
+    components: [Stick, IronIngot]
+}
+
+export const EnchantedPickaxe: Item = {
+    name: 'EnchantedPickaxe',
+    description: '+3 Weight\n\nCan be used to mine ore',
+    type: 'Tool',
+    rarity: 'Uncommon',
+    weight: 3,
+    durability: 10,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fd/Enchanted_Iron_Pickaxe.gif',
+    components: [Pickaxe, EnchantedBook]
+}
+
+
+
+
+
+/// Inventory
 
 export const MedKit: Item = {
     name: 'Medical Kit',
