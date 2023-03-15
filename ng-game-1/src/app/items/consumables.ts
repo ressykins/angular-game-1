@@ -233,7 +233,7 @@ export const Bread: Item = {
 }
 
 export const BeetrootSoup: Item = {
-    name: 'Beetroot',
+    name: 'Beetroot Soup',
     description: '+15 Health\n+15 Hunger\n+15 Thirst\n+1 Weight',
     type: 'Consumable',
     rarity: 'Uncommon',
@@ -448,7 +448,7 @@ export const WaterBottle: Item = {
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/28/Potion_of_Absorption_BE2.png',
     food: 'healing',
-    thirst: 100
+    thirst: 50
 }
 
 export const HoneyBottle: Item = {
@@ -457,8 +457,8 @@ export const HoneyBottle: Item = {
     type: 'Consumable',
     rarity: 'Uncommon',
     weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/64/Potion_of_Healing.gif',
-    food: 'healing',
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c2/Honey_Bottle_JE1_BE2.png',
+    food: 'sweet',
     health: 5,
     thirst: 25
 }
@@ -511,7 +511,7 @@ export const Ale: Item = {
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/72/Potion_of_Fire_Resistance.gif',
     components: [WaterBottle, Wheat, Sugar],
-    food: 'healing',
+    food: 'alcohol',
     health: -10,
     thirst: 20
 }
@@ -524,7 +524,7 @@ export const Cocktail: Item = {
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/82/Potion_of_Harming.gif',
     components: [WaterBottle, Sugar, Apple, MelonSlice, SweetBerries],
-    food: 'healing',
+    food: 'sweet',
     thirst: 100
 }
 

@@ -26,7 +26,7 @@ export class TitleScreenComponent {
 
   public kits: Kit[] = [
     {
-     name: 'Appler',
+     name: 'Chef',
      description: 'Start with some food',
      inventory: [Apple, Carrot, Potato]
     },

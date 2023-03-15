@@ -33,16 +33,27 @@ export class OverworldComponent implements OnInit {
     console.log(this.currentStage);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+  /// loot
   public harvest(): boolean {
     if (!this.currentStage.numCrops) {
       alert("There are no more crops to harvest...");
       return false;
     } 
     else {
-      for (let item of this.game.playerInventory) {
+      for (let item of this.game.$playerInventory.value) {
         if (item.name.includes('Hoe')) {
           const rolledItem = this.game.rollCrops();
-          console.log(rolledItem);
 
           this.currentStage.numCrops--;
           if (item.durability) item.durability--;
@@ -54,6 +65,7 @@ export class OverworldComponent implements OnInit {
             item: rolledItem,
           }
           this.currentMessage = newActionMessage;
+          this.game.addItem(rolledItem);
 
           return true;
         }
@@ -69,10 +81,9 @@ export class OverworldComponent implements OnInit {
       return false;
     } 
     else {
-      for (let item of this.game.playerInventory) {
+      for (let item of this.game.$playerInventory.value) {
         if (item.name.includes('Shovel')) {
           const rolledItem = this.game.rollGraves();
-          console.log(rolledItem);
 
           this.currentStage.numGraves--;
           if (item.durability) item.durability--;
@@ -86,6 +97,7 @@ export class OverworldComponent implements OnInit {
               item: rolledItem,
             }
             this.currentMessage = newActionMessage;
+            this.game.addItem(rolledItem);
 
             return false;
           }
@@ -97,6 +109,7 @@ export class OverworldComponent implements OnInit {
             item: rolledItem,
           }
           this.currentMessage = newActionMessage;
+          this.game.addItem(rolledItem);
           
           return true;
         }
@@ -112,10 +125,9 @@ export class OverworldComponent implements OnInit {
       return false;
     } 
     else {
-      for (let item of this.game.playerInventory) {
+      for (let item of this.game.$playerInventory.value) {
         if (item.name == 'Fishing Rod') {
           const rolledItem = this.game.rollFish();
-          console.log(rolledItem);
 
           this.currentStage.numFish--;
           if (item.durability) item.durability--;
@@ -127,6 +139,7 @@ export class OverworldComponent implements OnInit {
             item: rolledItem
           }
           this.currentMessage = newActionMessage;
+          this.game.addItem(rolledItem);
 
           return true;
         }
@@ -146,7 +159,6 @@ export class OverworldComponent implements OnInit {
     else if (roll < this.currentStage.lootPotionWeight) rolledItem = this.game.rollPots();
     else rolledItem = this.game.rollMil(this.currentStage.lootMilitaryTier);
     
-    console.log(rolledItem);
     this.currentStage.numChests--;
 
     this.clearMessage();
@@ -156,14 +168,25 @@ export class OverworldComponent implements OnInit {
       item: rolledItem
     }
     this.currentMessage = newActionMessage;
+    this.game.addItem(rolledItem);
 
     return true;
   }
 
 
-  public rest() {
+
+
+
+
+  /// general actions
+
+  public rest(): boolean {
+    if (this.game.$playerHealth.value == 100) {
+      alert('You are already well rested!');
+      return false;
+    }
+
     const roll: number = Math.floor(Math.random() * 101);
-    console.log(this.game.$playerHealth.value + 10);
     if (roll < 75)  {
       this.game.changeValue(this.game.$playerHealth.value + 10, 'Health');
       this.clearMessage();
@@ -194,7 +217,16 @@ export class OverworldComponent implements OnInit {
       this.currentMessage = newActionMessage;
     }
     this.currentStage.canRest = false;
+    return true;
   }
+
+
+
+
+
+
+
+
 
 
 

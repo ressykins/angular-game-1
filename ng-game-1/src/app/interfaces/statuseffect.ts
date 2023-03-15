@@ -1,5 +1,5 @@
 export interface StatusEffect {
     statusName: string,
-    statusDuration: number,
+    statusDuration?: number,
     statusDescription: string
 }

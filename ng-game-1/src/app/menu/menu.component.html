@@ -66,10 +66,10 @@
       <div class="flex-item">2</div>
       <div class="flex-item">3</div>
     </div> -->
-
-    <h2 style="color:white;text-shadow: 0 0 1px black;">Inventory <span class="closeInventory" (click)="toggleInventory()">X</span></h2>
+    <h2 style="color:white;text-shadow: 0 0 1px black;">Inventory<span class="closeInventory" (click)="toggleInventory()">X</span></h2>
+    <h5 style="color:white;text-shadow: 0 0 1px black;" title="This is your carrying capacity!">Current Weight: {{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</h5>
     <div class="grid-container">
-      <ng-container *ngFor="let item of this.game.playerInventory">
+      <ng-container *ngFor="let item of this.game.$playerInventory.value; let i = index">
         <ng-container *ngIf="item; else emptySlot">
           <div class="grid-item {{item.rarity}}">
             <ng-container [ngSwitch]="item.type">
@@ -77,7 +77,7 @@
               <img *ngSwitchCase="'Armor'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
               <img *ngSwitchCase="'Tool'" class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
               <img *ngSwitchCase="'Button'" class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
-              <img *ngSwitchCase="'Consumable'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO USE]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+              <img *ngSwitchCase="'Consumable'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO USE]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="useConsumable(item, i)">
               <img *ngSwitchDefault class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
             </ng-container>
           </div>

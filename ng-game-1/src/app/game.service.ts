@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Item } from './interfaces/item';
 import { Bow, Crossbow, EnchantedBow, EnchantedCrossbow, EnchantedIronAxe, EnchantedIronSword, EnchantedStoneAxe, EnchantedStoneSword, EnchantedWoodenAxe, EnchantedWoodenSword, IronAxe, IronSword, StoneAxe, StoneSword, WoodenAxe, WoodenSword } from './items/weapons';
 import { Ale, Apple, BakedPotato, Bandage, Beetroot, BeetrootSoup, Bread, Button, Cake, Carrot, Cobweb, Cocktail, CookedChicken, CookedFish, CookedPorkchop, CookedRabbit, Cookie, Egg, Flashbang, GoldenApple, GoldenCarrot, Grenade, HealPotI, HealPotII, HealPotIII, HoneyBottle, Incendiary, MelonSlice, Milk, MysteriousArtifact, Nemo, PoisonousPotato, Potato, Pufferfish, PumpkinPie, RawBeef, RawChicken, RawFish, RawPorkchop, RawRabbit, RottenFlesh, Snowball, Steak, SuspiciousStew, SweetBerries, VegetableJuice, WaterBottle } from './items/consumables';
-import { Dead, Healthy } from './statusEffects/statusEffects';
+import { Dead, Normal } from './statusEffects/statusEffects';
 import { Bone, Bowl, BrownMushroom, Coal, CocoaBeans, EnchantedBook, GlassBottle, GlowstoneDust, GoldIngot, Gunpowder, IronIngot, Leather, NetherWart, Pumpkin, RedMushroom, RedstoneDust, Stick, Stone, StringItem, SugarCane, Wheat } from './items/materials';
 import { StatusEffect } from './interfaces/statuseffect';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -14,9 +14,15 @@ import { ChainBoots, ChainChestplate, ChainHelmet, ChainLeggings, IronBoots, Iro
 })
 export class GameService {
 
+
+
+
+
+  /// VARIABLES
+
   public playerName: string = 'Survivor';
 
-  public $playerHealth = new BehaviorSubject<number>(100);
+  public $playerHealth: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   public set setPlayerHealth(value: number) {
     this.$playerHealth.next(value);
     this.checkPlayer();
@@ -25,7 +31,7 @@ export class GameService {
     return this.$playerHealth.asObservable();
   }
 
-  public $playerHunger = new BehaviorSubject<number>(100);
+  public $playerHunger: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   public set setPlayerHunger(value: number) {
     this.$playerHunger.next(value);
     this.checkPlayer();
@@ -34,7 +40,7 @@ export class GameService {
     return this.$playerHunger.asObservable();
   }
 
-  public $playerThirst = new BehaviorSubject<number>(100);
+  public $playerThirst: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   public set setPlayerThirst(value: number) {
     this.$playerThirst.next(value);
     this.checkPlayer();
@@ -43,8 +49,20 @@ export class GameService {
     return this.$playerThirst.asObservable();
   }
 
-  public playerStatus: StatusEffect = Healthy;
-  public playerInventory: Item[] = [FishingRod,Hoe,Shovel];
+
+
+
+
+  public $playerInventory: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public playerInventory = this.$playerInventory.asObservable();
+  public inventoryWeight: number = 0;
+  public inventoryMax: number = 36;
+
+
+
+
+
+  public playerStatus: StatusEffect = Normal;
   public playerStage: number = 1;
   public inCombat: boolean = false;
   public equippedWeapon: Item;
@@ -53,13 +71,41 @@ export class GameService {
   public equippedLegs: Item;
   public equippedBoots: Item;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   constructor() { }
 
+  /// CRUD ////////////////////////////////////////////////////////////////////////////
+
+  public addItem(item: Item) {
+    this.inventoryWeight += item.weight;
+    this.$playerInventory.next([...this.$playerInventory.value, item]);
+}
+
+public removeItem(index: number) {
+  this.inventoryWeight -= this.$playerInventory.value[index].weight;
+  this.$playerInventory.value.splice(index, 1);
+  this.$playerInventory.next(this.$playerInventory.value);
+}
 
   public createPlayer(items: Item[], name: string): void {
     this.playerName = name;
-    this.playerInventory.push(WoodenSword, WaterBottle);
-    this.playerInventory.concat(items);
+    this.addItem(WoodenSword);
+    this.addItem(WaterBottle);
+    for (let item of items) this.addItem(item);
   }
 
   public changeName(name: string): void {
@@ -93,6 +139,66 @@ export class GameService {
     if (this.$playerHealth.value <= 0 || this.$playerHunger.value <= 0 || this.$playerThirst.value <= 0) this.playerStatus = Dead;
   }
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /// ACTIONS ////////////////////////////////////////////////////////////////////////////
+
+  public useConsumable(item: Item, index: number) {
+    if (item.food) {
+      if (item.health) this.changeValue(this.$playerHealth.value + item.health, 'Health');
+      if (item.hunger) this.changeValue(this.$playerHunger.value + item.hunger, 'Hunger');
+      if (item.thirst) this.changeValue(this.$playerThirst.value + item.thirst, 'Thirst');
+
+      switch(item.food) {
+        default:
+          console.log('this food is raw');
+      }
+    }
+    
+    this.removeItem(index);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

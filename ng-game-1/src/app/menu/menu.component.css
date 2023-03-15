@@ -71,14 +71,14 @@
     text-shadow: 0 0 32px yellow;
 }
 
-.Healthy {
-    color:lime;
+.Normal {
+    color:yellow;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.Healthy:hover {
-    text-shadow: 0 0 32px lime;
+.Normal:hover {
+    text-shadow: 0 0 32px yellow;
 }
 
 .Dead {

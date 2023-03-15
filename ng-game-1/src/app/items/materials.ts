@@ -149,8 +149,8 @@ export const Bone: Item = {
 
 
 export const EnchantedBook: Item = {
-    name: 'Enchanted Book\n\n Used to enchant tools and weapons',
-    description: '+1 Weight',
+    name: 'Enchanted Book',
+    description: '+1 Weight\n\n Used to enchant tools and weapons',
     type: 'Material',
     rarity: 'Rare',
     weight: 1,

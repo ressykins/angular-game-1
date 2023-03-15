@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
+import { Item } from '../interfaces/item';
 
 @Component({
   selector: 'app-menu',
@@ -19,6 +20,25 @@ export class MenuComponent implements OnInit {
     if(this.inventoryOpen) this.inventoryOpen = false;
     else this.inventoryOpen = true;
   }
+
+
+
+
+
+
+
+  public useConsumable(item: Item, index: number) {
+    this.game.useConsumable(item, index);
+    alert('You used ' + item.name);
+    this.toggleInventory();
+  }
+
+
+
+
+
+
+
 
   public debugChangeName(): void {
     let newName = prompt("Enter a new name:", this.game.playerName);
@@ -42,7 +62,6 @@ export class MenuComponent implements OnInit {
       default: 
         alert('Huh? How did you get here?');
     }
-
   }
   
 }
