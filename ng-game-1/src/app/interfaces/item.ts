@@ -8,14 +8,13 @@ export interface Item {
 
     combat?: boolean,
     weapon?: string,
-    damage?: number | number[],
+    damage?: number,
     defense?: number,
     durability?: number,
 
     components?: Item[],
 
     equipped?: boolean,
-    armorType?: string,
 
     furnace?: boolean,
     food?: string,

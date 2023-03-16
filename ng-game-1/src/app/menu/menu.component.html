@@ -21,6 +21,9 @@
         <li class="nav-item">
             <span [ngClass]="inventoryOpen ? 'inventoryBtn selected' : 'inventoryBtn'" title="Open your inventory." (click)="toggleInventory()"><b>Inventory</b></span>
         </li>
+        <li class="nav-item">
+          <span [ngClass]="equipmentOpen ? 'inventoryBtn selected' : 'inventoryBtn'" title="Open your equipped items." (click)="toggleEquipment()"><b>Equipment</b></span>
+      </li>
       </ul>
 
       <ul class="navbar-nav ms-auto">
@@ -41,7 +44,7 @@
             <a class="dropdown-item" (click)="debugChangeValue('Thirst')">
               <strong>Change Thirst</strong>
             </a>
-            <a class="dropdown-item">
+            <a class="dropdown-item" (click)="debugChangeStatus()">
               <strong>Change Status</strong>
             </a>
             <a class="dropdown-item">
@@ -55,30 +58,22 @@
 
 
   <div class="centered" *ngIf="inventoryOpen">
-    <!-- <div class="flex-container">
-      <div class="flex-item">1</div>
-      <div class="flex-item">2</div>
-      <div class="flex-item">3</div>
-      <div class="flex-item">1</div>
-      <div class="flex-item">2</div>
-      <div class="flex-item">3</div>
-      <div class="flex-item">1</div>
-      <div class="flex-item">2</div>
-      <div class="flex-item">3</div>
-    </div> -->
     <h2 style="color:white;text-shadow: 0 0 1px black;">Inventory<span class="closeInventory" (click)="toggleInventory()">X</span></h2>
-    <h5 style="color:white;text-shadow: 0 0 1px black;" title="This is your carrying capacity!">Current Weight: {{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</h5>
+    <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/11/Chest_(S)_BE1.png" style="height:32px" title="This is your carrying capacity!">{{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</p>
     <div class="grid-container">
       <ng-container *ngFor="let item of this.game.$playerInventory.value; let i = index">
         <ng-container *ngIf="item; else emptySlot">
           <div class="grid-item {{item.rarity}}">
             <ng-container [ngSwitch]="item.type">
-              <img *ngSwitchCase="'Weapon'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-              <img *ngSwitchCase="'Armor'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-              <img *ngSwitchCase="'Tool'" class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-              <img *ngSwitchCase="'Button'" class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
-              <img *ngSwitchCase="'Consumable'" class="inventoryItem" src="{{item.picture}}" title="[CLICK TO USE]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="useConsumable(item, i)">
-              <img *ngSwitchDefault class="inventoryItem" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+              <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="equipItem(item, i)">
+              <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="equipItem(item, i)">
+              <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="equipItem(item, i)">
+              <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="equipItem(item, i)">
+              <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="equipItem(item, i)">
+              <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
+              <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
+              <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO USE]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="useConsumable(item, i)">
+              <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
             </ng-container>
           </div>
         </ng-container>
@@ -86,5 +81,46 @@
           <div class="grid-item"></div>
         </ng-template>
       </ng-container>
+    </div>
+  </div>
+
+  <div class="centered" *ngIf="equipmentOpen">
+    <h2 style="color:white;text-shadow: 0 0 1px black;">Equipment<span class="closeInventory" (click)="toggleEquipment()">X</span></h2>
+    <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:32px" title="Damage">{{this.game.currentDamage}} <img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:32px" title="Defense">{{this.game.currentDefense}}</p>
+    <div class="flex-container" style="color:white;text-shadow: 0 0 1px black;">
+      <ng-container *ngIf="this.game.equippedWeapon; else noWeapon">
+          <div class="flex-item {{this.game.equippedWeapon.rarity}}"><img class="itemImg" src="{{this.game.equippedWeapon.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedWeapon.name}}&#013;[{{this.game.equippedWeapon.rarity}} {{this.game.equippedWeapon.type}}]&#013;&#013;{{this.game.equippedWeapon.description}}&#013;&#013;Durability: {{this.game.equippedWeapon.durability}}" (click)="this.game.unequipItem(this.game.equippedWeapon)"></div>
+      </ng-container>
+      <ng-template #noWeapon>
+        <div class="flex-item"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:96px;opacity: 0.1;"></div>
+      </ng-template>
+
+      <ng-container *ngIf="this.game.equippedHead; else noHelm">
+          <div class="flex-item {{this.game.equippedHead.rarity}}"><img class="itemImg" src="{{this.game.equippedHead.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedHead.name}}&#013;[{{this.game.equippedHead.rarity}} {{this.game.equippedHead.type}}]&#013;&#013;{{this.game.equippedHead.description}}&#013;&#013;Durability: {{this.game.equippedHead.durability}}" (click)="this.game.unequipItem(this.game.equippedHead)"></div>
+      </ng-container>
+      <ng-template #noHelm>
+        <div class="flex-item"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:96px;opacity: 0.1;"></div>
+      </ng-template>
+
+      <ng-container *ngIf="this.game.equippedChest; else noChest">
+        <div class="flex-item {{this.game.equippedChest.rarity}}"><img class="itemImg" src="{{this.game.equippedChest.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedChest.name}}&#013;[{{this.game.equippedChest.rarity}} {{this.game.equippedChest.type}}]&#013;&#013;{{this.game.equippedChest.description}}&#013;&#013;Durability: {{this.game.equippedChest.durability}}" (click)="this.game.unequipItem(this.game.equippedChest)"></div>
+      </ng-container>
+      <ng-template #noChest>
+        <div class="flex-item"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f6/Golden_Chestplate_(item)_JE1_BE1.png" style="height:96px;opacity: 0.1;"></div>
+      </ng-template>
+
+      <ng-container *ngIf="this.game.equippedLegs; else emptyLegs">
+        <div class="flex-item {{this.game.equippedLegs.rarity}}"><img class="itemImg" src="{{this.game.equippedLegs.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedLegs.name}}&#013;[{{this.game.equippedLegs.rarity}} {{this.game.equippedLegs.type}}]&#013;&#013;{{this.game.equippedLegs.description}}&#013;&#013;Durability: {{this.game.equippedLegs.durability}}" (click)="this.game.unequipItem(this.game.equippedLegs)"></div>
+      </ng-container>
+      <ng-template #emptyLegs>
+        <div class="flex-item"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/39/Golden_Leggings_(item)_JE1_BE1.png" style="height:96px;opacity: 0.1;"></div>
+      </ng-template>
+      
+      <ng-container *ngIf="this.game.equippedBoots; else emptyBoots">
+        <div class="flex-item {{this.game.equippedBoots.rarity}}"><img class="itemImg" src="{{this.game.equippedBoots.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedBoots.name}}&#013;[{{this.game.equippedBoots.rarity}} {{this.game.equippedBoots.type}}]&#013;&#013;{{this.game.equippedBoots.description}}&#013;&#013;Durability: {{this.game.equippedBoots.durability}}" (click)="this.game.unequipItem(this.game.equippedBoots)"></div>
+      </ng-container>
+      <ng-template #emptyBoots>
+        <div class="flex-item"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8d/Golden_Boots_(item)_JE1_BE1.png" style="height:96px;opacity: 0.1;"></div>
+      </ng-template>
     </div>
   </div>

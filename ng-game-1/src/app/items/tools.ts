@@ -116,7 +116,7 @@ export const MedKit: Item = {
 export const SmallBag: Item = {
     name: 'Small Bag',
     description: '-10 Weight',
-    type: 'Tool',
+    type: 'Material',
     rarity: 'Epic',
     weight: -10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e7/Brown_Shulker_Box_Revision_1.png',

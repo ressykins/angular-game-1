@@ -17,7 +17,7 @@ export const WellFed: StatusEffect = {
 
 export const Healthy: StatusEffect = {
     statusName: 'Healthy',
-    statusDescription: 'You are more resistant to negative status effects!'
+    statusDescription: 'You are resistant to negative status effects!'
 }
 
 export const HypedUp: StatusEffect = {
@@ -36,16 +36,11 @@ export const Bleeding: StatusEffect = {
 }
 
 export const Crippled: StatusEffect = {
-    statusName: 'Cripplied',
+    statusName: 'Crippled',
     statusDescription: 'Your attack and defense are lowered!'
 }
 
-export const Infected: StatusEffect = {
-    statusName: 'Infected',
-    statusDescription: 'You are infected!!!'
-}
-
-export const Poisoned: StatusEffect = {
-    statusName: 'Poisoned',
-    statusDescription: 'You cannot eat!'
+export const Sick: StatusEffect = {
+    statusName: 'Sick',
+    statusDescription: 'You cannot replenish hunger!'
 }

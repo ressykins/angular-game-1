@@ -10,6 +10,7 @@ import { Item } from '../interfaces/item';
 export class MenuComponent implements OnInit {
 
   public inventoryOpen: boolean = false;
+  public equipmentOpen: boolean = false;
 
   constructor(public game: GameService) {};
   
@@ -21,16 +22,19 @@ export class MenuComponent implements OnInit {
     else this.inventoryOpen = true;
   }
 
+  public toggleEquipment(): void {
+    if(this.equipmentOpen) this.equipmentOpen = false;
+    else this.equipmentOpen = true;
+  }
 
-
-
-
-
-
-  public useConsumable(item: Item, index: number) {
+  public useConsumable(item: Item, index: number): void {
     this.game.useConsumable(item, index);
     alert('You used ' + item.name);
     this.toggleInventory();
+  }
+
+  public equipItem(item: Item, index: number): void {
+    if(!this.game.equipItem(item, index)) alert('You already have something equipped!');
   }
 
 
@@ -39,6 +43,8 @@ export class MenuComponent implements OnInit {
 
 
 
+
+  /// DEBUG
 
   public debugChangeName(): void {
     let newName = prompt("Enter a new name:", this.game.playerName);
@@ -62,6 +68,11 @@ export class MenuComponent implements OnInit {
       default: 
         alert('Huh? How did you get here?');
     }
+  }
+
+  public debugChangeStatus(): void {
+    let newStatus = prompt("Enter a status effect:", this.game.playerStatus.statusName);
+    this.game.changeStatus(newStatus ?? this.game.playerStatus.statusName);
   }
   
 }

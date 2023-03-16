@@ -418,7 +418,7 @@ export const RabbitStew: Item = {
 
 export const Bandage: Item = {
     name: 'Bandage',
-    description: '+15 Health\n+1 Weight\n\nCures Bleed',
+    description: '+10 Health\n+1 Weight\n\nCures Bleed',
     type: 'Consumable',
     rarity: 'Common',
     weight: 1,
@@ -430,7 +430,7 @@ export const Bandage: Item = {
 
 export const Milk: Item = {
     name: 'Milk',
-    description: '+5 Health\n+10 Thirst\n+1 Weight\n\nCures Infection',
+    description: '+5 Health\n+10 Thirst\n+1 Weight\n\nCures Sickness',
     type: 'Consumable',
     rarity: 'Common',
     weight: 1,
@@ -453,12 +453,12 @@ export const WaterBottle: Item = {
 
 export const HoneyBottle: Item = {
     name: 'Bottle of Honey',
-    description: '+15 Health\n+15 Thirst\n+1 Weight\n\nCures Poison',
+    description: '+15 Health\n+25 Thirst\n+1 Weight\n\nCures Bleeding or Sickness',
     type: 'Consumable',
     rarity: 'Uncommon',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c2/Honey_Bottle_JE1_BE2.png',
-    food: 'sweet',
+    food: 'healing',
     health: 5,
     thirst: 25
 }
@@ -511,26 +511,14 @@ export const Ale: Item = {
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/72/Potion_of_Fire_Resistance.gif',
     components: [WaterBottle, Wheat, Sugar],
-    food: 'alcohol',
+    food: 'healing',
     health: -10,
     thirst: 20
 }
 
-export const Cocktail: Item = {
-    name: 'Fruit Cocktail',
-    description: '+100 Thirst\n+1 Weight\n\nYum',
-    type: 'Consumable',
-    rarity: 'Rare',
-    weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/82/Potion_of_Harming.gif',
-    components: [WaterBottle, Sugar, Apple, MelonSlice, SweetBerries],
-    food: 'sweet',
-    thirst: 100
-}
-
 export const VegetableJuice: Item = {
     name: 'Vegetable Juice',
-    description: '+25 Health\n+30 Thirst\n+1 Weight\n\nCures any status',
+    description: '+25 Health\n+30 Thirst\n+1 Weight\n\nClears any status effects and prevents you from getting negative status effects',
     type: 'Consumable',
     rarity: 'Rare',
     weight: 1,
@@ -659,6 +647,17 @@ export const GoldenApple: Item = {
     hunger: 100
 }
 
+export const Cocktail: Item = {
+    name: 'Fruit Cocktail',
+    description: '+100 Thirst\n+1 Weight\n\nYum',
+    type: 'Consumable',
+    rarity: 'Rare',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/82/Potion_of_Harming.gif',
+    components: [WaterBottle, Sugar, Apple, MelonSlice, SweetBerries],
+    food: 'sweet',
+    thirst: 100
+}
 
 
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Item } from './interfaces/item';
 import { Bow, Crossbow, EnchantedBow, EnchantedCrossbow, EnchantedIronAxe, EnchantedIronSword, EnchantedStoneAxe, EnchantedStoneSword, EnchantedWoodenAxe, EnchantedWoodenSword, IronAxe, IronSword, StoneAxe, StoneSword, WoodenAxe, WoodenSword } from './items/weapons';
 import { Ale, Apple, BakedPotato, Bandage, Beetroot, BeetrootSoup, Bread, Button, Cake, Carrot, Cobweb, Cocktail, CookedChicken, CookedFish, CookedPorkchop, CookedRabbit, Cookie, Egg, Flashbang, GoldenApple, GoldenCarrot, Grenade, HealPotI, HealPotII, HealPotIII, HoneyBottle, Incendiary, MelonSlice, Milk, MysteriousArtifact, Nemo, PoisonousPotato, Potato, Pufferfish, PumpkinPie, RawBeef, RawChicken, RawFish, RawPorkchop, RawRabbit, RottenFlesh, Snowball, Steak, SuspiciousStew, SweetBerries, VegetableJuice, WaterBottle } from './items/consumables';
-import { Dead, Normal } from './statusEffects/statusEffects';
+import { Bleeding, Dead, Healthy, Normal, Sick, Tipsy } from './statusEffects/statusEffects';
 import { Bone, Bowl, BrownMushroom, Coal, CocoaBeans, EnchantedBook, GlassBottle, GlowstoneDust, GoldIngot, Gunpowder, IronIngot, Leather, NetherWart, Pumpkin, RedMushroom, RedstoneDust, Stick, Stone, StringItem, SugarCane, Wheat } from './items/materials';
 import { StatusEffect } from './interfaces/statuseffect';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -24,8 +24,13 @@ export class GameService {
 
   public $playerHealth: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   public set setPlayerHealth(value: number) {
-    this.$playerHealth.next(value);
-    this.checkPlayer();
+    if (this.playerStatus == Bleeding) {
+      console.log('You are bleeding!');
+    }
+    else {
+      this.$playerHealth.next(value);
+      this.checkPlayer();
+    }
   }
   public get playerHealth(): Observable<number> {
     return this.$playerHealth.asObservable();
@@ -33,8 +38,13 @@ export class GameService {
 
   public $playerHunger: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   public set setPlayerHunger(value: number) {
-    this.$playerHunger.next(value);
-    this.checkPlayer();
+    if (this.playerStatus == Sick) {
+      console.log('You are sick!');
+    }
+    else {
+      this.$playerHunger.next(value);
+      this.checkPlayer();
+    }
   }
   public get playerHunger(): Observable<number> {
     return this.$playerHunger.asObservable();
@@ -59,17 +69,18 @@ export class GameService {
   public inventoryMax: number = 36;
 
 
-
-
-
   public playerStatus: StatusEffect = Normal;
   public playerStage: number = 1;
+
+
   public inCombat: boolean = false;
-  public equippedWeapon: Item;
-  public equippedHead: Item;
-  public equippedChest: Item;
-  public equippedLegs: Item;
-  public equippedBoots: Item;
+  public equippedWeapon: Item | null;
+  public equippedHead: Item | null;
+  public equippedChest: Item | null;
+  public equippedLegs: Item | null;
+  public equippedBoots: Item | null;
+  public currentDamage: number = 2;
+  public currentDefense: number = 0;
 
 
 
@@ -93,13 +104,74 @@ export class GameService {
   public addItem(item: Item) {
     this.inventoryWeight += item.weight;
     this.$playerInventory.next([...this.$playerInventory.value, item]);
-}
+  }
 
-public removeItem(index: number) {
-  this.inventoryWeight -= this.$playerInventory.value[index].weight;
-  this.$playerInventory.value.splice(index, 1);
-  this.$playerInventory.next(this.$playerInventory.value);
-}
+  public removeItem(index: number) {
+    this.inventoryWeight -= this.$playerInventory.value[index].weight;
+    this.$playerInventory.value.splice(index, 1);
+    this.$playerInventory.next(this.$playerInventory.value);
+  }
+
+  public equipItem(item: Item, index: number): boolean {
+    switch(item.type) {
+      case 'Head Armor':
+        if (this.equippedHead) return false;
+        this.equippedHead = item;
+        this.currentDefense += item.defense ?? 0;
+        break;
+      case 'Body Armor':
+        if (this.equippedChest) return false;
+        this.equippedChest = item;
+        this.currentDefense += item.defense ?? 0;
+        break;
+      case 'Leg Armor':
+        if (this.equippedLegs) return false;
+        this.equippedLegs = item;
+        this.currentDefense += item.defense ?? 0;
+        break;
+      case 'Boots Armor':
+        if (this.equippedBoots) return false;
+        this.equippedBoots = item;
+        this.currentDefense += item.defense ?? 0;
+        break;
+      default:
+        this.equippedWeapon = item;
+        this.currentDamage = item.damage ?? 2;
+        break;
+    }
+    this.removeItem(index);
+    return true;
+  }
+
+  public unequipItem(item: Item) {
+    switch(item.type) {
+      case 'Head Armor':
+        this.currentDefense -= item.defense ?? 0;
+        this.addItem(this.equippedHead ?? Bone);
+        this.equippedHead = null;
+        break;
+      case 'Body Armor':
+        this.currentDefense -= item.defense ?? 0;
+        this.addItem(this.equippedChest ?? Bone);
+        this.equippedChest = null;
+        break;
+      case 'Leg Armor':
+        this.currentDefense -= item.defense ?? 0;
+        this.addItem(this.equippedLegs ?? Bone);
+        this.equippedLegs = null;
+        break;
+      case 'Boots Armor':
+        this.currentDefense -= item.defense ?? 0;
+        this.addItem(this.equippedBoots ?? Bone);
+        this.equippedBoots = null;
+        break;
+      default:
+        this.currentDamage = 2;
+        this.addItem(this.equippedWeapon ?? Bone);
+        this.equippedWeapon = null;
+        break;
+    }
+  }
 
   public createPlayer(items: Item[], name: string): void {
     this.playerName = name;
@@ -111,6 +183,22 @@ public removeItem(index: number) {
   public changeName(name: string): void {
     if (name.length < 1) this.playerName = 'Survivor';
     else this.playerName = name;
+  }
+
+  public changeStatus(status: string): void {
+    switch(status) {
+      case 'Normal': 
+        this.playerStatus = Normal;
+        break;
+      case 'Bleeding':
+        this.playerStatus = Bleeding;
+        break;
+      case 'Sick':
+        this.playerStatus = Sick;
+        break;
+      default:
+        console.log('invalid status');
+    }
   }
 
   public changeValue(value: number, prop: string): void {
@@ -170,14 +258,18 @@ public removeItem(index: number) {
 
   public useConsumable(item: Item, index: number) {
     if (item.food) {
+      switch(item.food) {
+        case 'healing':
+          if ((item == Bandage || item == HoneyBottle) && this.playerStatus == Bleeding) this.playerStatus = Normal; 
+          if ((item == Milk || item == HoneyBottle) && this.playerStatus == Sick) this.playerStatus = Normal;
+          if (item == Ale && this.playerStatus == Normal) this.playerStatus = Tipsy;
+          if (item == VegetableJuice) this.playerStatus = Healthy;
+          break;
+        default:
+      }
       if (item.health) this.changeValue(this.$playerHealth.value + item.health, 'Health');
       if (item.hunger) this.changeValue(this.$playerHunger.value + item.hunger, 'Hunger');
       if (item.thirst) this.changeValue(this.$playerThirst.value + item.thirst, 'Thirst');
-
-      switch(item.food) {
-        default:
-          console.log('this food is raw');
-      }
     }
     
     this.removeItem(index);
