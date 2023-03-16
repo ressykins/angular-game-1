@@ -88,6 +88,7 @@
     <h2 style="color:white;text-shadow: 0 0 1px black;">Equipment<span class="closeInventory" (click)="toggleEquipment()">X</span></h2>
     <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:32px" title="Damage">{{this.game.currentDamage}} <img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:32px" title="Defense">{{this.game.currentDefense}}</p>
     <div class="flex-container" style="color:white;text-shadow: 0 0 1px black;">
+      
       <ng-container *ngIf="this.game.equippedWeapon; else noWeapon">
           <div class="flex-item {{this.game.equippedWeapon.rarity}}"><img class="itemImg" src="{{this.game.equippedWeapon.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedWeapon.name}}&#013;[{{this.game.equippedWeapon.rarity}} {{this.game.equippedWeapon.type}}]&#013;&#013;{{this.game.equippedWeapon.description}}&#013;&#013;Durability: {{this.game.equippedWeapon.durability}}" (click)="this.game.unequipItem(this.game.equippedWeapon)"></div>
       </ng-container>

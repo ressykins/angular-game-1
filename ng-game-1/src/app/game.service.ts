@@ -112,6 +112,14 @@ export class GameService {
     this.$playerInventory.next(this.$playerInventory.value);
   }
 
+  public useDurability(index: number) {
+    if (this.$playerInventory.value[index].durability) {
+      this.$playerInventory.value[index].durability = (this.$playerInventory.value[index].durability ?? 1) - 1;
+    }
+    if (this.$playerInventory.value[index].durability == 0) this.removeItem(index);
+    else this.$playerInventory.next(this.$playerInventory.value);
+  }
+
   public equipItem(item: Item, index: number): boolean {
     switch(item.type) {
       case 'Head Armor':
@@ -129,12 +137,13 @@ export class GameService {
         this.equippedLegs = item;
         this.currentDefense += item.defense ?? 0;
         break;
-      case 'Boots Armor':
+      case 'Boot Armor':
         if (this.equippedBoots) return false;
         this.equippedBoots = item;
         this.currentDefense += item.defense ?? 0;
         break;
       default:
+        if (this.equippedWeapon) return false;
         this.equippedWeapon = item;
         this.currentDamage = item.damage ?? 2;
         break;
@@ -160,7 +169,7 @@ export class GameService {
         this.addItem(this.equippedLegs ?? Bone);
         this.equippedLegs = null;
         break;
-      case 'Boots Armor':
+      case 'Boot Armor':
         this.currentDefense -= item.defense ?? 0;
         this.addItem(this.equippedBoots ?? Bone);
         this.equippedBoots = null;
@@ -256,8 +265,9 @@ export class GameService {
 
   /// ACTIONS ////////////////////////////////////////////////////////////////////////////
 
-  public useConsumable(item: Item, index: number) {
+  public useConsumable(item: Item, index: number): boolean {
     if (item.food) {
+      if (this.$playerHunger.value == 100 && item.hunger) return false;
       switch(item.food) {
         case 'healing':
           if ((item == Bandage || item == HoneyBottle) && this.playerStatus == Bleeding) this.playerStatus = Normal; 
@@ -271,8 +281,11 @@ export class GameService {
       if (item.hunger) this.changeValue(this.$playerHunger.value + item.hunger, 'Hunger');
       if (item.thirst) this.changeValue(this.$playerThirst.value + item.thirst, 'Thirst');
     }
-    
+    else if (item.combat) {
+      if (!this.inCombat) return false;
+    }
     this.removeItem(index);
+    return true;
   }
 
 

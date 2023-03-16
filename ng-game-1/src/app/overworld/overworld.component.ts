@@ -51,12 +51,12 @@ export class OverworldComponent implements OnInit {
       return false;
     } 
     else {
-      for (let item of this.game.$playerInventory.value) {
-        if (item.name.includes('Hoe')) {
+      for (let i = 0; i < this.game.$playerInventory.value.length; i++) {
+        if (this.game.$playerInventory.value[i].name.includes('Hoe')) {
           const rolledItem = this.game.rollCrops();
 
           this.currentStage.numCrops--;
-          if (item.durability) item.durability--;
+          if (this.game.$playerInventory.value[i].durability) this.game.useDurability(i);
 
           this.clearMessage();
           let newActionMessage: actionMessage = {
@@ -81,12 +81,12 @@ export class OverworldComponent implements OnInit {
       return false;
     } 
     else {
-      for (let item of this.game.$playerInventory.value) {
-        if (item.name.includes('Shovel')) {
+      for (let i = 0; i < this.game.$playerInventory.value.length; i++) {
+        if (this.game.$playerInventory.value[i].name.includes('Shovel')) {
           const rolledItem = this.game.rollGraves();
 
           this.currentStage.numGraves--;
-          if (item.durability) item.durability--;
+          if (this.game.$playerInventory.value[i].durability) this.game.useDurability(i);
 
           if(rolledItem == ZombieHead) {
 
@@ -125,12 +125,12 @@ export class OverworldComponent implements OnInit {
       return false;
     } 
     else {
-      for (let item of this.game.$playerInventory.value) {
-        if (item.name == 'Fishing Rod') {
+      for (let i = 0; i < this.game.$playerInventory.value.length; i++) {
+        if (this.game.$playerInventory.value[i].name.includes('Fishing Rod')) {
           const rolledItem = this.game.rollFish();
 
           this.currentStage.numFish--;
-          if (item.durability) item.durability--;
+          if (this.game.$playerInventory.value[i].durability) this.game.useDurability(i);
 
           this.clearMessage();
           let newActionMessage: actionMessage = {
@@ -197,7 +197,18 @@ export class OverworldComponent implements OnInit {
       }
       this.currentMessage = newActionMessage;
     }
-    else if (roll < 95) {
+    else if (roll < 80 && this.game.$playerInventory.value.length > 0) {
+      const roll: number = Math.floor(Math.random() * this.game.$playerInventory.value.length);
+      this.game.removeItem(roll);
+      this.clearMessage();
+      let newActionMessage: actionMessage = {
+        subject: 'Danger',
+        description: 'While you were asleep, someone snuck into your bag and stole something!', 
+        item: IconPlayer
+      }
+      this.currentMessage = newActionMessage;
+    }
+    else {
       this.game.changeValue(this.game.$playerHealth.value - 20, 'Health');
       this.clearMessage();
       let newActionMessage: actionMessage = {
@@ -207,17 +218,12 @@ export class OverworldComponent implements OnInit {
       }
       this.currentMessage = newActionMessage;
     }
-    else {
-      this.clearMessage();
-      let newActionMessage: actionMessage = {
-        subject: 'Danger',
-        description: 'While you were asleep, someone snuck into your bag and stole something!', 
-        item: IconPlayer
-      }
-      this.currentMessage = newActionMessage;
-    }
     this.currentStage.canRest = false;
     return true;
+  }
+
+  public refillWater() {
+
   }
 
 

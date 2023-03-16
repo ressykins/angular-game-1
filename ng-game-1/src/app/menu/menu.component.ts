@@ -28,13 +28,17 @@ export class MenuComponent implements OnInit {
   }
 
   public useConsumable(item: Item, index: number): void {
-    this.game.useConsumable(item, index);
-    alert('You used ' + item.name);
-    this.toggleInventory();
+    let result = this.game.useConsumable(item, index);
+
+    if (result) alert('You used ' + item.name);
+    else {
+      if (item.food) alert('You are full!');
+      else if (item.combat) alert('You are not in combat!');
+    }
   }
 
   public equipItem(item: Item, index: number): void {
-    if(!this.game.equipItem(item, index)) alert('You already have something equipped!');
+    if (!this.game.equipItem(item, index)) alert('You already have something equipped!');
   }
 
 

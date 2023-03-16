@@ -269,9 +269,6 @@ export const SuspiciousStew: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/da/Suspicious_Stew_JE1_BE1.png',
     components: [Bowl, NetherWart],
     food: 'crafted',
-    health: 0,
-    thirst: 0,
-    hunger: 0
 }
 
 export const GoldenCarrot: Item = {
