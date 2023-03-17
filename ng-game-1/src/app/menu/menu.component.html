@@ -47,8 +47,8 @@
             <a class="dropdown-item" (click)="debugChangeStatus()">
               <strong>Change Status</strong>
             </a>
-            <a class="dropdown-item">
-              <strong>Test Inventory</strong>
+            <a class="dropdown-item" (click)="debugGiveItem()">
+              <strong>Give Item</strong>
             </a>
           </div>
         </li>
@@ -86,7 +86,7 @@
 
   <div class="centered" *ngIf="equipmentOpen">
     <h2 style="color:white;text-shadow: 0 0 1px black;">Equipment<span class="closeInventory" (click)="toggleEquipment()">X</span></h2>
-    <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:32px" title="Damage">{{this.game.currentDamage}} <img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:32px" title="Defense">{{this.game.currentDefense}}</p>
+    <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:32px" title="Current Damage">{{this.game.currentDamage}} <img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:32px" title="Current Defense">{{this.game.currentDefense}}</p>
     <div class="flex-container" style="color:white;text-shadow: 0 0 1px black;">
       
       <ng-container *ngIf="this.game.equippedWeapon; else noWeapon">

@@ -102,7 +102,6 @@ export class TitleScreenComponent {
     }
     this.kits.sort(() => 0.5 - Math.random());
     this.rerollsRemaining--;
-    console.log(this.kits);
   }
 
   public selectKit(kit: Kit): void {

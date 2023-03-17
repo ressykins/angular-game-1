@@ -168,8 +168,8 @@ export const PoisonousPotato: Item = {
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Poisonous_Potato_JE3_BE2.png',
     food: 'raw',
-    health: -99,
-    hunger: -99
+    health: -15,
+    hunger: -15
 }
 
 export const Pufferfish: Item = {
@@ -180,8 +180,8 @@ export const Pufferfish: Item = {
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/02/Pufferfish_(item)_JE5_BE2.png',
     food: 'raw',
-    health: -99,
-    thirst: -99
+    health: -45,
+    hunger: -45
 }
 
 export const Egg: Item = {
@@ -526,6 +526,17 @@ export const VegetableJuice: Item = {
     thirst: 30
 }
 
+export const WaterBucket: Item = {
+    name: 'WaterBucket',
+    description: '+100 Thirst\n+3 Weight\n\nCures Heatstroke',
+    type: 'Consumable',
+    rarity: 'Uncommon',
+    weight: 3,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/dc/Water_Bucket_JE2_BE2.png',
+    food: 'healing',
+    thirst: 100
+}
+
 
 
 /// COMBAT
@@ -534,7 +545,7 @@ export const VegetableJuice: Item = {
 
 export const Cobweb: Item = {
     name: 'Cobweb',
-    description: '+1 Weight\n\nThrow it to stun your enemies',
+    description: '+1 Weight\n\nThrow it to slow your enemies',
     type: 'Consumable',
     rarity: 'Uncommon',
     weight: 1,
@@ -612,7 +623,7 @@ export const PumpkinPie: Item = {
     rarity: 'Epic',
     weight: 2,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ac/Pumpkin_Pie_JE2_BE2.png',
-    components: [Pumpkin, Sugar, Egg],
+    components: [Pumpkin, Sugar, Egg, Wheat],
     food: 'sweet',
     health: 30,
     hunger: 30
@@ -632,7 +643,7 @@ export const Cake: Item = {
 }
 
 export const GoldenApple: Item = {
-    name: 'Cake',
+    name: 'Golden Apple',
     description: '+100 Health\n+100 Hunger\n+1 Weight',
     type: 'Consumable',
     rarity: 'Legendary',
@@ -664,7 +675,7 @@ export const Cocktail: Item = {
 export const Button: Item = {
     name: 'Button',
     description: '+1 Weight\n\nThis can be used to open a locked door',
-    type: 'Button',
+    type: 'Misc',
     rarity: 'Rare',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3c/Polished_Blackstone_Button_JE1.png'
@@ -673,7 +684,7 @@ export const Button: Item = {
 export const MysteriousArtifact: Item = {
     name: 'Mysterious Artifact',
     description: '+1 Weight',
-    type: 'Consumable',
+    type: 'Misc',
     rarity: 'Legendary',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2e/Totem_of_Undying_JE2_BE2.png'

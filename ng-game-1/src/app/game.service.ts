@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Item } from './interfaces/item';
 import { Bow, Crossbow, EnchantedBow, EnchantedCrossbow, EnchantedIronAxe, EnchantedIronSword, EnchantedStoneAxe, EnchantedStoneSword, EnchantedWoodenAxe, EnchantedWoodenSword, IronAxe, IronSword, StoneAxe, StoneSword, WoodenAxe, WoodenSword } from './items/weapons';
-import { Ale, Apple, BakedPotato, Bandage, Beetroot, BeetrootSoup, Bread, Button, Cake, Carrot, Cobweb, Cocktail, CookedChicken, CookedFish, CookedPorkchop, CookedRabbit, Cookie, Egg, Flashbang, GoldenApple, GoldenCarrot, Grenade, HealPotI, HealPotII, HealPotIII, HoneyBottle, Incendiary, MelonSlice, Milk, MysteriousArtifact, Nemo, PoisonousPotato, Potato, Pufferfish, PumpkinPie, RawBeef, RawChicken, RawFish, RawPorkchop, RawRabbit, RottenFlesh, Snowball, Steak, SuspiciousStew, SweetBerries, VegetableJuice, WaterBottle } from './items/consumables';
+import { Ale, Apple, BakedPotato, Bandage, Beetroot, BeetrootSoup, Bread, Button, Cake, Carrot, Cobweb, Cocktail, CookedChicken, CookedFish, CookedPorkchop, CookedRabbit, Cookie, Egg, Flashbang, GoldenApple, GoldenCarrot, Grenade, HealPotI, HealPotII, HealPotIII, HoneyBottle, Incendiary, MelonSlice, Milk, MysteriousArtifact, Nemo, PoisonousPotato, Potato, Pufferfish, PumpkinPie, RawBeef, RawChicken, RawFish, RawPorkchop, RawRabbit, RottenFlesh, Snowball, Steak, SuspiciousStew, SweetBerries, VegetableJuice, WaterBottle, WaterBucket } from './items/consumables';
 import { Bleeding, Dead, Healthy, Normal, Sick, Tipsy } from './statusEffects/statusEffects';
-import { Bone, Bowl, BrownMushroom, Coal, CocoaBeans, EnchantedBook, GlassBottle, GlowstoneDust, GoldIngot, Gunpowder, IronIngot, Leather, NetherWart, Pumpkin, RedMushroom, RedstoneDust, Stick, Stone, StringItem, SugarCane, Wheat } from './items/materials';
+import { Bone, Bowl, BrownMushroom, Bucket, Coal, CocoaBeans, EnchantedBook, GlassBottle, GlowstoneDust, GoldIngot, Gunpowder, IronIngot, Leather, NetherWart, Pumpkin, RedMushroom, RedstoneDust, Stick, Stone, StringItem, SugarCane, Wheat } from './items/materials';
 import { StatusEffect } from './interfaces/statuseffect';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { EnchantedFishingRod, EnchantedHoe, EnchantedPickaxe, EnchantedShovel, FishingRod, Hoe, MedKit, Pickaxe, Shovel, SmallBag } from './items/tools';
 import { ChainBoots, ChainChestplate, ChainHelmet, ChainLeggings, IronBoots, IronChestplate, IronHelmet, IronLeggings, LeatherBoots, LeatherCap, LeatherPants, LeatherTunic, ZombieHead } from './items/armor';
+import { CraftableList, ItemList } from './items/itemList';
 
 @Injectable({
   providedIn: 'root'
@@ -59,14 +60,13 @@ export class GameService {
     return this.$playerThirst.asObservable();
   }
 
-
-
-
-
   public $playerInventory: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
   public playerInventory = this.$playerInventory.asObservable();
   public inventoryWeight: number = 0;
   public inventoryMax: number = 36;
+  public craftingList: Item[] = CraftableList;
+  public $craftableItems: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public craftableItems = this.$craftableItems.asObservable();
 
 
   public playerStatus: StatusEffect = Normal;
@@ -79,7 +79,7 @@ export class GameService {
   public equippedChest: Item | null;
   public equippedLegs: Item | null;
   public equippedBoots: Item | null;
-  public currentDamage: number = 2;
+  public currentDamage: number = 2; // base damage
   public currentDefense: number = 0;
 
 
@@ -101,14 +101,42 @@ export class GameService {
 
   /// CRUD ////////////////////////////////////////////////////////////////////////////
 
+  public addRecipe(item: Item) {
+    for (let craftItem of this.craftingList) {
+      if (craftItem.components?.includes(item) && !this.$craftableItems.value.includes(craftItem)) this.$craftableItems.next([...this.$craftableItems.value, craftItem]);
+    }
+    console.log('ITEM ADDED, UPDATED CRAFTING:', this.$craftableItems.value);
+  }
+  
+  public removeRecipes(item: Item) {
+    let updatedCrafting = this.$craftableItems.value.filter((item: Item): boolean => {
+      if(item.components) {
+        for(let component of item.components) {
+          if (this.$playerInventory.value.includes(component)) return true;
+        }
+      }
+      return false;
+    });
+    console.log('ITEM REMOVED. UPDATED CRAFTING:', updatedCrafting)
+    this.$craftableItems.next(updatedCrafting);
+  }
+ 
   public addItem(item: Item) {
     this.inventoryWeight += item.weight;
     this.$playerInventory.next([...this.$playerInventory.value, item]);
+    this.addRecipe(item);
   }
 
   public removeItem(index: number) {
-    this.inventoryWeight -= this.$playerInventory.value[index].weight;
+    let removedItem = this.$playerInventory.value[index]
+    this.inventoryWeight -= removedItem.weight;
     this.$playerInventory.value.splice(index, 1);
+    this.$playerInventory.next(this.$playerInventory.value);
+    this.removeRecipes(removedItem);
+  }
+
+  public updateItem(index: number, newItem: Item) {
+    this.$playerInventory.value[index] = newItem;
     this.$playerInventory.next(this.$playerInventory.value);
   }
 
@@ -230,6 +258,18 @@ export class GameService {
       default: 
         console.log('Huh? How did you get here?');
     }
+  }
+
+  public giveItem(name: string): boolean {
+    let allItems = ItemList;
+    for (let item of allItems) {
+      if (item.name.toLowerCase() == name.toLowerCase()) {
+        this.addItem(item);
+        return true;
+      }
+    }
+    return false;
+
   }
 
   public checkPlayer(): void {
@@ -531,6 +571,7 @@ export class GameService {
       if (roll < 60) return GlassBottle;
       if (roll < 70) return Bowl;
       if (roll < 80) return Stone;
+      if (roll < 90) return Bucket;
       return Bone;
     }
     // normal roll
@@ -542,7 +583,7 @@ export class GameService {
       if (roll < 27) return SmallBag;
       if (roll < 31) return Bandage;
       if (roll < 35) return HealPotI;
-      if (roll < 40) return RawFish;
+      if (roll < 40) return WaterBucket;
       if (roll < 44) return Coal;
       if (roll < 48) return Bow;
       if (roll < 52) return Milk;
@@ -596,7 +637,7 @@ export class GameService {
       else if (roll < 90) return ChainChestplate;
       else if (roll < 92) return ChainLeggings;
       else if (roll < 94) return ChainBoots;
-      else return Apple;
+      else return Bucket;
     }
   }
 

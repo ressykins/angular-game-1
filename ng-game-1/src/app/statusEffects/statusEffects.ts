@@ -35,11 +35,6 @@ export const Bleeding: StatusEffect = {
     statusDescription: 'You cannot heal!'
 }
 
-export const Crippled: StatusEffect = {
-    statusName: 'Crippled',
-    statusDescription: 'Your attack and defense are lowered!'
-}
-
 export const Sick: StatusEffect = {
     statusName: 'Sick',
     statusDescription: 'You cannot replenish hunger!'

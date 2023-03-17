@@ -111,7 +111,7 @@ export const IronHelmet: Item = {
 }
 
 export const IronChestplate: Item = {
-    name: 'Chainmail Chestplate',
+    name: 'Iron Chestplate',
     description: '+8 Defense\n+8 Weight',
     type: 'Body Armor',
     rarity: 'Epic',

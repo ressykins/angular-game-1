@@ -101,22 +101,21 @@ export const EnchantedPickaxe: Item = {
 
 
 
-/// Inventory
+/// Misc
 
 export const MedKit: Item = {
     name: 'Medical Kit',
     description: '+5 Weight\n\nCan be used to heal yourself or help others',
-    type: 'Tool',
+    type: 'Misc',
     rarity: 'Rare',
     weight: 5,
-    durability: 5,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5a/Shears_JE2_BE2.png'
 }
 
 export const SmallBag: Item = {
     name: 'Small Bag',
     description: '-10 Weight',
-    type: 'Material',
+    type: 'Misc',
     rarity: 'Epic',
     weight: -10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e7/Brown_Shulker_Box_Revision_1.png',

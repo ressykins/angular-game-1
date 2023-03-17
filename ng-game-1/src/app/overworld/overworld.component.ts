@@ -4,7 +4,9 @@ import { Towns } from '../locations/towns';
 import { Location } from '../interfaces/location';
 import { Item } from '../interfaces/item';
 import { ZombieHead } from '../items/armor';
-import { IconPlayer, IconRest, IconZombie } from '../items/icons';
+import { IconPlayer, IconRest, IconWater, IconZombie } from '../items/icons';
+import { Bucket, GlassBottle } from '../items/materials';
+import { WaterBottle, WaterBucket } from '../items/consumables';
 
 export interface actionMessage {
   subject: string,
@@ -23,6 +25,7 @@ export class OverworldComponent implements OnInit {
   public doneLoading: Promise<boolean>;
   public currentStage: Location;
   public currentMessage: actionMessage | null;
+  public craftingOpen: boolean = false;
 
   constructor(public game: GameService){}
 
@@ -178,14 +181,22 @@ export class OverworldComponent implements OnInit {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /// general actions
-
-  public rest(): boolean {
-    if (this.game.$playerHealth.value == 100) {
-      alert('You are already well rested!');
-      return false;
-    }
-
+  public rest(): void {
     const roll: number = Math.floor(Math.random() * 101);
     if (roll < 75)  {
       this.game.changeValue(this.game.$playerHealth.value + 10, 'Health');
@@ -219,14 +230,32 @@ export class OverworldComponent implements OnInit {
       this.currentMessage = newActionMessage;
     }
     this.currentStage.canRest = false;
-    return true;
   }
 
   public refillWater() {
-
+    this.game.changeValue(100, 'Thirst');
+    for (let i = 0; i < this.game.$playerInventory.value.length; i++) {
+      if (this.game.$playerInventory.value[i] == GlassBottle) {
+        this.game.updateItem(i, WaterBottle);
+      }
+      if (this.game.$playerInventory.value[i] == Bucket) {
+        this.game.updateItem(i, WaterBucket);
+      }
+    }
+    this.clearMessage();
+    let newActionMessage: actionMessage = {
+      subject: 'Refill',
+      description: 'You replenished your thirst and water supply.', 
+      item: IconWater
+    }
+    this.currentMessage = newActionMessage;
+    this.currentStage.canRefill = false;
   }
 
-
+  public toggleCrafting(): void {
+    if(this.craftingOpen) this.craftingOpen = false;
+    else this.craftingOpen = true;
+  }
 
 
 

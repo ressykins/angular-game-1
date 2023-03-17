@@ -1,3 +1,4 @@
+import { compileClassMetadata } from "@angular/compiler";
 import { Item } from "../interfaces/item";
 
 
@@ -138,16 +139,6 @@ export const Leather: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6d/Leather_JE2_BE2.png'
 }
 
-export const Bone: Item = {
-    name: 'Bone',
-    description: '+1 Weight',
-    type: 'Material',
-    rarity: 'Common',
-    weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft/images/2/25/BoneNew.png'
-}
-
-
 export const EnchantedBook: Item = {
     name: 'Enchanted Book',
     description: '+1 Weight\n\n Used to enchant tools and weapons',
@@ -164,15 +155,6 @@ export const Bowl: Item = {
     rarity: 'Common',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/82/Bowl_JE2_BE2.png'
-}
-
-export const GlassBottle: Item = {
-    name: 'Glass Bottle',
-    description: '+1 Weight\n\n Can be filled up with water',
-    type: 'Material',
-    rarity: 'Common',
-    weight: 1,
-    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fb/Glass_Bottle_JE2_BE2.png'
 }
 
 export const Coal: Item = {
@@ -211,3 +193,33 @@ export const Gunpowder: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/40/Gunpowder_JE2_BE2.png'
 }
 
+
+
+
+export const GlassBottle: Item = {
+    name: 'Glass Bottle',
+    description: '+1 Weight\n\n Can be filled up with water',
+    type: 'Misc',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fb/Glass_Bottle_JE2_BE2.png'
+}
+
+export const Bucket: Item = {
+    name: 'Bucket',
+    description: '+2 Weight\n\n Can be filled up',
+    type: 'Misc',
+    rarity: 'Common',
+    weight: 2,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fc/Bucket_JE2_BE2.png',
+    components: [IronIngot]
+}
+
+export const Bone: Item = {
+    name: 'Bone',
+    description: '+1 Weight',
+    type: 'Misc',
+    rarity: 'Common',
+    weight: 1,
+    picture: 'https://static.wikia.nocookie.net/minecraft/images/2/25/BoneNew.png'
+}

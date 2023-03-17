@@ -27,3 +27,11 @@ export const IconPlayer: Item = {
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/85/Player_Head_(8)_JE5.png'
 }
 
+export const IconWater: Item = {
+    name: '',
+    description: '',
+    type: '',
+    rarity: '',
+    weight: 0,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png'
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
 import { Item } from '../interfaces/item';
+import { Bone } from '../items/materials';
 
 @Component({
   selector: 'app-menu',
@@ -79,4 +80,9 @@ export class MenuComponent implements OnInit {
     this.game.changeStatus(newStatus ?? this.game.playerStatus.statusName);
   }
   
+  public debugGiveItem(): void {
+    let newItem = prompt("Enter an item name:");
+    if (this.game.giveItem(newItem ?? 'Bone')) console.log("Item successfully given.");
+    else alert('Item does not exist!');
+  }
 }
