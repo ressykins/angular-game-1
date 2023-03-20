@@ -9,3 +9,8 @@ html, body {
     height: 100%;
 }
 
+.whiteText {
+    color:white;
+    text-shadow: 0 0 1px black;
+}
+

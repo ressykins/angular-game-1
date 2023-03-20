@@ -64,8 +64,10 @@ export class GameService {
   public playerInventory = this.$playerInventory.asObservable();
   public inventoryWeight: number = 0;
   public inventoryMax: number = 36;
+
+
   public craftingList: Item[] = CraftableList;
-  public $craftableItems: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public $craftableItems: BehaviorSubject<[Item,boolean[]][]> = new BehaviorSubject<[Item,boolean[]][]>([]);
   public craftableItems = this.$craftableItems.asObservable();
 
 
@@ -101,46 +103,71 @@ export class GameService {
 
   /// CRUD ////////////////////////////////////////////////////////////////////////////
 
-  public addRecipe(item: Item) {
-    for (let craftItem of this.craftingList) {
-      if (craftItem.components?.includes(item) && !this.$craftableItems.value.includes(craftItem)) this.$craftableItems.next([...this.$craftableItems.value, craftItem]);
+  // when an item is added to inventory, add any recipes that contain that item as a component.
+  public addRecipe(item: Item): void {
+    for (let cItem of this.craftingList) {
+      if (cItem.components?.includes(item) && !this.$craftableItems.value.find((i : [Item, boolean[]]) => i[0] == cItem)) this.$craftableItems.next([...this.$craftableItems.value, [cItem, Array(cItem.components.length).fill(false)]]);
     }
     console.log('ITEM ADDED, UPDATED CRAFTING:', this.$craftableItems.value);
+    this.updateRecipes();
   }
   
-  public removeRecipes(item: Item) {
-    let updatedCrafting = this.$craftableItems.value.filter((item: Item): boolean => {
-      if(item.components) {
-        for(let component of item.components) {
-          if (this.$playerInventory.value.includes(component)) return true;
+  // when an item is removed from the inventory, remove recipes that are uncraftable 
+  // public removeRecipes(item: Item) {
+  //   let updatedCrafting = this.$craftableItems.value.filter((i : [Item,boolean[]]) => {
+  //     if(item.components) {
+  //       for(let component of item.components) {
+  //         if (this.$playerInventory.value.includes(component)) return true;
+  //       }
+  //     }
+  //     return false;
+  //   });
+
+  //   console.log('ITEM REMOVED. UPDATED CRAFTING:', updatedCrafting)
+  //   this.$craftableItems.next(updatedCrafting);
+  // }
+
+  // check current recipes. remove any that are no longer valid
+  public updateRecipes(): void {
+      for (let i = 0; i < this.$craftableItems.value.length; i++) {
+        let currInventory: Item[] = [...this.$playerInventory.value];
+        for (let j = 0; j < this.$craftableItems.value[i][0].components!.length; j++) {
+          if (currInventory.includes(this.$craftableItems.value[i][0].components![j])) {
+            currInventory.splice(currInventory.indexOf(this.$craftableItems.value[i][0].components![j]), 1);
+            this.$craftableItems.value[i][1][j] = true; 
+          }
+          else this.$craftableItems.value[i][1][j] = false; 
         }
       }
-      return false;
-    });
-    console.log('ITEM REMOVED. UPDATED CRAFTING:', updatedCrafting)
-    this.$craftableItems.next(updatedCrafting);
+
+      let updatedCrafting = this.$craftableItems.value.filter((i : [Item,boolean[]]) => !i[1].every(i => i == false));
+      this.$craftableItems.next(updatedCrafting);
+      console.log('UPDATING RECIPES...', updatedCrafting);
   }
  
-  public addItem(item: Item) {
+  public addItem(item: Item): void {
     this.inventoryWeight += item.weight;
+    item.inInventory = 'grayedOutItem';
     this.$playerInventory.next([...this.$playerInventory.value, item]);
     this.addRecipe(item);
   }
 
-  public removeItem(index: number) {
+  public removeItem(index: number): void {
     let removedItem = this.$playerInventory.value[index]
     this.inventoryWeight -= removedItem.weight;
     this.$playerInventory.value.splice(index, 1);
     this.$playerInventory.next(this.$playerInventory.value);
-    this.removeRecipes(removedItem);
+    this.updateRecipes();
   }
 
-  public updateItem(index: number, newItem: Item) {
+  public updateItem(index: number, newItem: Item): void {
     this.$playerInventory.value[index] = newItem;
     this.$playerInventory.next(this.$playerInventory.value);
+    this.addRecipe(newItem);
+    this.updateRecipes();
   }
 
-  public useDurability(index: number) {
+  public useDurability(index: number): void {
     if (this.$playerInventory.value[index].durability) {
       this.$playerInventory.value[index].durability = (this.$playerInventory.value[index].durability ?? 1) - 1;
     }

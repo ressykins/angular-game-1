@@ -232,7 +232,7 @@ export class OverworldComponent implements OnInit {
     this.currentStage.canRest = false;
   }
 
-  public refillWater() {
+  public refillWater(): void {
     this.game.changeValue(100, 'Thirst');
     for (let i = 0; i < this.game.$playerInventory.value.length; i++) {
       if (this.game.$playerInventory.value[i] == GlassBottle) {
@@ -255,6 +255,14 @@ export class OverworldComponent implements OnInit {
   public toggleCrafting(): void {
     if(this.craftingOpen) this.craftingOpen = false;
     else this.craftingOpen = true;
+  }
+
+  public canCraft(list: boolean[]): boolean {
+    return list.every((i : boolean) => i === true);
+  }
+
+  public craftItem(item: Item) {
+
   }
 
 

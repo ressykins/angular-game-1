@@ -77,23 +77,54 @@
         </div>
 
         <div *ngIf="craftingOpen" class="craftingGUI">
-            <h2 style="color:white;text-shadow: 0 0 1px black;">Crafting<span class="closeCrafting" (click)="toggleCrafting()">X</span></h2>
+            <h2 class="whiteText">Crafting<span class="closeCrafting" (click)="toggleCrafting()">X</span></h2>
             <div class="craftingContainer">
-                <div *ngFor="let item of this.game.$craftableItems.value" class="craftItem">
-                    <div class="craftBox {{item.rarity}}">
-                        <ng-container [ngSwitch]="item.type">
-                            <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO CRAFT]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-                            <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-                            <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-                            <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-                            <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO EQUIP]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-                            <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}">
-                            <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
-                            <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO USE]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
-                            <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item.picture}}" title="{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}">
-                        </ng-container>
-                    </div>
+                <ng-container *ngFor="let item of this.game.$craftableItems.value">
+                    <div class="craftItem canCraftItem" *ngIf="canCraft(item[1])">
+                        <div class="craftBox {{item[0].rarity}}">
+                            <ng-container [ngSwitch]="item[0].type">
+                                <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
+                                <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
+                            </ng-container>
+                        </div>
+                        <div class="craftDesc whiteText">
+                            <div>{{item[0].name}}</div>
+                            <ng-container *ngFor="let component of item[0].components">
+                                <img src="{{component.picture}}" class="componentItem itemImg" title="{{component.name}}&#013;[{{component.rarity}} {{component.type}}]&#013;&#013;{{component.description}}">
+                            </ng-container>
+                        </div>
                 </div>
+                </ng-container>
+                <ng-container *ngFor="let item of this.game.$craftableItems.value">
+                    <div class="craftItem cantCraftItem" *ngIf="!canCraft(item[1])">
+                        <div class="craftBox {{item[0].rarity}}">
+                            <ng-container [ngSwitch]="item[0].type">
+                                <img *ngSwitchCase="'Weapon'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Head Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Body Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Leg Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Boot Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Tool'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Button'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                <img *ngSwitchCase="'Consumable'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                <img *ngSwitchDefault class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                            </ng-container>
+                        </div>
+                        <div class="craftDesc whiteText">
+                            <div>{{item[0].name}}</div>
+                            <ng-container *ngFor="let component of item[0].components; let i = index">
+                                <img src="{{component.picture}}" [ngClass]="item[1][i] ? 'componentItem itemImg' : 'componentItem itemImg grayedOutItem'" title="{{component.name}}&#013;[{{component.rarity}} {{component.type}}]&#013;&#013;{{component.description}}">
+                            </ng-container>
+                        </div>
+                </div>
+                </ng-container>
             </div>
         </div>
     </div>

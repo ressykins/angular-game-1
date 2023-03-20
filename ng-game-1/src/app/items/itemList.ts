@@ -38,10 +38,9 @@ export const ItemList: Item[] = [
     /// t2 food
     Bread,BeetrootSoup,MushroomStew,SuspiciousStew,GoldenCarrot,BakedPotato,CookedRabbit,
     CookedFish,CookedChicken,CookedPorkchop,Steak,RabbitStew,Cookie,PumpkinPie,Cake,GoldenApple,
-    Cocktail,
 
     /// medicine
-    Bandage,Milk,WaterBottle,HoneyBottle,HealPotI,HealPotII,HealPotIII,Ale,VegetableJuice,WaterBucket,
+    Bandage,Milk,WaterBottle,HoneyBottle,HealPotI,HealPotII,HealPotIII,Ale,VegetableJuice,Cocktail,WaterBucket,
 
     /// combat
     Cobweb,Snowball,Grenade,Flashbang,Incendiary,

@@ -13,6 +13,7 @@ export interface Item {
     durability?: number,
 
     components?: Item[],
+    inInventory?: string,
 
     equipped?: boolean,
 

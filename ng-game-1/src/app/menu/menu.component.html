@@ -58,8 +58,8 @@
 
 
   <div class="centered" *ngIf="inventoryOpen">
-    <h2 style="color:white;text-shadow: 0 0 1px black;">Inventory<span class="closeInventory" (click)="toggleInventory()">X</span></h2>
-    <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/11/Chest_(S)_BE1.png" style="height:32px" title="This is your carrying capacity!">{{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</p>
+    <h2 class="whiteText">Inventory<span class="closeInventory" (click)="toggleInventory()">X</span></h2>
+    <p class="whiteText"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/11/Chest_(S)_BE1.png" style="height:32px" title="This is your carrying capacity!">{{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</p>
     <div class="grid-container">
       <ng-container *ngFor="let item of this.game.$playerInventory.value; let i = index">
         <ng-container *ngIf="item; else emptySlot">
@@ -85,9 +85,9 @@
   </div>
 
   <div class="centered" *ngIf="equipmentOpen">
-    <h2 style="color:white;text-shadow: 0 0 1px black;">Equipment<span class="closeInventory" (click)="toggleEquipment()">X</span></h2>
-    <p style="color:white;text-shadow: 0 0 1px black;"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:32px" title="Current Damage">{{this.game.currentDamage}} <img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:32px" title="Current Defense">{{this.game.currentDefense}}</p>
-    <div class="flex-container" style="color:white;text-shadow: 0 0 1px black;">
+    <h2 class="whiteText">Equipment<span class="closeInventory" (click)="toggleEquipment()">X</span></h2>
+    <p class="whiteText"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/db/Golden_Sword_JE3_BE2.png" style="height:32px" title="Current Damage">{{this.game.currentDamage}} <img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/67/Golden_Helmet_(item)_JE3_BE3.png" style="height:32px" title="Current Defense">{{this.game.currentDefense}}</p>
+    <div class="flex-container whiteText">
       
       <ng-container *ngIf="this.game.equippedWeapon; else noWeapon">
           <div class="flex-item {{this.game.equippedWeapon.rarity}}"><img class="itemImg" src="{{this.game.equippedWeapon.picture}}" style="height:96px" title="[CLICK TO UNEQUIP]&#013;{{this.game.equippedWeapon.name}}&#013;[{{this.game.equippedWeapon.rarity}} {{this.game.equippedWeapon.type}}]&#013;&#013;{{this.game.equippedWeapon.description}}&#013;&#013;Durability: {{this.game.equippedWeapon.durability}}" (click)="this.game.unequipItem(this.game.equippedWeapon)"></div>

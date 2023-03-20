@@ -239,7 +239,7 @@ export const BeetrootSoup: Item = {
     rarity: 'Uncommon',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6c/Beetroot_Soup_JE2_BE2.png',
-    components: [Beetroot, Beetroot, Bowl],
+    components: [Bowl, Beetroot, Beetroot],
     food: 'crafted',
     health: 15,
     thirst: 15,
@@ -623,7 +623,7 @@ export const PumpkinPie: Item = {
     rarity: 'Epic',
     weight: 2,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ac/Pumpkin_Pie_JE2_BE2.png',
-    components: [Pumpkin, Sugar, Egg, Wheat],
+    components: [Wheat, Pumpkin, Sugar, Egg],
     food: 'sweet',
     health: 30,
     hunger: 30
@@ -636,7 +636,7 @@ export const Cake: Item = {
     rarity: 'Legendary',
     weight: 4,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/53/Cake_JE4.png',
-    components: [Milk, Egg, Wheat, Sugar],
+    components: [Wheat, Milk, Egg, Sugar],
     food: 'sweet',
     health: 60,
     hunger: 60
