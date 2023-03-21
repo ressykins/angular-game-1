@@ -12,10 +12,10 @@
                 <h1 class="stageName">{{currentStage.name}}</h1>
                 <button *ngIf="currentStage.canRest" type="button" class="btn btn-success btn-lg mb-1 btnGeneral btnRest" title="Try and take a rest." (click)="rest()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3e/Clock_JE3_BE3.gif" style="width:32px">Rest</button>
                 <button *ngIf="currentStage.canRefill" type="button" class="btn btn-primary btn-lg mb-1 btnGeneral" title="Replenish your thirst and water supply." (click)="refillWater()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png" style="width:32px">Refill</button>
+                <button *ngIf="currentStage.canRepair" type="button" class="btn btn-secondary btn-lg mb-1 btnGeneral" title="Repair your tools and weapons." (click)="repair()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png" style="width:32px">Repair</button>
                 <button *ngIf="currentStage.canCraft" type="button" class="btn btn-warning btn-lg mb-1 btnGeneral btnCraft" title="Craft items using materials." (click)="toggleCrafting()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Crafting_Table_JE4_BE3.png" style="width:32px">Craft</button>
-                <button *ngIf="currentStage.canRepair" type="button" class="btn btn-secondary btn-lg mb-1 btnGeneral" title="Repair your tools and weapons."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png" style="width:32px">Repair</button>
                 <button *ngIf="currentStage.canCook" type="button" class="btn btn-success btn-lg mb-1 btnGeneral" title="Cook food or smelt ores."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5c/Lit_Furnace_(S)_JE4.png" style="width:32px">Cook</button>
-                <button type="button" class="btn btn-danger btn-lg mb-1 btnGeneral" title="Need to empty your pockets?"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Lava_Bucket_JE2_BE2.png" style="width:32px">Trash</button>
+                <button type="button" class="btn btn-danger btn-lg mb-1 btnGeneral" title="Need to empty your pockets?" (click)="toggleTrash()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Lava_Bucket_JE2_BE2.png" style="width:32px">Trash</button>
             </div>
             <div class="flexItemB">
                 <button [disabled]="currentStage.numChests == 0" type="button" class="btn btn-success btn-lg mb-1 btnAction btnLoot" title="Let's see what this place has to offer..." (click)="loot()">
@@ -65,11 +65,14 @@
                         ({{currentStage.numCrops}} tries left)
                     </div>         
                 </button>
-
+            </div>
+            <div class="bottomTab">
+                <button type="button" class="btn btn-success btn-lg btnMain" title="See if there's anything to do around here..."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7a/Eye_of_Ender_JE2_BE2.png" style="width:32px;margin-right: 5px;">Events</button>
+                <button type="button" class="btn btn-danger btn-lg btnMain" title="Depart this area. (No turning back!)"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a2/Leather_Boots_(item)_JE1_BE1.png" style="width:32px;margin-right: 5px;">Depart</button>
             </div>
         </div>
 
-        <div *ngIf="currentMessage" class="centered {{currentMessage.subject}}"> 
+        <div *ngIf="currentMessage" class="centered messageBox {{currentMessage.subject}}"> 
             <h1 class="mb-2">{{currentMessage.subject}}</h1>
             <img *ngIf="currentMessage.item" class="mb-2 lootImg" src="{{currentMessage.item.picture}}" style="width: 128px;padding: 20px;" title="{{currentMessage.item.name}}&#013;[{{currentMessage.item.rarity}} {{currentMessage.item.type}}]&#013;&#013;{{currentMessage.item.description}}">
             <p>{{currentMessage.description}}</p>
@@ -106,15 +109,15 @@
                     <div class="craftItem cantCraftItem" *ngIf="!canCraft(item[1])">
                         <div class="craftBox {{item[0].rarity}}">
                             <ng-container [ngSwitch]="item[0].type">
-                                <img *ngSwitchCase="'Weapon'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Head Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Body Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Leg Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Boot Armor'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Tool'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Button'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
-                                <img *ngSwitchCase="'Consumable'" class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
-                                <img *ngSwitchDefault class="item[0].inInventory inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                <img *ngSwitchCase="'Weapon'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Head Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Body Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Leg Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Boot Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Tool'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                <img *ngSwitchCase="'Button'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                <img *ngSwitchCase="'Consumable'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                <img *ngSwitchDefault class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
                             </ng-container>
                         </div>
                         <div class="craftDesc whiteText">
@@ -127,5 +130,33 @@
                 </ng-container>
             </div>
         </div>
+
+        <div *ngIf="trashOpen" class="trashGUI">
+            <h2 class="whiteText">Trash<span class="closeCrafting" (click)="toggleTrash()">X</span></h2>
+            <p class="whiteText"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/11/Chest_(S)_BE1.png" style="height:32px" title="This is your carrying capacity!">{{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</p>
+            <div class="grid-container">
+                <ng-container *ngFor="let item of this.game.$playerInventory.value; let i = index">
+                    <ng-container *ngIf="item; else emptySlot">
+                      <div class="grid-item {{item.rarity}}">
+                        <ng-container [ngSwitch]="item.type">
+                          <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
+                          <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                    <ng-template #emptySlot>
+                      <div class="grid-item"></div>
+                    </ng-template>
+                  </ng-container>
+            </div>
+        </div>
+
     </div>
 <!-- </ng-template> -->

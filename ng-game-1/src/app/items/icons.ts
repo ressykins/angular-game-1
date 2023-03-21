@@ -35,3 +35,12 @@ export const IconWater: Item = {
     weight: 0,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png'
 }
+
+export const IconAnvil: Item = {
+    name: '',
+    description: '',
+    type: '',
+    rarity: '',
+    weight: 0,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png'
+}

@@ -465,7 +465,7 @@ export const HealPotI: Item = {
     name: 'Healing Potion I',
     description: '+40 Health\n+5 Thirst\n+1 Weight',
     type: 'Consumable',
-    rarity: 'Rare',
+    rarity: 'Uncommon',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c2/Lingering_Potion_of_Healing_JE2_BE2.png',
     components: [WaterBottle, NetherWart],
@@ -478,7 +478,7 @@ export const HealPotII: Item = {
     name: 'Healing Potion II',
     description: '+60 Health\n+5 Thirst\n+1 Weight',
     type: 'Consumable',
-    rarity: 'Epic',
+    rarity: 'Rare',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/72/Splash_Potion_of_Healing_JE2_BE2.png',
     components: [HealPotI, RedstoneDust],
@@ -491,7 +491,7 @@ export const HealPotIII: Item = {
     name: 'Healing Potion III',
     description: '+80 Health\n+5 Thirst\n+1 Weight',
     type: 'Consumable',
-    rarity: 'Legendary',
+    rarity: 'Epic',
     weight: 1,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/64/Potion_of_Healing.gif',
     components: [HealPotII, GlowstoneDust],
@@ -537,6 +537,19 @@ export const WaterBucket: Item = {
     thirst: 100
 }
 
+export const DeathPot: Item = {
+    name: 'Death in a Bottle',
+    description: '-100 Health\n-100 Thirst\n-100 Hunger\n+1 Weight\n\nYikes',
+    type: 'Consumable',
+    rarity: 'Legendary',
+    weight: 1,
+    picture: "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8a/Dragon's_Breath_JE2_BE2.png",
+    components: [WaterBottle, Pufferfish, RottenFlesh, PoisonousPotato],
+    food: 'healing',
+    health: -100,
+    thirst: -100,
+    hunger: -100
+}
 
 
 /// COMBAT

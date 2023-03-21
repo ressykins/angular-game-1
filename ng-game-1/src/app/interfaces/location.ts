@@ -5,6 +5,9 @@ export interface Location {
     picture: string,
     stage: number,
 
+    nextAreas: Location[],
+    // events: boolean,
+
     canRefill: boolean,
     canCraft: boolean,
     canCook: boolean,
@@ -19,7 +22,6 @@ export interface Location {
     numGraves?: number,
     numFish?: number,
     numCrops?: number,
-    nextStages?: number,
     mineTier?: number,
     lootCivWeight: number,
     lootFoodTier: number,
@@ -29,7 +31,5 @@ export interface Location {
     lootPotionWeight: number,
     lootMilitaryTier: number,
     lootMilitaryWeight: number,
-
     lootSpecial?: number,
-    events?: boolean,
 }

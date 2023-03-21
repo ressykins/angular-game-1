@@ -63,10 +63,11 @@ export class GameService {
   public $playerInventory: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
   public playerInventory = this.$playerInventory.asObservable();
   public inventoryWeight: number = 0;
-  public inventoryMax: number = 36;
+  public inventoryMax: number = 18;
 
 
   public craftingList: Item[] = CraftableList;
+  public itemList: Item[] = ItemList;
   public $craftableItems: BehaviorSubject<[Item,boolean[]][]> = new BehaviorSubject<[Item,boolean[]][]>([]);
   public craftableItems = this.$craftableItems.asObservable();
 
@@ -111,21 +112,6 @@ export class GameService {
     console.log('ITEM ADDED, UPDATED CRAFTING:', this.$craftableItems.value);
     this.updateRecipes();
   }
-  
-  // when an item is removed from the inventory, remove recipes that are uncraftable 
-  // public removeRecipes(item: Item) {
-  //   let updatedCrafting = this.$craftableItems.value.filter((i : [Item,boolean[]]) => {
-  //     if(item.components) {
-  //       for(let component of item.components) {
-  //         if (this.$playerInventory.value.includes(component)) return true;
-  //       }
-  //     }
-  //     return false;
-  //   });
-
-  //   console.log('ITEM REMOVED. UPDATED CRAFTING:', updatedCrafting)
-  //   this.$craftableItems.next(updatedCrafting);
-  // }
 
   // check current recipes. remove any that are no longer valid
   public updateRecipes(): void {
@@ -334,7 +320,7 @@ export class GameService {
 
   public useConsumable(item: Item, index: number): boolean {
     if (item.food) {
-      if (this.$playerHunger.value == 100 && item.hunger) return false;
+      if (this.$playerHunger.value == 100 && item.hunger && item.hunger > 0) return false;
       switch(item.food) {
         case 'healing':
           if ((item == Bandage || item == HoneyBottle) && this.playerStatus == Bleeding) this.playerStatus = Normal; 
@@ -354,8 +340,6 @@ export class GameService {
     this.removeItem(index);
     return true;
   }
-
-
 
 
 

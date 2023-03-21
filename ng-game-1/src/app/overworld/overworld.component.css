@@ -33,6 +33,14 @@
     margin-left: auto;
 }
 
+.bottomTab {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}
+
 .btn {
  border: 3px solid black !important;
 }
@@ -106,6 +114,9 @@
     text-align: center;
 }
 
+.messageBox {
+    z-index: 5;
+}
 
 .craftingGUI {
     position: fixed;
@@ -117,6 +128,18 @@
     background-color: darkgoldenrod;
     padding: 20px;
     border-radius: 25px;
+}
+
+.trashGUI {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-45%, -45%);
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 25px;
+    background: rgb(90, 5, 22);
 }
 
 .craftingContainer {
@@ -185,6 +208,16 @@
     color: white;
 }
 
+.Crafting {
+    background-color: goldenrod !important;
+    color: white;
+}
+
+.Repairing {
+    background-color: gray !important;
+    color: white;
+}
+
 .Looting {
     background-color: yellowgreen !important;
     color: white;
@@ -200,6 +233,11 @@
 
 .Danger {
     background-color: red !important;
+    color: white;
+}
+
+.Trash {
+    background-color: crimson !important;
     color: white;
 }
 
@@ -237,6 +275,28 @@
     border: 2px solid orange !important;
 }
 
+.grid-container {
+    display: grid;
+    padding: 10px;
+    /* border: 2px solid white; */
+    grid-template-columns: auto auto auto;
+    height: 468px;
+    width: 468px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.grid-item {
+    border: 2px solid white;
+    margin: 10px;
+    width: 128px;
+    height: 128px;
+    border-radius: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
 .inventoryItem {
     width: 96px;
     height: 96px;
@@ -245,4 +305,10 @@
 .componentItem {
     width: 64px;
     height: 64px;
+}
+
+.btnMain {
+    height: 60px;
+    text-align: center;
+    margin: 10px;
 }

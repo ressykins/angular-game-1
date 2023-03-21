@@ -4,7 +4,7 @@ import { Towns } from '../locations/towns';
 import { Location } from '../interfaces/location';
 import { Item } from '../interfaces/item';
 import { ZombieHead } from '../items/armor';
-import { IconPlayer, IconRest, IconWater, IconZombie } from '../items/icons';
+import { IconAnvil, IconPlayer, IconRest, IconWater, IconZombie } from '../items/icons';
 import { Bucket, GlassBottle } from '../items/materials';
 import { WaterBottle, WaterBucket } from '../items/consumables';
 
@@ -26,6 +26,7 @@ export class OverworldComponent implements OnInit {
   public currentStage: Location;
   public currentMessage: actionMessage | null;
   public craftingOpen: boolean = false;
+  public trashOpen: boolean = false;
 
   constructor(public game: GameService){}
 
@@ -197,43 +198,19 @@ export class OverworldComponent implements OnInit {
 
   /// general actions
   public rest(): void {
-    const roll: number = Math.floor(Math.random() * 101);
-    if (roll < 75)  {
-      this.game.changeValue(this.game.$playerHealth.value + 10, 'Health');
-      this.clearMessage();
-      let newActionMessage: actionMessage = {
-        subject: 'Rest',
-        description: 'You had a good rest.', 
-        item: IconRest
-      }
-      this.currentMessage = newActionMessage;
+    this.game.changeValue(this.game.$playerHealth.value + 10, 'Health');
+    this.clearMessage();
+    let newActionMessage: actionMessage = {
+      subject: 'Rest',
+      description: 'You had a good rest.', 
+      item: IconRest
     }
-    else if (roll < 80 && this.game.$playerInventory.value.length > 0) {
-      const roll: number = Math.floor(Math.random() * this.game.$playerInventory.value.length);
-      this.game.removeItem(roll);
-      this.clearMessage();
-      let newActionMessage: actionMessage = {
-        subject: 'Danger',
-        description: 'While you were asleep, someone snuck into your bag and stole something!', 
-        item: IconPlayer
-      }
-      this.currentMessage = newActionMessage;
-    }
-    else {
-      this.game.changeValue(this.game.$playerHealth.value - 20, 'Health');
-      this.clearMessage();
-      let newActionMessage: actionMessage = {
-        subject: 'Danger',
-        description: 'While you were trying to sleep, a zombie attacked you!', 
-        item: IconZombie
-      }
-      this.currentMessage = newActionMessage;
-    }
+    this.currentMessage = newActionMessage;
     this.currentStage.canRest = false;
   }
 
   public refillWater(): void {
-    this.game.changeValue(100, 'Thirst');
+    this.game.changeValue(this.game.$playerThirst.value + 20, 'Thirst');
     for (let i = 0; i < this.game.$playerInventory.value.length; i++) {
       if (this.game.$playerInventory.value[i] == GlassBottle) {
         this.game.updateItem(i, WaterBottle);
@@ -257,16 +234,59 @@ export class OverworldComponent implements OnInit {
     else this.craftingOpen = true;
   }
 
+  public toggleTrash(): void {
+    if(this.trashOpen) this.trashOpen = false;
+    else this.trashOpen = true;
+  }
+
+  public trashItem(item: Item, i: number): void {
+    if (confirm("Are you sure you want to trash this item?")) {
+      this.game.removeItem(i);
+      this.clearMessage();
+      let newActionMessage: actionMessage = {
+        subject: 'Trash',
+        description: 'You trashed ' + item.name + '!', 
+        item: item
+      }
+      this.currentMessage = newActionMessage;
+    }
+  }
+
   public canCraft(list: boolean[]): boolean {
     return list.every((i : boolean) => i === true);
   }
 
-  public craftItem(item: Item) {
-
+  public craftItem(item: Item): void {
+    for (let component of item.components!) this.game.removeItem(this.game.$playerInventory.value.indexOf(component));
+    this.game.addItem(item);
+    this.clearMessage();
+    let newActionMessage: actionMessage = {
+      subject: 'Crafting',
+      description: 'You crafted ' + item.name + '!', 
+      item: item
+    }
+    this.currentMessage = newActionMessage;
   }
 
-
-
+  public repair(): void {
+    for (let item of this.game.$playerInventory.value) {
+      if (item.durability) item.durability += 3;
+    }
+    if (this.game.equippedWeapon) this.game.equippedWeapon.durability! += 3;
+    if (this.game.equippedHead) this.game.equippedHead.durability! += 3;
+    if (this.game.equippedChest) this.game.equippedChest.durability! += 3;
+    if (this.game.equippedLegs) this.game.equippedLegs.durability! += 3;
+    if (this.game.equippedBoots) this.game.equippedBoots.durability! += 3;
+    
+    this.clearMessage();
+    let newActionMessage: actionMessage = {
+      subject: 'Repairing',
+      description: 'You repaired your tools, weapons, and armor!', 
+      item: IconAnvil
+    }
+    this.currentMessage = newActionMessage;
+    this.currentStage.canRepair = false;
+  }
 
 
 

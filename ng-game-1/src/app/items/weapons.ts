@@ -181,7 +181,7 @@ export const EnchantedIronAxe: Item = {
 
 export const Bow: Item = {
     name: 'Bow',
-    description: '3-7 Damage\n+8 Weight',
+    description: '5 Damage\n+8 Weight',
     type: 'Weapon',
     rarity: 'Uncommon',
     weight: 8,
@@ -194,7 +194,7 @@ export const Bow: Item = {
 
 export const EnchantedBow: Item = {
     name: 'Enchanted Bow',
-    description: '5-9 Damage\n+8 Weight',
+    description: '7 Damage\n+8 Weight',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 8,
@@ -207,7 +207,7 @@ export const EnchantedBow: Item = {
 
 export const Crossbow: Item = {
     name: 'Crossbow',
-    description: '3-9 Damage\n+10 Weight',
+    description: '6 Damage\n+10 Weight',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 10,
@@ -220,7 +220,7 @@ export const Crossbow: Item = {
 
 export const EnchantedCrossbow: Item = {
     name: 'Enchanted Crossbow',
-    description: '4-10 Damage\n+10 Weight',
+    description: '8 Damage\n+10 Weight',
     type: 'Weapon',
     rarity: 'Epic',
     weight: 10,

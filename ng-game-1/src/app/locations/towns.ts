@@ -1,10 +1,11 @@
 import { Location } from "../interfaces/location";
 
-export const Towns: Location[] = [
-    {
+export const Pravus: Location = {
         name: 'Pravus',
         picture: 'https://wiki.shotbow.net/images/5/5f/PravusNew.png',
         stage: 1,
+
+        nextAreas: [],
 
         canRefill: true,
         canCraft: true,
@@ -28,5 +29,8 @@ export const Towns: Location[] = [
         lootToolWeight: 70,
         lootPotionWeight: 80,
         lootMilitaryWeight: 100,
-    }
+}
+
+export const Towns: Location[] = [
+    Pravus
 ]

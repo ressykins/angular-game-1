@@ -16,7 +16,7 @@ export const FishingRod: Item = {
     weight: 3,
     durability: 5,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7f/Fishing_Rod_JE2_BE2.png',
-    components: [Stick, StringItem]
+    components: [Stick, StringItem, StringItem]
 }
 
 export const EnchantedFishingRod: Item = {
@@ -50,7 +50,7 @@ export const EnchantedHoe: Item = {
     weight: 3,
     durability: 10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2e/Enchanted_Wooden_Hoe.gif',
-    components: [Stick, Stick]
+    components: [Hoe, EnchantedBook]
 }
 
 export const Shovel: Item = {
