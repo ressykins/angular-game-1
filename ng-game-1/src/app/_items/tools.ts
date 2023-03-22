@@ -1,5 +1,5 @@
 import { combineLatest } from "rxjs";
-import { Item } from "../interfaces/item";
+import { Item } from "../_interfaces/item";
 import { EnchantedBook, IronIngot, Leather, Stick, StringItem } from "./materials";
 import { Bandage, HealPotI, Milk } from "./consumables";
 

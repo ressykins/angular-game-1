@@ -1,3 +1,4 @@
+import { minezEvent } from "./event";
 import { Item } from "./item";
 
 export interface Location {
@@ -6,7 +7,7 @@ export interface Location {
     stage: number,
 
     nextAreas: Location[],
-    // events: boolean,
+    events: minezEvent[],
 
     canRefill: boolean,
     canCraft: boolean,

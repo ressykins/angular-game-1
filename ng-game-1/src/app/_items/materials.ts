@@ -1,5 +1,5 @@
 import { compileClassMetadata } from "@angular/compiler";
-import { Item } from "../interfaces/item";
+import { Item } from "../_interfaces/item";
 
 
 

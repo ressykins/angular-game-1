@@ -67,8 +67,8 @@
                 </button>
             </div>
             <div class="bottomTab">
-                <button type="button" class="btn btn-success btn-lg btnMain" title="See if there's anything to do around here..."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7a/Eye_of_Ender_JE2_BE2.png" style="width:32px;margin-right: 5px;">Events</button>
-                <button type="button" class="btn btn-danger btn-lg btnMain" title="Depart this area. (No turning back!)"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a2/Leather_Boots_(item)_JE1_BE1.png" style="width:32px;margin-right: 5px;">Depart</button>
+                <button type="button" class="btn btn-success btn-lg btnMain" title="See if there's anything to do around here..." (click)="toggleEvents()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7a/Eye_of_Ender_JE2_BE2.png" style="width:32px;height:32px;margin-right: 5px;">Events</button>
+                <button type="button" class="btn btn-danger btn-lg btnMain" title="Depart this area. (No turning back!)"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a2/Leather_Boots_(item)_JE1_BE1.png" style="width:32px;height:32px;margin-right: 5px;">Depart</button>
             </div>
         </div>
 
@@ -158,5 +158,45 @@
             </div>
         </div>
 
+
+        <div *ngIf="eventsOpen" class="eventsGUI">
+            <h2 class="whiteText">Events<span class="closeCrafting" (click)="toggleEvents()">X</span></h2>
+            <div class="eventsContainer">
+                <ng-container *ngFor="let event of this.currentStage.events">
+                    <div class="eventItem eventIncomplete" *ngIf="!event.eventCompleted" (click)="startEvent()">
+                        <div class="eventBox">
+                            <img class="inventoryItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
+                        </div>
+                        <div class="craftDesc">
+                            <div style="font-weight: bold;color: darkgreen;">{{event.eventName}}</div>
+                            <div style="font-size: smaller;color:olive">{{event.eventDescription}}</div>
+                            <div style="font-weight: bold;color: darkgreen;">Reward(s):</div>
+                            <div style="border-radius: 10px;border:2px solid darkgreen">
+                                <ng-container *ngFor="let reward of event.eventReward">
+                                    <img class="componentItem itemImg" src="{{reward.picture}}" title="{{reward.name}}&#013;[{{reward.rarity}} {{reward.type}}]&#013;&#013;{{reward.description}}">
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngFor="let event of this.currentStage.events">
+                    <div class="eventItem eventComplete" *ngIf="event.eventCompleted">
+                        <div class="eventBox">
+                            <img class="inventoryItem grayedOutItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
+                        </div>
+                        <div class="craftDesc">
+                            <div style="font-weight: bold;color: darkgreen;">{{event.eventName}}</div>
+                            <div style="font-size: smaller;color:olive">{{event.eventDescription}}</div>
+                            <div style="font-weight: bold;color: darkgreen;">Reward(s):</div>
+                            <div style="border-radius: 10px;border:2px solid darkgreen">
+                                <ng-container *ngFor="let reward of event.eventReward">
+                                    <img class="componentItem itemImg grayedOutItem" src="{{reward.picture}}" title="{{reward.name}}&#013;[{{reward.rarity}} {{reward.type}}]&#013;&#013;{{reward.description}}">
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
     </div>
 <!-- </ng-template> -->

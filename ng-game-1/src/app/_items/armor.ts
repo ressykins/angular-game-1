@@ -1,4 +1,4 @@
-import { Item } from "../interfaces/item";
+import { Item } from "../_interfaces/item";
 import { RottenFlesh } from "./consumables";
 import { IronIngot, Leather, Stone } from "./materials";
 
@@ -148,10 +148,10 @@ export const IronBoots: Item = {
 
 export const ZombieHead: Item = {
     name: 'Zombie Head',
-    description: '+2 Weight\n\nZombies are less likely to attack you',
+    description: '+2 Weight\n\nZombies may not attack you',
     type: 'Head Armor',
-    rarity: 'Uncommon',
+    rarity: 'Legendary',
     weight: 2,
+    durability: 100,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e4/Zombie_Head_(8).png',
-    components: [Leather, RottenFlesh, RottenFlesh, RottenFlesh]
 }

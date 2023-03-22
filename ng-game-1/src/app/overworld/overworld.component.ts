@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
-import { Towns } from '../locations/towns';
-import { Location } from '../interfaces/location';
-import { Item } from '../interfaces/item';
-import { ZombieHead } from '../items/armor';
-import { IconAnvil, IconPlayer, IconRest, IconWater, IconZombie } from '../items/icons';
-import { Bucket, GlassBottle } from '../items/materials';
-import { WaterBottle, WaterBucket } from '../items/consumables';
+import { Towns } from '../_locations/towns';
+import { Location } from '../_interfaces/location';
+import { Item } from '../_interfaces/item';
+import { ZombieHead } from '../_items/armor';
+import { IconAnvil, IconPlayer, IconRest, IconWater, IconZombie } from '../_items/icons';
+import { Bucket, GlassBottle } from '../_items/materials';
+import { WaterBottle, WaterBucket } from '../_items/consumables';
 
 export interface actionMessage {
   subject: string,
@@ -23,10 +23,13 @@ export class OverworldComponent implements OnInit {
 
   public sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   public doneLoading: Promise<boolean>;
+
   public currentStage: Location;
   public currentMessage: actionMessage | null;
+
   public craftingOpen: boolean = false;
   public trashOpen: boolean = false;
+  public eventsOpen: boolean = false;
 
   constructor(public game: GameService){}
 
@@ -36,7 +39,6 @@ export class OverworldComponent implements OnInit {
     this.currentStage = Towns[this.game.playerStage - 1];
     console.log(this.currentStage);
   }
-
 
 
 
@@ -230,13 +232,15 @@ export class OverworldComponent implements OnInit {
   }
 
   public toggleCrafting(): void {
-    if(this.craftingOpen) this.craftingOpen = false;
-    else this.craftingOpen = true;
+    this.craftingOpen ? this.craftingOpen = false : this.craftingOpen = true;
+  }
+
+  public toggleEvents(): void {
+    this.eventsOpen ? this.eventsOpen = false : this.eventsOpen = true;
   }
 
   public toggleTrash(): void {
-    if(this.trashOpen) this.trashOpen = false;
-    else this.trashOpen = true;
+    this.trashOpen ? this.trashOpen = false : this.trashOpen = true;
   }
 
   public trashItem(item: Item, i: number): void {
@@ -288,6 +292,11 @@ export class OverworldComponent implements OnInit {
     this.currentStage.canRepair = false;
   }
 
+  public startEvent(): void {
+    if (confirm("Are you sure you want to start this event?")) {
+
+    }
+  }
 
 
 

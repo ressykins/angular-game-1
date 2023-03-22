@@ -1,4 +1,5 @@
-import { Location } from "../interfaces/location";
+import {PravusEvent1 } from "../_events/events";
+import { Location } from "../_interfaces/location";
 
 export const Pravus: Location = {
         name: 'Pravus',
@@ -6,6 +7,7 @@ export const Pravus: Location = {
         stage: 1,
 
         nextAreas: [],
+        events: [PravusEvent1],
 
         canRefill: true,
         canCraft: true,

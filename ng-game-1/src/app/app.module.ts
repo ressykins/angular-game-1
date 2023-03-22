@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { TitleScreenComponent } from './title-screen/title-screen.component';
 import { OverworldComponent } from './overworld/overworld.component';
+import { CombatComponent } from './combat/combat.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { OverworldComponent } from './overworld/overworld.component';
     MenuComponent,
     TitleScreenComponent,
     OverworldComponent,
+    CombatComponent,
   ],
   imports: [
     BrowserModule,

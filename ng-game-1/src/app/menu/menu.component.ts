@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
-import { Item } from '../interfaces/item';
-import { Bone } from '../items/materials';
+import { Item } from '../_interfaces/item';
+import { Bone } from '../_items/materials';
 
 @Component({
   selector: 'app-menu',
@@ -19,13 +19,11 @@ export class MenuComponent implements OnInit {
   }
 
   public toggleInventory(): void {
-    if(this.inventoryOpen) this.inventoryOpen = false;
-    else this.inventoryOpen = true;
+    this.inventoryOpen ? this.inventoryOpen = false : this.inventoryOpen = true;
   }
 
   public toggleEquipment(): void {
-    if(this.equipmentOpen) this.equipmentOpen = false;
-    else this.equipmentOpen = true;
+    this.equipmentOpen ? this.equipmentOpen = false : this.equipmentOpen = true;
   }
 
   public useConsumable(item: Item, index: number): void {

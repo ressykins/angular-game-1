@@ -1,4 +1,4 @@
-import { StatusEffect } from "../interfaces/statuseffect";
+import { StatusEffect } from "../_interfaces/statuseffect";
 
 export const Normal: StatusEffect = {
     statusName: 'Normal',

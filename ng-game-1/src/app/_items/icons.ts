@@ -1,4 +1,4 @@
-import { Item } from "../interfaces/item";
+import { Item } from "../_interfaces/item";
 
 export const IconRest: Item = {
     name: '',

@@ -1,4 +1,4 @@
-import { Item } from "../interfaces/item";
+import { Item } from "../_interfaces/item";
 import { Bowl, BrownMushroom, CocoaBeans, GlowstoneDust, GoldIngot, Gunpowder, IronIngot, NetherWart, Pumpkin, RedMushroom, RedstoneDust, Stone, StringItem, Sugar, SugarCane, Wheat } from "./materials";
 
 /// RAW FOOD

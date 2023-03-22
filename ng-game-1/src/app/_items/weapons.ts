@@ -1,4 +1,4 @@
-import { Item } from "../interfaces/item";
+import { Item } from "../_interfaces/item";
 import { EnchantedBook, IronIngot, Stick, Stone, StringItem } from "./materials";
 
 
@@ -79,6 +79,18 @@ export const EnchantedIronSword: Item = {
     durability: 30,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/de/Enchanted_Iron_Sword.gif',
     components: [IronSword, EnchantedBook],
+    weapon: 'Sword'
+}
+
+export const DiamondSword: Item = {
+    name: 'Diamond Sword',
+    description: '7 Damage\n+8 Weight\n\nSmall chance to insta-kill',
+    type: 'Weapon',
+    rarity: 'Legendary',
+    weight: 8,
+    damage: 7,
+    durability: 100,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/44/Diamond_Sword_JE3_BE3.png',
     weapon: 'Sword'
 }
 
@@ -171,8 +183,17 @@ export const EnchantedIronAxe: Item = {
     weapon: 'Axe'
 }
 
-
-
+export const DiamondAxe: Item = {
+    name: 'Diamond Axe',
+    description: '9 Damage\n+8 Weight',
+    type: 'Weapon',
+    rarity: 'Legendary',
+    weight: 8,
+    damage: 9,
+    durability: 100,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/40/Diamond_Axe_JE3_BE3.png',
+    weapon: 'Axe'
+}
 
 
 
@@ -215,7 +236,7 @@ export const Crossbow: Item = {
     durability: 10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/79/Crossbow.png',
     components: [Stick, IronIngot, StringItem],
-    weapon: 'Bow'
+    weapon: 'Crossbow'
 }
 
 export const EnchantedCrossbow: Item = {
@@ -228,5 +249,17 @@ export const EnchantedCrossbow: Item = {
     durability: 15,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/35/Enchanted_Crossbow.gif',
     components: [Crossbow, EnchantedBook],
-    weapon: 'Bow'
+    weapon: 'Crossbow'
+}
+
+export const Shotbow: Item = {
+    name: 'The Shotbow',
+    description: '20 Damage\n+10 Weight\n\nFires bolts at all enemies',
+    type: 'Weapon',
+    rarity: 'Legendary',
+    weight: 10,
+    damage: 20,
+    durability: 100,
+    picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/35/Enchanted_Crossbow.gif',
+    weapon: 'Crossbow'
 }

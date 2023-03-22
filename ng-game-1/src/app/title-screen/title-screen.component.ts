@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Kit } from '../interfaces/kit';
-import { Apple, Bandage, Button, Carrot, Cobweb, HealPotI, Milk, Potato } from '../items/consumables';
-import { Bow, EnchantedWoodenSword } from '../items/weapons';
-import { FishingRod, Hoe, Shovel, SmallBag } from '../items/tools';
-import { LeatherTunic } from '../items/armor';
-import { Leather, Stick, StringItem, Wheat } from '../items/materials';
+import { Kit } from '../_interfaces/kit';
+import { Apple, Bandage, Button, Carrot, Cobweb, HealPotI, Milk, Potato } from '../_items/consumables';
+import { Bow, EnchantedWoodenSword } from '../_items/weapons';
+import { FishingRod, Hoe, Shovel, SmallBag } from '../_items/tools';
+import { LeatherTunic } from '../_items/armor';
+import { Leather, Stick, StringItem, Wheat } from '../_items/materials';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../game.service';
 import { Router } from '@angular/router';
