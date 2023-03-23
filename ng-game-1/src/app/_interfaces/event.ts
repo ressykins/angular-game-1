@@ -10,6 +10,7 @@ export interface minezEvent {
     eventIcon: string,
 
     eventCompleted?: boolean,
-    eventRequirement?: Item,
-    eventEnemy?: Enemy[]
+    eventRequirement?: Item[],
+    eventEnemy?: Enemy[],
+    eventBg?: string,
 }

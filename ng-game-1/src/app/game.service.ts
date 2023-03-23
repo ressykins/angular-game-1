@@ -9,6 +9,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { EnchantedFishingRod, EnchantedHoe, EnchantedPickaxe, EnchantedShovel, FishingRod, Hoe, MedKit, Pickaxe, Shovel, SmallBag } from './_items/tools';
 import { ChainBoots, ChainChestplate, ChainHelmet, ChainLeggings, IronBoots, IronChestplate, IronHelmet, IronLeggings, LeatherBoots, LeatherCap, LeatherPants, LeatherTunic, ZombieHead } from './_items/armor';
 import { CraftableList, ItemList } from './_items/itemList';
+import { Enemy } from './_interfaces/enemy';
+import { PumpkinZombie, SwordZombie, Zombie } from './_mobs/enemies';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +79,12 @@ export class GameService {
 
 
   public inCombat: boolean = false;
+  public combatEnemies: Enemy[] = [];
+  public combatBg: string = '';
+  public combatLog: string[][] = [];
+  public analyzedEnemies: Enemy[] = [];
+
+
   public equippedWeapon: Item | null;
   public equippedHead: Item | null;
   public equippedChest: Item | null;
@@ -84,7 +92,7 @@ export class GameService {
   public equippedBoots: Item | null;
   public currentDamage: number = 2; // base damage
   public currentDefense: number = 0;
-
+  public currentSpeed: number = 10; // base speed
 
 
 
@@ -340,6 +348,36 @@ export class GameService {
     this.removeItem(index);
     return true;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /// COMBAT ////////////////////////////////////////////////////////////////////////////
+
+  public enterBattle(enemies: Enemy[], bg: string, isEvent: boolean) {
+    this.inCombat = true;
+    this.combatBg = bg;
+    this.combatLog = [];
+    for (let enemy of enemies) this.combatEnemies.push(enemy);
+    let encounterMsg: string = 'You encounter the ' + this.combatEnemies[0].enemyName;
+    (this.combatEnemies.length > 1) ? encounterMsg += ' and its cohorts.' : encounterMsg += '.';
+    this.combatLog.push(['msgConsole', encounterMsg]);
+  }
+
+  
+
+
+
 
 
 

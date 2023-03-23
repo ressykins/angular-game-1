@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GameService } from '../game.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-combat',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class CombatComponent {
 
+  public chatLog: string[] = [];
+
+  constructor(public game: GameService, public router: Router){}
+  
 }

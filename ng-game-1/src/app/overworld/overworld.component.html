@@ -163,7 +163,7 @@
             <h2 class="whiteText">Events<span class="closeCrafting" (click)="toggleEvents()">X</span></h2>
             <div class="eventsContainer">
                 <ng-container *ngFor="let event of this.currentStage.events">
-                    <div class="eventItem eventIncomplete" *ngIf="!event.eventCompleted" (click)="startEvent()">
+                    <div class="eventItem eventIncomplete" *ngIf="!event.eventCompleted" (click)="startEvent(event)">
                         <div class="eventBox">
                             <img class="inventoryItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
                         </div>

@@ -10,5 +10,5 @@ export interface Enemy {
     enemyPicture: string,
     enemyDesc: string,
     enemyType: string,
-    specialActions: [string, number][]
+    specialActions: [string, number][],
 }

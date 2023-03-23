@@ -7,6 +7,8 @@ import { ZombieHead } from '../_items/armor';
 import { IconAnvil, IconPlayer, IconRest, IconWater, IconZombie } from '../_items/icons';
 import { Bucket, GlassBottle } from '../_items/materials';
 import { WaterBottle, WaterBucket } from '../_items/consumables';
+import { minezEvent } from '../_interfaces/event';
+import { Router } from '@angular/router';
 
 export interface actionMessage {
   subject: string,
@@ -31,7 +33,7 @@ export class OverworldComponent implements OnInit {
   public trashOpen: boolean = false;
   public eventsOpen: boolean = false;
 
-  constructor(public game: GameService){}
+  constructor(public game: GameService, public router: Router){}
 
   async ngOnInit() {
     // await this.sleep(1000);
@@ -292,10 +294,18 @@ export class OverworldComponent implements OnInit {
     this.currentStage.canRepair = false;
   }
 
-  public startEvent(): void {
-    if (confirm("Are you sure you want to start this event?")) {
-
+  public startEvent(event: minezEvent): void {
+    switch(event.eventType) {
+      case 'Battle':
+        if (confirm("Are you sure you want to start this event?")) {
+          this.game.enterBattle(event.eventEnemy!, event.eventBg!, true);
+          this.router.navigate(['/battle']);
+        }
+        break;
+      default:
+        console.log('default event');
     }
+    
   }
 
 
