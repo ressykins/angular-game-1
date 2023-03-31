@@ -3,7 +3,7 @@ import { ChainBoots, ChainChestplate, ChainHelmet, ChainLeggings, IronBoots, Iro
 import { Ale, Apple, BakedPotato, Bandage, Beetroot, BeetrootSoup, Bread, Button, Cake, Carrot, Cobweb, Cocktail, CookedChicken, CookedFish, CookedPorkchop, CookedRabbit, Cookie, DeathPot, Egg, Flashbang, GoldenApple, GoldenCarrot, Grenade, HealPotI, HealPotII, HealPotIII, HoneyBottle, Incendiary, MelonSlice, Milk, MushroomStew, MysteriousArtifact, Nemo, PoisonousPotato, Potato, Pufferfish, PumpkinPie, RabbitStew, RawBeef, RawChicken, RawFish, RawPorkchop, RawRabbit, RottenFlesh, Snowball, Steak, SuspiciousStew, SweetBerries, VegetableJuice, WaterBottle, WaterBucket } from "./consumables";
 import { Bone, Bowl, BrownMushroom, Bucket, Coal, CocoaBeans, EnchantedBook, GlassBottle, GlowstoneDust, GoldIngot, Gunpowder, IronIngot, Leather, NetherWart, Pumpkin, RedMushroom, RedstoneDust, Stick, Stone, StringItem, Sugar, SugarCane, Wheat } from "./materials";
 import { EnchantedFishingRod, EnchantedHoe, EnchantedPickaxe, EnchantedShovel, FishingRod, Hoe, MedKit, Pickaxe, Shovel, SmallBag } from "./tools";
-import { Bow, Crossbow, EnchantedBow, EnchantedCrossbow, EnchantedIronAxe, EnchantedIronSword, EnchantedStoneAxe, EnchantedStoneSword, EnchantedWoodenAxe, EnchantedWoodenSword, IronAxe, IronSword, StoneAxe, StoneSword, WoodenAxe, WoodenSword } from "./weapons";
+import { Bow, Crossbow, DiamondAxe, DiamondSword, EnchantedBow, EnchantedCrossbow, EnchantedIronAxe, EnchantedIronSword, EnchantedStoneAxe, EnchantedStoneSword, EnchantedWoodenAxe, EnchantedWoodenSword, IronAxe, IronSword, Shotbow, StoneAxe, StoneSword, WoodenAxe, WoodenSword } from "./weapons";
 
 export const ItemList: Item[] = [
     /// armor
@@ -21,6 +21,7 @@ export const ItemList: Item[] = [
     IronAxe, EnchantedIronAxe,
     Bow,EnchantedBow,
     Crossbow,EnchantedCrossbow,
+    Shotbow,DiamondSword,DiamondAxe,
 
     /// tools
     FishingRod,EnchantedFishingRod,

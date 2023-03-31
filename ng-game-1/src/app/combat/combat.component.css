@@ -33,6 +33,16 @@
     margin-right: auto;
 }
 
+.flexItemB {
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    display: flex;
+    margin-left: auto;
+    text-align: center;
+}
+
+
 .combatLog {
     background-color: olive;
     width: 250px;
@@ -49,7 +59,14 @@
     height: 425px;
     background-color: darkslategray;
     color: white;
+    border: 1px solid black;
     padding: 5px
+}
+
+.actionsTitle {
+    color: white;
+    text-decoration: underline;
+    text-shadow: 0 0 32px black;
 }
 
 .msgConsole {
@@ -63,3 +80,39 @@
 .msgEnemy {
     color:red;
 }
+
+.btn {
+    border: 3px solid black !important;
+}
+
+.btnActions {
+    width: 220px;
+}
+
+.btn-warning {
+    background-color: yellow !important;
+}
+
+.btn-warning:hover {
+    background-color: darkgoldenrod !important;
+}
+
+.selectionMsg {
+    color:red;
+    text-shadow: 0 0 3px black;
+}
+
+.selectTarget:hover {
+    border: 5px solid red;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.bottomTab {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}
+

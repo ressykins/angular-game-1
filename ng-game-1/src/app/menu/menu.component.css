@@ -71,6 +71,16 @@ nav {
     transition: 0.3s;
 }
 
+.combatStats {
+    color: orange;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.combatStats:hover {
+    text-shadow: 0 0 32px orange;
+}
+
 .status:hover {
     text-shadow: 0 0 32px yellow;
 }

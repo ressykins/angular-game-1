@@ -1,5 +1,5 @@
 <app-menu></app-menu>
-<div style="background-image: url({{this.game.combatBg}});height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;">
+<div style="height: 100%">
     <div class="flex">
         <div class="flexItemA">
             <div class="combatLog">
@@ -11,9 +11,38 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="flexItemB">
+            <h1 class="actionsTitle">Actions</h1>
+            <button class="btn btn-danger btn-lg mb-1 btnActions" title="Do battle!" (click)="playerAction('fight')" [disabled]="awaitTurn">
+                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png" style="width:64px"></div>
+                <div>Fight</div>
+            </button>
+            <button class="btn btn-success btn-lg mb-1 btnActions" title="Use an item." [disabled]="awaitTurn">
+                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2a/Green_Shulker_Box.png" style="width:64px"></div>
+                <div>Item</div>
+            </button>
+            <button class="btn btn-primary btn-lg mb-1 btnActions" title="Scout information." [disabled]="awaitTurn">
+                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c1/Spyglass_JE2_BE1.png" style="width:64px"></div>
+                <div>Analyze</div>
+            </button>
+            <button class="btn btn-warning btn-lg mb-1 btnActions" title="Try and escape." [disabled]="awaitTurn">
+                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/51/Netherite_Boots_(item)_JE1.png" style="width:64px"></div>
+                <div>Run</div>
+            </button>
+        </div>
+
+
+        <div class="bottomTab">
+            <h1 class="selectionMsg">{{this.selectionMsg}}</h1>
+        </div>
+
         <div class="enemy-container">
-            <ng-container *ngFor="let enemy of this.game.combatEnemies; let i = index">
-                <img src="{{enemy.enemyPicture}}" class="enemyImg">
+            <ng-container>
+                <ng-container *ngFor="let enemy of this.game.combatEnemies; let i = index">
+                    <img src="{{enemy.enemyPicture}}" (click)="selectEnemy(i)" [ngClass]="awaitingSelection ? 'selectTarget enemyImg' : 'enemyImg'" title="{{enemy.enemyName}} [{{i}}]&#013;&#013;Health: [??]&#013;Defense: [??]&#013;Speed: [??]">
+                </ng-container>
             </ng-container>
         </div>
     </div>

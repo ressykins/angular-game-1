@@ -46,6 +46,7 @@ export class GameService {
     }
     else {
       this.$playerHunger.next(value);
+      this.currentSpeed = Math.floor(this.$playerHunger.value * 0.2);
       this.checkPlayer();
     }
   }
@@ -80,7 +81,6 @@ export class GameService {
 
   public inCombat: boolean = false;
   public combatEnemies: Enemy[] = [];
-  public combatBg: string = '';
   public combatLog: string[][] = [];
   public analyzedEnemies: Enemy[] = [];
 
@@ -92,7 +92,7 @@ export class GameService {
   public equippedBoots: Item | null;
   public currentDamage: number = 2; // base damage
   public currentDefense: number = 0;
-  public currentSpeed: number = 10; // base speed
+  public currentSpeed: number = 20; // max speed
 
 
 
@@ -362,11 +362,12 @@ export class GameService {
 
 
 
-  /// COMBAT ////////////////////////////////////////////////////////////////////////////
+  /// COMBAT SYSTEM ////////////////////////////////////////////////////////////////////////////
 
-  public enterBattle(enemies: Enemy[], bg: string, isEvent: boolean) {
+  public sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  public enterBattle(enemies: Enemy[], isEvent: boolean) {
     this.inCombat = true;
-    this.combatBg = bg;
     this.combatLog = [];
     for (let enemy of enemies) this.combatEnemies.push(enemy);
     let encounterMsg: string = 'You encounter the ' + this.combatEnemies[0].enemyName;
@@ -374,7 +375,85 @@ export class GameService {
     this.combatLog.push(['msgConsole', encounterMsg]);
   }
 
-  
+  public startTurn(target: number, intent: string) {
+    // setup turn order
+    let turnOrder: [number,number][] = [];
+    let playerTurn: [number,number] = [-1, this.currentSpeed];
+    turnOrder.push(playerTurn);
+    for (let i = 0; i < this.combatEnemies.length; i++) turnOrder.push([i,this.combatEnemies[i].enemySpeed]); 
+    turnOrder.sort((a: [number, number], b: [number, number]) => b[1] - a[1]);
+
+    // start turn
+    for (let turn of turnOrder) {
+      console.log('commence turns');
+      // player action
+      if (turn[0] == -1) {
+        switch(intent) {
+          case 'fight':
+            this.useAttack(0);
+            break; 
+          default:
+            break;
+        }
+      }
+      else this.enemyAction(target);
+    }
+  }
+
+
+
+  public enemyAction(index: number) {
+
+  }
+
+
+
+  public useAttack(index: number): boolean {
+    console.log('commence attack');
+    // when no weapon is equipped
+    if (!this.equippedWeapon) {
+      let damage: number = Math.floor(this.currentDamage * (1 - (this.combatEnemies[index].enemyDefense * 0.04)));
+      damage < 1 ? this.combatEnemies[index].enemyHealth -= 1 : this.combatEnemies[index].enemyHealth -= damage;
+      this.combatLog.push(['msgPlayer', this.playerName + ' strikes with their fists! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
+      return true;
+    }
+    else {
+      switch(this.equippedWeapon.weapon) {
+
+
+
+        case 'Sword':
+          let missRoll: number = Math.floor(Math.random() * 101);
+          if (missRoll < (5 + )) {
+            this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! But they missed...']);
+            return true;
+          }
+          let critRoll: number = Math.floor(Math.random() * 101);
+          let damage: number = this.equippedWeapon.damage!;
+
+          if (critRoll < 10) damage *= 1.5;
+          damage < 1 ? this.combatEnemies[index].enemyHealth -= 1 : this.combatEnemies[index].enemyHealth -= damage;
+
+          if (critRoll < 10) this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
+          else this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
+          break;
+
+
+
+        case 'Axe':
+          this.combatLog.push(['msgPlayer', this.playerName + ' cleaves with their axe!']);
+          for (let i = 0; i < this.combatEnemies.length; i++) {
+            let missRoll: number = Math.floor(Math.random() * 101);
+            if (missRoll < 20) {
+              this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! But they missed...']);
+              return true;
+            }
+          }
+
+      }
+      return true;
+    }
+  }
 
 
 

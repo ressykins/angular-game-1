@@ -9,6 +9,5 @@ export const PravusEvent1: minezEvent = {
     eventReward: [Ale,Cocktail],
     eventDescription: 'In search of supplies, you come across an abandoned underground cantina, but an ominous groans echoes from within...',
     eventIcon: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/72/Potion_of_Fire_Resistance.gif',
-    eventEnemy: [Zombie],
-    eventBg: 'https://wiki.shotbow.net/images/5/5f/PravusNew.png'
+    eventEnemy: [Zombie]
 }

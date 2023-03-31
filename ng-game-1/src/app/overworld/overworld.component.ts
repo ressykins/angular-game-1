@@ -298,7 +298,7 @@ export class OverworldComponent implements OnInit {
     switch(event.eventType) {
       case 'Battle':
         if (confirm("Are you sure you want to start this event?")) {
-          this.game.enterBattle(event.eventEnemy!, event.eventBg!, true);
+          this.game.enterBattle(event.eventEnemy!, true);
           this.router.navigate(['/battle']);
         }
         break;

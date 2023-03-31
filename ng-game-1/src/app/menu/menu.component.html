@@ -23,7 +23,10 @@
         </li>
         <li class="nav-item">
           <span [hidden]="this.game.inCombat" [ngClass]="equipmentOpen ? 'inventoryBtn selected' : 'inventoryBtn'" title="Open your equipped items." (click)="toggleEquipment()"><b>Equipment</b></span>
-      </li>
+        </li>
+        <li class="nav-item">
+          <span [hidden]="!this.game.inCombat" class="combatStats" title="Your current Damage, Defense, and Speed.">ATK: {{this.game.currentDamage}} | DEF: {{this.game.currentDefense}} | AGIL: {{this.game.currentSpeed}}</span>
+        </li>
       </ul>
 
       <ul class="navbar-nav ms-auto">
