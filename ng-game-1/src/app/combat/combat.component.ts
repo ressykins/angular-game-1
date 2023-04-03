@@ -26,12 +26,15 @@ export class CombatComponent {
     }
 
     this.selectionIntent = intent;
-    
-    if (this.selectionIntent == 'fight' && this.game.equippedWeapon && (this.game.equippedWeapon.type == 'Bow' || this.game.equippedWeapon.type == 'Axe')) return this.game.useAttack(0);
-
-    this.awaitingSelection = true;
-    this.selectionMsg = "Choose a target."
-    return true;
+    if (this.selectionIntent == 'fight' && this.game.equippedWeapon && (this.game.equippedWeapon.weapon == 'Bow' || this.game.equippedWeapon.weapon == 'Axe')) {
+      this.game.useAttack(0);
+      return true;
+    }
+    else {
+      this.awaitingSelection = true;
+      this.selectionMsg = "Choose a target."
+      return true;
+    }
   }
 
 

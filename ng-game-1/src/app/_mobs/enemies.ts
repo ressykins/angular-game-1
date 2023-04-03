@@ -8,6 +8,7 @@ import { DiamondAxe, DiamondSword, IronSword, Shotbow } from "../_items/weapons"
 export const Zombie: Enemy = {
     enemyName: 'Zombie',
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 15,
     enemyDefense: 2,
     enemySpeed: 10,
@@ -21,6 +22,7 @@ export const Zombie: Enemy = {
 export const SwordZombie: Enemy = {
     enemyName: 'Zombie Swordsman',
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 30,
     enemyDefense: 2,
     enemySpeed: 10,
@@ -34,6 +36,7 @@ export const SwordZombie: Enemy = {
 export const ShovelZombie: Enemy = {
     enemyName: 'Zombie Gravedigger',
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 20,
     enemyDefense: 2,
     enemySpeed: 10,
@@ -47,6 +50,7 @@ export const ShovelZombie: Enemy = {
 export const PumpkinZombie: Enemy = {
     enemyName: "Jack O' Zombie",
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 15,
     enemyDefense: 4,
     enemySpeed: 10,
@@ -60,6 +64,7 @@ export const PumpkinZombie: Enemy = {
 export const LeatherZombie: Enemy = {
     enemyName: "Zombie Scavenger",
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 15,
     enemyDefense: 7,
     enemySpeed: 10,
@@ -73,6 +78,7 @@ export const LeatherZombie: Enemy = {
 export const FarmerZombie: Enemy = {
     enemyName: "Zombie Farmer",
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 15,
     enemyDefense: 2,
     enemySpeed: 10,
@@ -86,6 +92,7 @@ export const FarmerZombie: Enemy = {
 export const FisherZombie: Enemy = {
     enemyName: "Zombie Fisherman",
     enemyHealth: 20,
+    enemyMaxHealth: 20,
     enemyDamage: 15,
     enemyDefense: 2,
     enemySpeed: 10,
@@ -103,6 +110,7 @@ export const FisherZombie: Enemy = {
 export const GiantZombie: Enemy = {
     enemyName: "The Giant",
     enemyHealth: 100,
+    enemyMaxHealth: 100,
     enemyDamage: 60,
     enemyDefense: 20,
     enemySpeed: 0,
@@ -120,6 +128,7 @@ export const GiantZombie: Enemy = {
 export const BabyZombie: Enemy = {
     enemyName: 'Zombie',
     enemyHealth: 10,
+    enemyMaxHealth: 10,
     enemyDamage: 10,
     enemyDefense: 0,
     enemySpeed: 30,
@@ -133,6 +142,7 @@ export const BabyZombie: Enemy = {
 export const PumpkinBabyZombie: Enemy = {
     enemyName: "Baby Jack O' Zombie",
     enemyHealth: 10,
+    enemyMaxHealth: 10,
     enemyDamage: 10,
     enemyDefense: 2,
     enemySpeed: 30,

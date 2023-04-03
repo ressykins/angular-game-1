@@ -3,6 +3,7 @@ import { Item } from "./item";
 export interface Enemy {
     enemyName: string,
     enemyHealth: number,
+    enemyMaxHealth: number,
     enemyDamage: number,
     enemyDefense: number,
     enemySpeed: number,
