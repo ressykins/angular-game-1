@@ -527,7 +527,7 @@ export const VegetableJuice: Item = {
 }
 
 export const WaterBucket: Item = {
-    name: 'WaterBucket',
+    name: 'Water Bucket',
     description: '+100 Thirst\n+3 Weight\n\nCures Heatstroke',
     type: 'Consumable',
     rarity: 'Uncommon',

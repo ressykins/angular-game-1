@@ -11,7 +11,6 @@ export class CombatComponent {
 
   public sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   public awaitingSelection: boolean = false;
-  public awaitTurn: boolean = false;
   public selectionMsg: string = "";
   public selectionIntent: string = "";
 
@@ -27,7 +26,7 @@ export class CombatComponent {
 
     this.selectionIntent = intent;
     if (this.selectionIntent == 'fight' && this.game.equippedWeapon && (this.game.equippedWeapon.weapon == 'Bow' || this.game.equippedWeapon.weapon == 'Axe')) {
-      this.game.useAttack(0);
+      this.selectEnemy(0);
       return true;
     }
     else {
@@ -42,7 +41,6 @@ export class CombatComponent {
   public selectEnemy(index: number): boolean {
     if (this.selectionIntent) {
       this.game.startTurn(index, this.selectionIntent);
-      this.awaitTurn = true;
       this.awaitingSelection = false;
       this.selectionIntent = '';
       this.selectionMsg = '';

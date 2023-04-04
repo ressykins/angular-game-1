@@ -6,11 +6,11 @@ import { EnchantedBook, IronIngot, Stick, Stone, StringItem } from "./materials"
 
 export const WoodenSword: Item = {
     name: 'Wooden Sword',
-    description: '4 Damage\n+5 Weight',
+    description: '40 Damage\n+5 Weight',
     type: 'Weapon',
     rarity: 'Common',
     weight: 5,
-    damage: 4,
+    damage: 40,
     durability: 5,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d5/Wooden_Sword_JE2_BE2.png',
     components: [Stick, Stick, Stick],
@@ -19,11 +19,11 @@ export const WoodenSword: Item = {
 
 export const EnchantedWoodenSword: Item = {
     name: 'Enchanted Wooden Sword',
-    description: '5 Damage\n+5 Weight\n\nEnhanced critical strike chance',
+    description: '50 Damage\n+5 Weight\n\nEnhanced critical strike chance',
     type: 'Weapon',
     rarity: 'Uncommon',
     weight: 5,
-    damage: 5,
+    damage: 50,
     durability: 10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c1/Enchanted_Wooden_Sword.gif',
     components: [WoodenSword, EnchantedBook],
@@ -32,11 +32,11 @@ export const EnchantedWoodenSword: Item = {
 
 export const StoneSword: Item = {
     name: 'Stone Sword',
-    description: '5 Damage\n+6 Weight',
+    description: '50 Damage\n+6 Weight',
     type: 'Weapon',
     rarity: 'Uncommon',
     weight: 6,
-    damage: 5,
+    damage: 50,
     durability: 15,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b1/Stone_Sword_JE2_BE2.png',
     components: [Stick, Stone, Stone],
@@ -45,11 +45,11 @@ export const StoneSword: Item = {
 
 export const EnchantedStoneSword: Item = {
     name: 'Enchanted Stone Sword',
-    description: '6 Damage\n+6 Weight\n\nEnhanced critical strike chance',
+    description: '60 Damage\n+6 Weight\n\nEnhanced critical strike chance',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 6,
-    damage: 6,
+    damage: 60,
     durability: 20,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ed/Enchanted_Stone_Sword.gif',
     components: [StoneSword, EnchantedBook],
@@ -58,11 +58,11 @@ export const EnchantedStoneSword: Item = {
 
 export const IronSword: Item = {
     name: 'Iron Sword',
-    description: '6 Damage\n+7 Weight',
+    description: '60 Damage\n+7 Weight',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 7,
-    damage: 6,
+    damage: 60,
     durability: 25,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8e/Iron_Sword_JE2_BE2.png',
     components: [Stick, IronIngot, IronIngot],
@@ -71,11 +71,11 @@ export const IronSword: Item = {
 
 export const EnchantedIronSword: Item = {
     name: 'Enchanted Iron Sword',
-    description: '7 Damage\n+7 Weight\n\nEnhanced critical strike chance',
+    description: '70 Damage\n+7 Weight\n\nEnhanced critical strike chance',
     type: 'Weapon',
     rarity: 'Epic',
     weight: 7,
-    damage: 7,
+    damage: 70,
     durability: 30,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/de/Enchanted_Iron_Sword.gif',
     components: [IronSword, EnchantedBook],
@@ -84,11 +84,11 @@ export const EnchantedIronSword: Item = {
 
 export const DiamondSword: Item = {
     name: 'Diamond Sword',
-    description: '7 Damage\n+8 Weight\n\nSmall chance to insta-kill',
+    description: '70 Damage\n+8 Weight\n\nSmall chance to insta-kill',
     type: 'Weapon',
     rarity: 'Legendary',
     weight: 8,
-    damage: 7,
+    damage: 70,
     durability: 100,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/44/Diamond_Sword_JE3_BE3.png',
     weapon: 'Sword'
@@ -107,11 +107,11 @@ export const DiamondSword: Item = {
 
 export const WoodenAxe: Item = {
     name: 'Wooden Axe',
-    description: '6 Damage\n+5 Weight',
+    description: '60 Damage\n+5 Weight',
     type: 'Weapon',
     rarity: 'Common',
     weight: 5,
-    damage: 6,
+    damage: 60,
     durability: 5,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/56/Wooden_Axe_JE2_BE2.png',
     components: [Stick, Stick, Stick],
@@ -120,11 +120,11 @@ export const WoodenAxe: Item = {
 
 export const EnchantedWoodenAxe: Item = {
     name: 'Enchanted Wooden Axe',
-    description: '7 Damage\n+5 Weight\n\nDeals more damage to low health enemies',
+    description: '70 Damage\n+5 Weight\n\nDeals more damage to low health enemies',
     type: 'Weapon',
     rarity: 'Uncommon',
     weight: 5,
-    damage: 7,
+    damage: 70,
     durability: 10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e0/Enchanted_Wooden_Axe.gif',
     components: [WoodenAxe, EnchantedBook],
@@ -133,11 +133,11 @@ export const EnchantedWoodenAxe: Item = {
 
 export const StoneAxe: Item = {
     name: 'Stone Axe',
-    description: '7 Damage\n+6 Weight',
+    description: '70 Damage\n+6 Weight',
     type: 'Weapon',
     rarity: 'Uncommon',
     weight: 6,
-    damage: 7,
+    damage: 70,
     durability: 15,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/02/Stone_Axe_JE2_BE2.png',
     components: [Stick, Stone, Stone],
@@ -146,11 +146,11 @@ export const StoneAxe: Item = {
 
 export const EnchantedStoneAxe: Item = {
     name: 'Enchanted Stone Axe',
-    description: '8 Damage\n+6 Weight\n\nDeals more damage to low health enemies',
+    description: '80 Damage\n+6 Weight\n\nDeals more damage to low health enemies',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 6,
-    damage: 8,
+    damage: 80,
     durability: 20,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d0/Enchanted_Stone_Axe.gif',
     components: [StoneAxe, EnchantedBook],
@@ -159,11 +159,11 @@ export const EnchantedStoneAxe: Item = {
 
 export const IronAxe: Item = {
     name: 'Iron Axe',
-    description: '8 Damage\n+7 Weight',
+    description: '80 Damage\n+7 Weight',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 7,
-    damage: 8,
+    damage: 80,
     durability: 25,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5e/Iron_Axe_JE5_BE2.png',
     components: [Stick, IronIngot, IronIngot],
@@ -176,7 +176,7 @@ export const EnchantedIronAxe: Item = {
     type: 'Weapon',
     rarity: 'Epic',
     weight: 7,
-    damage: 9,
+    damage: 90,
     durability: 30,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/bf/Enchanted_Iron_Axe.gif',
     components: [IronAxe, EnchantedBook],
@@ -189,7 +189,7 @@ export const DiamondAxe: Item = {
     type: 'Weapon',
     rarity: 'Legendary',
     weight: 8,
-    damage: 9,
+    damage: 90,
     durability: 100,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/40/Diamond_Axe_JE3_BE3.png',
     weapon: 'Axe'
@@ -202,11 +202,11 @@ export const DiamondAxe: Item = {
 
 export const Bow: Item = {
     name: 'Bow',
-    description: '3-9 Damage\n+8 Weight',
+    description: '30-90 Damage\n+8 Weight',
     type: 'Weapon',
     rarity: 'Uncommon',
     weight: 8,
-    damage: 3,
+    damage: 30,
     durability: 5,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/99/Bow_JE2_BE1.png',
     components: [Stick, Stick, StringItem],
@@ -215,11 +215,11 @@ export const Bow: Item = {
 
 export const EnchantedBow: Item = {
     name: 'Enchanted Bow',
-    description: '4-12 Damage\n+8 Weight\n\nDeals extra damage to healthy enemies',
+    description: '40-120 Damage\n+8 Weight\n\nDeals extra damage to healthy enemies',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 8,
-    damage: 4,
+    damage: 40,
     durability: 10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Enchanted_Bow.gif',
     components: [Bow, EnchantedBook],
@@ -228,11 +228,11 @@ export const EnchantedBow: Item = {
 
 export const Crossbow: Item = {
     name: 'Crossbow',
-    description: '6 Damage\n+10 Weight',
+    description: '60 Damage\n+10 Weight',
     type: 'Weapon',
     rarity: 'Rare',
     weight: 10,
-    damage: 6,
+    damage: 60,
     durability: 10,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/79/Crossbow.png',
     components: [Stick, IronIngot, StringItem],
@@ -241,11 +241,11 @@ export const Crossbow: Item = {
 
 export const EnchantedCrossbow: Item = {
     name: 'Enchanted Crossbow',
-    description: '8 Damage\n+10 Weight\n\nIgnores enemy defenses',
+    description: '80 Damage\n+10 Weight\n\nIgnores enemy defenses',
     type: 'Weapon',
     rarity: 'Epic',
     weight: 10,
-    damage: 7,
+    damage: 80,
     durability: 15,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/35/Enchanted_Crossbow.gif',
     components: [Crossbow, EnchantedBook],
@@ -254,11 +254,11 @@ export const EnchantedCrossbow: Item = {
 
 export const Shotbow: Item = {
     name: 'The Shotbow',
-    description: '20 Damage\n+10 Weight\n\nFires bolts at all enemies',
+    description: '200 Damage\n+10 Weight\n\nFires bolts at all enemies',
     type: 'Weapon',
     rarity: 'Legendary',
     weight: 10,
-    damage: 20,
+    damage: 200,
     durability: 100,
     picture: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/35/Enchanted_Crossbow.gif',
     weapon: 'Crossbow'

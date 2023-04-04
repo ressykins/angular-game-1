@@ -21,8 +21,7 @@ export class GameService {
 
 
 
-  /// VARIABLES
-
+  /// player vitals
   public playerName: string = 'Survivor';
 
   public $playerHealth: BehaviorSubject<number> = new BehaviorSubject<number>(100);
@@ -63,11 +62,12 @@ export class GameService {
     return this.$playerThirst.asObservable();
   }
 
+
+  // crafting and inventory 
   public $playerInventory: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
   public playerInventory = this.$playerInventory.asObservable();
   public inventoryWeight: number = 0;
   public inventoryMax: number = 18;
-
 
   public craftingList: Item[] = CraftableList;
   public itemList: Item[] = ItemList;
@@ -79,18 +79,21 @@ export class GameService {
   public playerStage: number = 1;
 
 
+  // combat
   public inCombat: boolean = false;
   public combatEnemies: Enemy[] = [];
   public combatLog: string[][] = [];
   public analyzedEnemies: Enemy[] = [];
+  public awaitTurn: boolean = false;
 
 
+  // equipment
   public equippedWeapon: Item | null;
   public equippedHead: Item | null;
   public equippedChest: Item | null;
   public equippedLegs: Item | null;
   public equippedBoots: Item | null;
-  public currentDamage: number = 2; // base damage
+  public currentDamage: number = 20; // base damage
   public currentDefense: number = 0; // base defense
   public currentSpeed: number = 20; // base speed at 100 hunger
 
@@ -224,7 +227,7 @@ export class GameService {
         this.equippedBoots = null;
         break;
       default:
-        this.currentDamage = 2;
+        this.currentDamage = 20;
         this.addItem(this.equippedWeapon ?? Bone);
         this.equippedWeapon = null;
         break;
@@ -375,7 +378,8 @@ export class GameService {
     this.combatLog.push(['msgConsole', encounterMsg]);
   }
 
-  public startTurn(target: number, intent: string) {
+  public async startTurn(target: number, intent: string) {
+    this.awaitTurn = true;
     // setup turn order
     let turnOrder: [number,number][] = [];
     let playerTurn: [number,number] = (this.equippedWeapon && this.equippedWeapon.weapon! == 'Crossbow') ? [-1, -1] : [-1, this.currentSpeed];
@@ -385,30 +389,61 @@ export class GameService {
 
     // start turn
     for (let turn of turnOrder) {
-      console.log('commence turns');
+      console.log('commence turn', turn);
       // player action
       if (turn[0] == -1) {
         switch(intent) {
           case 'fight':
-            this.useAttack(0);
+            await this.useAttack(0);
             break; 
           default:
             break;
         }
       }
-      else this.enemyAction(target);
+      else await this.enemyAction(turn[0]);
+      await this.sleep(1000);
     }
+    this.awaitTurn = false;
   }
 
 
 
-  public enemyAction(index: number) {
+  public async enemyAction(index: number): Promise<boolean> {
+    let actionRoll: number = Math.floor(Math.random() * 101);
+    let chosenAction: string = '';
+    for (let action of this.combatEnemies[index].enemyActions) {
+      if (actionRoll < action[1]) {
+        chosenAction = action[0];
+        break;
+      }
+    }
+    console.log('inside enemy action', actionRoll, chosenAction);
 
+    switch (chosenAction) {
+      case 'Attack': // basic attack
+        let missRoll: number = Math.floor(Math.random() * 101);
+        let speedDiff: number = (this.currentSpeed - this.combatEnemies[index].enemySpeed) < 0 ? 0 : (this.currentSpeed - this.combatEnemies[index].enemySpeed);
+        if (missRoll < (5 + speedDiff)) {
+          this.combatLog.push(['msgEnemy', this.combatEnemies[index].enemyName + ' [' + index + '] attacks! Just missed!']);
+          return true;
+        }
+        var critRoll: number = Math.floor(Math.random() * 101);
+        var damage: number = this.combatEnemies[index].enemyDamage;
+
+        if (critRoll < 10) damage *= 1.5;
+        damage = Math.floor(damage * (1 - (this.currentDefense * 0.008)));
+        damage < 1 ? this.changeValue(this.$playerHealth.value - 1, 'Health') : this.changeValue(this.$playerHealth.value - damage, 'Health');
+
+        if (critRoll < 10) this.combatLog.push(['msgEnemy', this.combatEnemies[index].enemyName + ' [' + index + '] attacks! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.playerName + '!']);
+        else this.combatLog.push(['msgEnemy', this.combatEnemies[index].enemyName + ' [' + index + '] attacks! Dealt *' + damage + '* damage to ' + this.playerName + '!']);
+        break;
+    }
+    return true;
   }
 
 
 
-  public async useAttack(index: number) {
+  public async useAttack(index: number): Promise<boolean> {
     // when no weapon is equipped
     if (!this.equippedWeapon) {
       let missRoll: number = Math.floor(Math.random() * 101);
@@ -418,9 +453,9 @@ export class GameService {
         return true;
       }
 
-      let damage: number = Math.floor(this.currentDamage * (1 - (this.combatEnemies[index].enemyDefense * 0.04)));
+      let damage: number = Math.floor(this.currentDamage * (1 - (this.combatEnemies[index].enemyDefense * 0.008)));
       damage < 1 ? this.combatEnemies[index].enemyHealth -= 1 : this.combatEnemies[index].enemyHealth -= damage;
-      this.combatLog.push(['msgPlayer', this.playerName + ' throws a punch! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
+      this.combatLog.push(['msgPlayer', this.playerName + ' throws a punch! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + ' [' + index + ']!']);
       return true;
     }
 
@@ -439,11 +474,11 @@ export class GameService {
           var enchantCrit = this.equippedWeapon.name.includes('Enchanted') ? 10 : 0;
 
           if (critRoll < (10 + enchantCrit)) damage *= 1.5;
-          damage = Math.floor(damage * (1 - (this.combatEnemies[index].enemyDefense * 0.04)));
+          damage = Math.floor(damage * (1 - (this.combatEnemies[index].enemyDefense * 0.008)));
           damage < 1 ? this.combatEnemies[index].enemyHealth -= 1 : this.combatEnemies[index].enemyHealth -= damage;
 
-          if (critRoll < (10 + enchantCrit)) this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
-          else this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
+          if (critRoll < (10 + enchantCrit)) this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + ' [' + index + ']!']);
+          else this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + ' [' + index + ']!']);
           break;
 
 
@@ -460,10 +495,10 @@ export class GameService {
             else {
               let critRoll: number = Math.floor(Math.random() * 101);
               let damage: number = this.currentDamage;
-              if (this.equippedWeapon.weapon.includes('Enchanted')) damage += this.combatEnemies[i].enemyHealth <= (Math.floor(this.combatEnemies[i].enemyMaxHealth / 2)) ? 2 : 0;
+              if (this.equippedWeapon.name.includes('Enchanted')) damage += this.combatEnemies[i].enemyHealth <= (Math.floor(this.combatEnemies[i].enemyMaxHealth / 2)) ? 20 : 0;
 
               if (critRoll < 10) damage *= 1.5;
-              damage = Math.floor(damage * (1 - (this.combatEnemies[i].enemyDefense * 0.04)));
+              damage = Math.floor(damage * (1 - (this.combatEnemies[i].enemyDefense * 0.008)));
               damage < 1 ? this.combatEnemies[i].enemyHealth -= 1 : this.combatEnemies[i].enemyHealth -= damage;
     
               if (critRoll < 10) this.combatLog.push(['msgPlayer', 'CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[i].enemyName + ' [' + i + ']!']);
@@ -487,10 +522,10 @@ export class GameService {
               else {
                 let critRoll: number = Math.floor(Math.random() * 101);
                 let damage: number = this.currentDamage;
-                if (this.equippedWeapon.weapon.includes('Enchanted')) damage += this.combatEnemies[i].enemyHealth >= (Math.floor(this.combatEnemies[i].enemyMaxHealth / 2)) ? 2 : 0;
+                if (this.equippedWeapon.name.includes('Enchanted')) damage += this.combatEnemies[i].enemyHealth >= (Math.floor(this.combatEnemies[target].enemyMaxHealth / 2)) ? 20 : 0;
 
                 if (critRoll < 10) damage *= 1.5;
-                damage = Math.floor(damage * (1 - (this.combatEnemies[target].enemyDefense * 0.04)));
+                damage = Math.floor(damage * (1 - (this.combatEnemies[target].enemyDefense * 0.008)));
                 damage < 1 ? this.combatEnemies[target].enemyHealth -= 1 : this.combatEnemies[target].enemyHealth -= damage;
 
                 if (critRoll < 10) this.combatLog.push(['msgPlayer', 'CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[target].enemyName + ' [' + target + ']!']);
@@ -506,13 +541,21 @@ export class GameService {
             var damage: number = this.currentDamage;
   
             if (critRoll < 10) damage *= 1.5;
-            if (!this.equippedWeapon.weapon.includes('Enchanted')) damage = Math.floor(damage * (1 - (this.combatEnemies[index].enemyDefense * 0.04)));
+            if (!this.equippedWeapon.name.includes('Enchanted')) damage = Math.floor(damage * (1 - (this.combatEnemies[index].enemyDefense * 0.008)));
             damage < 1 ? this.combatEnemies[index].enemyHealth -= 1 : this.combatEnemies[index].enemyHealth -= damage;
   
-            if (critRoll < 10) this.combatLog.push(['msgPlayer', this.playerName + ' fires their crossboiw! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
+            if (critRoll < 10) this.combatLog.push(['msgPlayer', this.playerName + ' fires their crossbow! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
             else this.combatLog.push(['msgPlayer', this.playerName + ' fires their crossbow! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + '!']);
             break;
       }
+
+      this.equippedWeapon.durability! -= 1;
+      if (this.equippedWeapon.durability! < 1) {
+        this.combatLog.push(['msgConsole', 'Your ' + this.equippedWeapon.name + ' broke amidst combat...']);
+        this.equippedWeapon = null;
+        this.currentDamage = 20;
+      } 
+      
       return true;
     }
   }
