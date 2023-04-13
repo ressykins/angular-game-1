@@ -36,8 +36,6 @@ export class CombatComponent {
     }
   }
 
-
-
   public selectEnemy(index: number): boolean {
     if (this.selectionIntent) {
       this.game.startTurn(index, this.selectionIntent);
@@ -48,4 +46,5 @@ export class CombatComponent {
     } 
     else return false;
   }
+  
 }

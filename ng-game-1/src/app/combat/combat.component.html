@@ -43,7 +43,10 @@
         <div class="enemy-container">
             <ng-container>
                 <ng-container *ngFor="let enemy of this.game.combatEnemies; let i = index">
-                    <img src="{{enemy.enemyPicture}}" (click)="selectEnemy(i)" [ngClass]="awaitingSelection ? 'selectTarget enemyImg' : 'enemyImg'" title="{{enemy.enemyName}} [{{i}}]&#013;&#013;Health: [??]&#013;Defense: [??]&#013;Speed: [??]">
+                    <img *ngIf="!enemy.enemyDefeated; else enemyDefeated" src="{{enemy.enemyPicture}}" (click)="selectEnemy(i)" [ngClass]="awaitingSelection ? 'selectTarget enemyImg' : 'enemyImg'" title="{{enemy.enemyName}} [{{i}}]&#013;&#013;Health: [??]&#013;Defense: [??]&#013;Speed: [??]">
+                    <ng-template #enemyDefeated>
+                        <img src="{{enemy.enemyPicture}}" class="defeatedEnemy">
+                    </ng-template>
                 </ng-container>
             </ng-container>
         </div>

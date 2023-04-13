@@ -12,4 +12,5 @@ export interface Enemy {
     enemyDesc: string,
     enemyType: string,
     enemyActions: [string, number][],
+    enemyDefeated?: boolean
 }

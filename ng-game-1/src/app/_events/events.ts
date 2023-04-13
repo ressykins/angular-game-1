@@ -1,7 +1,7 @@
 import { minezEvent } from "../_interfaces/event";
 import { Ale, Cocktail, HealPotI } from "../_items/consumables";
 import { Pravus, Towns } from "../_locations/towns";
-import { Zombie } from "../_mobs/enemies";
+import { PumpkinZombie, Zombie } from "../_mobs/enemies";
 
 export const PravusEvent1: minezEvent = {
     eventName: 'Dawn Brigade Cantina',

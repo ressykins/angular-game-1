@@ -21,6 +21,14 @@
     transition: 0.3s;
 }
 
+.defeatedEnemy {
+    max-height: 200px;
+    max-width: 200px;
+    margin: 40px;
+    opacity: 0.3;
+}
+
+
 .enemyImg:hover {
     transform: scale(1.1);
 }

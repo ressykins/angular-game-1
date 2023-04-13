@@ -172,7 +172,7 @@ export const IronAxe: Item = {
 
 export const EnchantedIronAxe: Item = {
     name: 'Enchanted Iron Axe',
-    description: '9 Damage\n+7 Weight\n\nDeals more damage to low health enemies',
+    description: '90 Damage\n+7 Weight\n\nDeals more damage to low health enemies',
     type: 'Weapon',
     rarity: 'Epic',
     weight: 7,
@@ -185,7 +185,7 @@ export const EnchantedIronAxe: Item = {
 
 export const DiamondAxe: Item = {
     name: 'Diamond Axe',
-    description: '9 Damage\n+8 Weight\n\n',
+    description: '90 Damage\n+8 Weight\n\n',
     type: 'Weapon',
     rarity: 'Legendary',
     weight: 8,
