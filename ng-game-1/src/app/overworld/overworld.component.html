@@ -6,197 +6,201 @@
     </div>
 </div>
 <ng-template #finishedLoading> -->
-    <div style="background-image: url({{currentStage.picture}});height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;">
-        <div class="flex">
-            <div class="flexItemA">
-                <h1 class="stageName">{{currentStage.name}}</h1>
-                <button *ngIf="currentStage.canRest" type="button" class="btn btn-success btn-lg mb-1 btnGeneral btnRest" title="Try and take a rest." (click)="rest()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3e/Clock_JE3_BE3.gif" style="width:32px">Rest</button>
-                <button *ngIf="currentStage.canRefill" type="button" class="btn btn-primary btn-lg mb-1 btnGeneral" title="Replenish your thirst and water supply." (click)="refillWater()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png" style="width:32px">Refill</button>
-                <button *ngIf="currentStage.canRepair" type="button" class="btn btn-secondary btn-lg mb-1 btnGeneral" title="Repair your tools and weapons." (click)="repair()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png" style="width:32px">Repair</button>
-                <button *ngIf="currentStage.canCraft" type="button" class="btn btn-warning btn-lg mb-1 btnGeneral btnCraft" title="Craft items using materials." (click)="toggleCrafting()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Crafting_Table_JE4_BE3.png" style="width:32px">Craft</button>
-                <button *ngIf="currentStage.canCook" type="button" class="btn btn-success btn-lg mb-1 btnGeneral" title="Cook food or smelt ores."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5c/Lit_Furnace_(S)_JE4.png" style="width:32px">Cook</button>
-                <button type="button" class="btn btn-danger btn-lg mb-1 btnGeneral" title="Need to empty your pockets?" (click)="toggleTrash()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Lava_Bucket_JE2_BE2.png" style="width:32px">Trash</button>
-            </div>
-            <div class="flexItemB">
-                <button [disabled]="currentStage.numChests == 0" type="button" class="btn btn-success btn-lg mb-1 btnAction btnLoot" title="Let's see what this place has to offer..." (click)="loot()">
-                    <div>
-                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/26/Emerald_JE3_BE3.png" style="width: 64px">
-                    </div>
-                    <div>
-                        Loot Chests
-                    </div>                
-                    <div>
-                        ({{currentStage.numChests}} remaining)
-                    </div>
-                </button>
+    <app-game-over *ngIf="this.game.playerStatus.statusName == 'Dead' else elseBlock"></app-game-over>
 
-                <button [disabled]="!currentStage.numFish" *ngIf="currentStage.canFish" type="button" class="btn btn-primary btn-lg mb-1 btnAction btnFish" title="Try your luck!" (click)="fish()">
-                    <div>
-                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Raw_Cod_JE4_BE2.png" style="width: 64px">
-                    </div>
-                    <div>
-                        Fish
-                    </div>                
-                    <div>
-                        ({{currentStage.numFish}} tries left)
-                    </div>
-                </button>
-
-                <button [disabled]="!currentStage.numGraves" *ngIf="currentStage.canDig" type="button" class="btn btn-dark btn-lg mb-1 btnAction" title="Watch out for zombies!" (click)="gravedig()">
-                    <div>
-                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4a/Skeleton_Skull_(8).png" style="width: 64px">
-                    </div>
-                    <div>
-                        Dig
-                    </div>       
-                    <div>
-                        ({{currentStage.numGraves}} tries left)
-                    </div>         
-                </button>
-
-                <button [disabled]="!currentStage.numCrops" *ngIf="currentStage.canFarm" type="button" class="btn btn-success btn-lg mb-1 btnAction btnFarm" title="Harvest some crops!" (click)="harvest()">
-                    <div>
-                        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Wheat_JE2_BE2.png" style="width: 64px">
-                    </div>
-                    <div>
-                        Harvest
-                    </div>       
-                    <div>
-                        ({{currentStage.numCrops}} tries left)
-                    </div>         
-                </button>
-            </div>
-            <div class="bottomTab">
-                <button type="button" class="btn btn-success btn-lg btnMain" title="See if there's anything to do around here..." (click)="toggleEvents()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7a/Eye_of_Ender_JE2_BE2.png" style="width:32px;height:32px;margin-right: 5px;">Events</button>
-                <button type="button" class="btn btn-danger btn-lg btnMain" title="Depart this area. (No turning back!)"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a2/Leather_Boots_(item)_JE1_BE1.png" style="width:32px;height:32px;margin-right: 5px;">Depart</button>
-            </div>
-        </div>
-
-        <div *ngIf="currentMessage" class="centered messageBox {{currentMessage.subject}}"> 
-            <h1 class="mb-2">{{currentMessage.subject}}</h1>
-            <img *ngIf="currentMessage.item" class="mb-2 lootImg" src="{{currentMessage.item.picture}}" style="width: 128px;padding: 20px;" title="{{currentMessage.item.name}}&#013;[{{currentMessage.item.rarity}} {{currentMessage.item.type}}]&#013;&#013;{{currentMessage.item.description}}">
-            <p>{{currentMessage.description}}</p>
-            <h1 style="cursor:pointer;text-shadow: rgb(255, 0, 0) 1px 0 10px;" (click)="clearMessage()">[ X ]</h1>
-        </div>
-
-        <div *ngIf="craftingOpen" class="craftingGUI">
-            <h2 class="whiteText">Crafting<span class="closeCrafting" (click)="toggleCrafting()">X</span></h2>
-            <div class="craftingContainer">
-                <ng-container *ngFor="let item of this.game.$craftableItems.value">
-                    <div class="craftItem canCraftItem" *ngIf="canCraft(item[1])">
-                        <div class="craftBox {{item[0].rarity}}">
-                            <ng-container [ngSwitch]="item[0].type">
-                                <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
-                                <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
-                            </ng-container>
-                        </div>
-                        <div class="craftDesc whiteText">
-                            <div>{{item[0].name}}</div>
-                            <ng-container *ngFor="let component of item[0].components">
-                                <img src="{{component.picture}}" class="componentItem itemImg" title="{{component.name}}&#013;[{{component.rarity}} {{component.type}}]&#013;&#013;{{component.description}}">
-                            </ng-container>
-                        </div>
+    <ng-template #elseBlock>
+        <div *ngIf="this.game.playerStatus.statusName != 'Dead'" style="background-image: url({{currentStage.picture}});height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;">
+            <div class="flex">
+                <div class="flexItemA">
+                    <h1 class="stageName">{{currentStage.name}}</h1>
+                    <button *ngIf="currentStage.canRest" type="button" class="btn btn-success btn-lg mb-1 btnGeneral btnRest" title="Try and take a rest." (click)="rest()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3e/Clock_JE3_BE3.gif" style="width:32px">Rest</button>
+                    <button *ngIf="currentStage.canRefill" type="button" class="btn btn-primary btn-lg mb-1 btnGeneral" title="Replenish your thirst and water supply." (click)="refillWater()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Water_Bottle_JE2_BE2.png" style="width:32px">Refill</button>
+                    <button *ngIf="currentStage.canRepair" type="button" class="btn btn-secondary btn-lg mb-1 btnGeneral" title="Repair your tools and weapons." (click)="repair()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Anvil_(N)_JE3.png" style="width:32px">Repair</button>
+                    <button *ngIf="currentStage.canCraft" type="button" class="btn btn-warning btn-lg mb-1 btnGeneral btnCraft" title="Craft items using materials." (click)="toggleCrafting()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Crafting_Table_JE4_BE3.png" style="width:32px">Craft</button>
+                    <button *ngIf="currentStage.canCook" type="button" class="btn btn-success btn-lg mb-1 btnGeneral" title="Cook food or smelt ores."><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5c/Lit_Furnace_(S)_JE4.png" style="width:32px">Cook</button>
+                    <button type="button" class="btn btn-danger btn-lg mb-1 btnGeneral" title="Need to empty your pockets?" (click)="toggleTrash()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Lava_Bucket_JE2_BE2.png" style="width:32px">Trash</button>
                 </div>
-                </ng-container>
-                <ng-container *ngFor="let item of this.game.$craftableItems.value">
-                    <div class="craftItem cantCraftItem" *ngIf="!canCraft(item[1])">
-                        <div class="craftBox {{item[0].rarity}}">
-                            <ng-container [ngSwitch]="item[0].type">
-                                <img *ngSwitchCase="'Weapon'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Head Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Body Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Leg Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Boot Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Tool'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
-                                <img *ngSwitchCase="'Button'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
-                                <img *ngSwitchCase="'Consumable'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
-                                <img *ngSwitchDefault class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
-                            </ng-container>
+                <div class="flexItemB">
+                    <button [disabled]="currentStage.numChests == 0" type="button" class="btn btn-success btn-lg mb-1 btnAction btnLoot" title="Let's see what this place has to offer..." (click)="loot()">
+                        <div>
+                            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/26/Emerald_JE3_BE3.png" style="width: 64px">
                         </div>
-                        <div class="craftDesc whiteText">
-                            <div>{{item[0].name}}</div>
-                            <ng-container *ngFor="let component of item[0].components; let i = index">
-                                <img src="{{component.picture}}" [ngClass]="item[1][i] ? 'componentItem itemImg' : 'componentItem itemImg grayedOutItem'" title="{{component.name}}&#013;[{{component.rarity}} {{component.type}}]&#013;&#013;{{component.description}}">
-                            </ng-container>
+                        <div>
+                            Loot Chests
+                        </div>                
+                        <div>
+                            ({{currentStage.numChests}} remaining)
                         </div>
+                    </button>
+    
+                    <button [disabled]="!currentStage.numFish" *ngIf="currentStage.canFish" type="button" class="btn btn-primary btn-lg mb-1 btnAction btnFish" title="Try your luck!" (click)="fish()">
+                        <div>
+                            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Raw_Cod_JE4_BE2.png" style="width: 64px">
+                        </div>
+                        <div>
+                            Fish
+                        </div>                
+                        <div>
+                            ({{currentStage.numFish}} tries left)
+                        </div>
+                    </button>
+    
+                    <button [disabled]="!currentStage.numGraves" *ngIf="currentStage.canDig" type="button" class="btn btn-dark btn-lg mb-1 btnAction" title="Watch out for zombies!" (click)="gravedig()">
+                        <div>
+                            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4a/Skeleton_Skull_(8).png" style="width: 64px">
+                        </div>
+                        <div>
+                            Dig
+                        </div>       
+                        <div>
+                            ({{currentStage.numGraves}} tries left)
+                        </div>         
+                    </button>
+    
+                    <button [disabled]="!currentStage.numCrops" *ngIf="currentStage.canFarm" type="button" class="btn btn-success btn-lg mb-1 btnAction btnFarm" title="Harvest some crops!" (click)="harvest()">
+                        <div>
+                            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Wheat_JE2_BE2.png" style="width: 64px">
+                        </div>
+                        <div>
+                            Harvest
+                        </div>       
+                        <div>
+                            ({{currentStage.numCrops}} tries left)
+                        </div>         
+                    </button>
                 </div>
-                </ng-container>
+                <div class="bottomTab">
+                    <button type="button" class="btn btn-success btn-lg btnMain" title="See if there's anything to do around here..." (click)="toggleEvents()"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/7a/Eye_of_Ender_JE2_BE2.png" style="width:32px;height:32px;margin-right: 5px;">Events</button>
+                    <button type="button" class="btn btn-danger btn-lg btnMain" title="Depart this area. (No turning back!)"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a2/Leather_Boots_(item)_JE1_BE1.png" style="width:32px;height:32px;margin-right: 5px;">Depart</button>
+                </div>
             </div>
-        </div>
-
-        <div *ngIf="trashOpen" class="trashGUI">
-            <h2 class="whiteText">Trash<span class="closeCrafting" (click)="toggleTrash()">X</span></h2>
-            <p class="whiteText"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/11/Chest_(S)_BE1.png" style="height:32px" title="This is your carrying capacity!">{{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</p>
-            <div class="grid-container">
-                <ng-container *ngFor="let item of this.game.$playerInventory.value; let i = index">
-                    <ng-container *ngIf="item; else emptySlot">
-                      <div class="grid-item {{item.rarity}}">
-                        <ng-container [ngSwitch]="item.type">
-                          <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
-                          <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
-                        </ng-container>
-                      </div>
+    
+            <div *ngIf="currentMessage" class="centered messageBox {{currentMessage.subject}}"> 
+                <h1 class="mb-2">{{currentMessage.subject}}</h1>
+                <img *ngIf="currentMessage.item" class="mb-2 lootImg" src="{{currentMessage.item.picture}}" style="width: 128px;padding: 20px;" title="{{currentMessage.item.name}}&#013;[{{currentMessage.item.rarity}} {{currentMessage.item.type}}]&#013;&#013;{{currentMessage.item.description}}">
+                <p>{{currentMessage.description}}</p>
+                <h1 style="cursor:pointer;text-shadow: rgb(255, 0, 0) 1px 0 10px;" (click)="clearMessage()">[ X ]</h1>
+            </div>
+    
+            <div *ngIf="craftingOpen" class="craftingGUI">
+                <h2 class="whiteText">Crafting<span class="closeCrafting" (click)="toggleCrafting()">X</span></h2>
+                <div class="craftingContainer">
+                    <ng-container *ngFor="let item of this.game.$craftableItems.value">
+                        <div class="craftItem canCraftItem" *ngIf="canCraft(item[1])">
+                            <div class="craftBox {{item[0].rarity}}">
+                                <ng-container [ngSwitch]="item[0].type">
+                                    <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
+                                    <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item[0].picture}}" title="[CLICK TO CRAFT]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}" (click)="craftItem(item[0])">
+                                </ng-container>
+                            </div>
+                            <div class="craftDesc whiteText">
+                                <div>{{item[0].name}}</div>
+                                <ng-container *ngFor="let component of item[0].components">
+                                    <img src="{{component.picture}}" class="componentItem itemImg" title="{{component.name}}&#013;[{{component.rarity}} {{component.type}}]&#013;&#013;{{component.description}}">
+                                </ng-container>
+                            </div>
+                    </div>
                     </ng-container>
-                    <ng-template #emptySlot>
-                      <div class="grid-item"></div>
-                    </ng-template>
-                  </ng-container>
-            </div>
-        </div>
-
-
-        <div *ngIf="eventsOpen" class="eventsGUI">
-            <h2 class="whiteText">Events<span class="closeCrafting" (click)="toggleEvents()">X</span></h2>
-            <div class="eventsContainer">
-                <ng-container *ngFor="let event of this.currentStage.events">
-                    <div class="eventItem eventIncomplete" *ngIf="!event.eventCompleted" (click)="startEvent(event)">
-                        <div class="eventBox">
-                            <img class="inventoryItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
-                        </div>
-                        <div class="craftDesc">
-                            <div style="font-weight: bold;color: darkgreen;">{{event.eventName}}</div>
-                            <div style="font-size: smaller;color:olive">{{event.eventDescription}}</div>
-                            <div style="font-weight: bold;color: darkgreen;">Reward(s):</div>
-                            <div style="border-radius: 10px;border:2px solid darkgreen">
-                                <ng-container *ngFor="let reward of event.eventReward">
-                                    <img class="componentItem itemImg" src="{{reward.picture}}" title="{{reward.name}}&#013;[{{reward.rarity}} {{reward.type}}]&#013;&#013;{{reward.description}}">
+                    <ng-container *ngFor="let item of this.game.$craftableItems.value">
+                        <div class="craftItem cantCraftItem" *ngIf="!canCraft(item[1])">
+                            <div class="craftBox {{item[0].rarity}}">
+                                <ng-container [ngSwitch]="item[0].type">
+                                    <img *ngSwitchCase="'Weapon'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                    <img *ngSwitchCase="'Head Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                    <img *ngSwitchCase="'Body Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                    <img *ngSwitchCase="'Leg Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                    <img *ngSwitchCase="'Boot Armor'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                    <img *ngSwitchCase="'Tool'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}&#013;&#013;Durability: {{item[0].durability}}">
+                                    <img *ngSwitchCase="'Button'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                    <img *ngSwitchCase="'Consumable'" class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
+                                    <img *ngSwitchDefault class="grayedOutItem inventoryItem itemImg" src="{{item[0].picture}}" title="[COMPONENTS MISSING]&#013;{{item[0].name}}&#013;[{{item[0].rarity}} {{item[0].type}}]&#013;&#013;{{item[0].description}}">
                                 </ng-container>
                             </div>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-container *ngFor="let event of this.currentStage.events">
-                    <div class="eventItem eventComplete" *ngIf="event.eventCompleted">
-                        <div class="eventBox">
-                            <img class="inventoryItem grayedOutItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
-                        </div>
-                        <div class="craftDesc">
-                            <div style="font-weight: bold;color: darkgreen;">{{event.eventName}}</div>
-                            <div style="font-size: smaller;color:olive">{{event.eventDescription}}</div>
-                            <div style="font-weight: bold;color: darkgreen;">Reward(s):</div>
-                            <div style="border-radius: 10px;border:2px solid darkgreen">
-                                <ng-container *ngFor="let reward of event.eventReward">
-                                    <img class="componentItem itemImg grayedOutItem" src="{{reward.picture}}" title="{{reward.name}}&#013;[{{reward.rarity}} {{reward.type}}]&#013;&#013;{{reward.description}}">
+                            <div class="craftDesc whiteText">
+                                <div>{{item[0].name}}</div>
+                                <ng-container *ngFor="let component of item[0].components; let i = index">
+                                    <img src="{{component.picture}}" [ngClass]="item[1][i] ? 'componentItem itemImg' : 'componentItem itemImg grayedOutItem'" title="{{component.name}}&#013;[{{component.rarity}} {{component.type}}]&#013;&#013;{{component.description}}">
                                 </ng-container>
                             </div>
-                        </div>
                     </div>
-                </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+    
+            <div *ngIf="trashOpen" class="trashGUI">
+                <h2 class="whiteText">Trash<span class="closeCrafting" (click)="toggleTrash()">X</span></h2>
+                <p class="whiteText"><img class="itemImg" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/11/Chest_(S)_BE1.png" style="height:32px" title="This is your carrying capacity!">{{this.game.inventoryWeight}} / {{this.game.inventoryMax}}</p>
+                <div class="grid-container">
+                    <ng-container *ngFor="let item of this.game.$playerInventory.value; let i = index">
+                        <ng-container *ngIf="item; else emptySlot">
+                          <div class="grid-item {{item.rarity}}">
+                            <ng-container [ngSwitch]="item.type">
+                              <img *ngSwitchCase="'Weapon'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Head Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Body Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Leg Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Boot Armor'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Tool'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}&#013;&#013;Durability: {{item.durability}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Button'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchCase="'Consumable'" class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
+                              <img *ngSwitchDefault class="inventoryItem itemImg" src="{{item.picture}}" title="[CLICK TO TRASH]&#013;{{item.name}}&#013;[{{item.rarity}} {{item.type}}]&#013;&#013;{{item.description}}" (click)="trashItem(item, i)">
+                            </ng-container>
+                          </div>
+                        </ng-container>
+                        <ng-template #emptySlot>
+                          <div class="grid-item"></div>
+                        </ng-template>
+                      </ng-container>
+                </div>
+            </div>
+    
+    
+            <div *ngIf="eventsOpen" class="eventsGUI">
+                <h2 class="whiteText">Events<span class="closeCrafting" (click)="toggleEvents()">X</span></h2>
+                <div class="eventsContainer">
+                    <ng-container *ngFor="let event of this.currentStage.events">
+                        <div class="eventItem eventIncomplete" *ngIf="!event.eventCompleted" (click)="startEvent(event)">
+                            <div class="eventBox">
+                                <img class="inventoryItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
+                            </div>
+                            <div class="craftDesc">
+                                <div style="font-weight: bold;color: darkgreen;">{{event.eventName}}</div>
+                                <div style="font-size: smaller;color:olive">{{event.eventDescription}}</div>
+                                <div style="font-weight: bold;color: darkgreen;">Reward(s):</div>
+                                <div style="border-radius: 10px;border:2px solid darkgreen">
+                                    <ng-container *ngFor="let reward of event.eventReward">
+                                        <img class="componentItem itemImg" src="{{reward.picture}}" title="{{reward.name}}&#013;[{{reward.rarity}} {{reward.type}}]&#013;&#013;{{reward.description}}">
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngFor="let event of this.currentStage.events">
+                        <div class="eventItem eventComplete" *ngIf="event.eventCompleted">
+                            <div class="eventBox">
+                                <img class="inventoryItem grayedOutItem" src="{{event.eventIcon}}" title="" style="height: 64px;width:64px;margin:10px">
+                            </div>
+                            <div class="craftDesc">
+                                <div style="font-weight: bold;color: darkgreen;">{{event.eventName}}</div>
+                                <div style="font-size: smaller;color:olive">{{event.eventDescription}}</div>
+                                <div style="font-weight: bold;color: darkgreen;">Reward(s):</div>
+                                <div style="border-radius: 10px;border:2px solid darkgreen">
+                                    <ng-container *ngFor="let reward of event.eventReward">
+                                        <img class="componentItem itemImg grayedOutItem" src="{{reward.picture}}" title="{{reward.name}}&#013;[{{reward.rarity}} {{reward.type}}]&#013;&#013;{{reward.description}}">
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-template>
 <!-- </ng-template> -->

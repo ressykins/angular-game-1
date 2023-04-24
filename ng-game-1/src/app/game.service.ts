@@ -16,10 +16,7 @@ import { PumpkinZombie, SwordZombie, Zombie } from './_mobs/enemies';
   providedIn: 'root'
 })
 export class GameService {
-
-
-
-
+  public sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
   /// player vitals
   public playerName: string = 'Survivor';
@@ -246,6 +243,9 @@ export class GameService {
       case 'Sick':
         this.playerStatus = Sick;
         break;
+      case 'Dead':
+        this.playerStatus = Dead;
+        break;
       default:
         console.log('invalid status');
     }
@@ -285,8 +285,11 @@ export class GameService {
 
   }
 
-  public checkPlayer(): void {
-    if (this.$playerHealth.value <= 0 || this.$playerHunger.value <= 0 || this.$playerThirst.value <= 0) this.playerStatus = Dead;
+  public async checkPlayer(): Promise<void> {
+    if (this.$playerHealth.value <= 0 || this.$playerHunger.value <= 0 || this.$playerThirst.value <= 0) {
+      this.playerStatus = Dead;
+    }
+    
   }
   
 
@@ -356,26 +359,29 @@ export class GameService {
 
   /// COMBAT SYSTEM ////////////////////////////////////////////////////////////////////////////
 
-  
-  public sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
   public inCombat: boolean = false;
+  public combatVictory: boolean = false;
   public combatEnemies: Enemy[] = [];
   public combatLog: string[][] = [];
   public analyzedEnemies: Enemy[] = [];
   public awaitTurn: boolean = false;
   public numTurns: number = 0;
+  public itemDrops: Item[] = [];
 
+  /// triggers when a battle is commenced
   public enterBattle(enemies: Enemy[], isEvent: boolean) {
     this.inCombat = true;
     this.combatLog = [];
     this.numTurns = 0;
+    this.combatVictory = false;
     for (let enemy of enemies) this.combatEnemies.push(JSON.parse(JSON.stringify(enemy)));
     let encounterMsg: string = 'You encounter the ' + this.combatEnemies[0].enemyName;
     (this.combatEnemies.length > 1) ? encounterMsg += ' and its company.' : encounterMsg += '.';
     this.combatLog.push(['msgConsole', encounterMsg]);
+    this.combatLog.push(['msgConsole', 'Awaiting your action...']);
   }
 
+  // check the health of enemies and player
   public async combatStatus() {
     for (let i = 0; i < this.combatEnemies.length; i++) {
       if (this.combatEnemies[i].enemyHealth < 1 && !this.combatEnemies[i].enemyDefeated) {
@@ -386,10 +392,12 @@ export class GameService {
     }
     if (this.combatEnemies.filter((enemy: Enemy) => !enemy.enemyDefeated).length < 1) {
       this.combatLog.push(['msgConsole', '!!! VICTORY !!!']);
+      this.combatVictory = true;
     }
   }
 
-  public async startTurn(target: number, intent: string) {
+  // begin a turn
+  public async startTurn(target: number, intent: string): Promise<boolean> {
     this.awaitTurn = true;
     // setup turn order
     let turnOrder: [number,number][] = [];
@@ -402,9 +410,16 @@ export class GameService {
     this.numTurns++;
     this.combatLog.push(['msgConsole', '--=[ TURN ' + this.numTurns + ' ]=--']);
     // start turn
+    console.log('Turn Order:', turnOrder);
     for (let turn of turnOrder) {
+      // player dies in combat
+      if (this.playerStatus.statusName == 'Dead') {
+        this.combatLog.push(['msgConsole', this.playerName + ' collapsed and fell...']);
+        return false;
+      }
       // player action
-      if (turn[0] == -1) {
+      else if (turn[0] == -1) {
+        console.log('Player Turn!');
         switch(intent) {
           case 'fight':
             await this.useAttack(target);
@@ -413,14 +428,26 @@ export class GameService {
             break;
         }
       }
-      else if(!this.combatEnemies[turn[0]].enemyDefeated) await this.enemyAction(turn[0]);
+      else {
+        console.log('Enemy Turn!', turn[0]);
+        if(!this.combatEnemies[turn[0]].enemyDefeated && !this.combatEnemies[turn[0]].summoningSickness) await this.enemyAction(turn[0]);
+        this.combatEnemies[turn[0]].summoningSickness = false;
+      } 
       await this.sleep(1000);
     }
     this.awaitTurn = false;
+    if (this.combatVictory) {
+      
+    }
+    else {
+      this.combatLog.push(['msgConsole', 'Awaiting your action...']);
+    }
+    return true;
   }
 
 
 
+  // all possible enemy actions
   public async enemyAction(index: number): Promise<boolean> {
     let actionRoll: number = Math.floor(Math.random() * 101);
     let chosenAction: string = '';
@@ -450,12 +477,23 @@ export class GameService {
         else this.combatLog.push(['msgEnemy', this.combatEnemies[index].enemyName + ' [' + index + '] attacks! Dealt *' + damage + '* damage to ' + this.playerName + '!']);
         this.combatStatus();
         break;
+      case 'CallForHelp':
+        this.combatLog.push(['msgEnemy', this.combatEnemies[index].enemyName + ' [' + index + '] called for help!']);
+        let successRoll: number = Math.floor(Math.random() * 101);
+        if (successRoll < 75 && this.combatEnemies.length < 5) {
+          this.combatEnemies.push(JSON.parse(JSON.stringify(Zombie)));
+          this.combatLog.push(['msgEnemy', this.combatEnemies[this.combatEnemies.length-1].enemyName + ' [' + (this.combatEnemies.length-1) + '] joined the fight!']);
+        }
+        else {
+          this.combatLog.push(['msgEnemy', 'But no one came...']);
+        }
     }
     return true;
   }
 
 
 
+  // all possible player attacks
   public async useAttack(index: number): Promise<boolean> {
     // when no weapon is equipped
     if (!this.equippedWeapon) {

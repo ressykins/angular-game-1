@@ -1,54 +1,55 @@
 <app-menu></app-menu>
-<div style="height: 100%">
-    <div class="flex">
-        <div class="flexItemA">
-            <div class="combatLog">
-                <h5 style="text-align:center;text-decoration: underline;text-shadow: 0 0 32px black;">Combat Log</h5>
-                <div class="chatLog">
-                    <div>
-                        <ng-container *ngFor="let message of this.game.combatLog;">
-                            <p class="{{message[0]}}">{{message[1]}}</p>
-                        </ng-container>
+
+    <div style="height: 100%">
+        <div class="flex">
+            <div class="flexItemA">
+                <div class="combatLog">
+                    <h5 style="text-align:center;text-decoration: underline;text-shadow: 0 0 32px black;">Combat Log</h5>
+                    <div class="chatLog">
+                        <div>
+                            <ng-container *ngFor="let message of this.game.combatLog;">
+                                <p class="{{message[0]}}">{{message[1]}}</p>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        <div class="flexItemB">
-            <h1 class="actionsTitle">Actions</h1>
-            <button class="btn btn-danger btn-lg mb-1 btnActions" title="Do battle!" (click)="playerAction('fight')" [disabled]="this.game.awaitTurn">
-                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png" style="width:64px"></div>
-                <div>Fight</div>
-            </button>
-            <button class="btn btn-success btn-lg mb-1 btnActions" title="Use an item." [disabled]="this.game.awaitTurn">
-                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2a/Green_Shulker_Box.png" style="width:64px"></div>
-                <div>Item</div>
-            </button>
-            <button class="btn btn-primary btn-lg mb-1 btnActions" title="Scout information." [disabled]="this.game.awaitTurn">
-                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c1/Spyglass_JE2_BE1.png" style="width:64px"></div>
-                <div>Analyze</div>
-            </button>
-            <button class="btn btn-warning btn-lg mb-1 btnActions" title="Try and escape." [disabled]="this.game.awaitTurn">
-                <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/51/Netherite_Boots_(item)_JE1.png" style="width:64px"></div>
-                <div>Run</div>
-            </button>
-        </div>
-
-
-        <div class="bottomTab">
-            <h1 class="selectionMsg">{{this.selectionMsg}}</h1>
-        </div>
-
-        <div class="enemy-container">
-            <ng-container>
-                <ng-container *ngFor="let enemy of this.game.combatEnemies; let i = index">
-                    <img *ngIf="!enemy.enemyDefeated; else enemyDefeated" src="{{enemy.enemyPicture}}" (click)="selectEnemy(i)" [ngClass]="awaitingSelection ? 'selectTarget enemyImg' : 'enemyImg'" title="{{enemy.enemyName}} [{{i}}]&#013;&#013;Health: [??]&#013;Defense: [??]&#013;Speed: [??]">
-                    <ng-template #enemyDefeated>
-                        <img src="{{enemy.enemyPicture}}" class="defeatedEnemy">
-                    </ng-template>
+    
+    
+            <div class="flexItemB">
+                <h1 class="actionsTitle">Actions</h1>
+                <button class="btn btn-danger btn-lg mb-1 btnActions" title="Do battle!" (click)="playerAction('fight')" [disabled]="this.game.awaitTurn">
+                    <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png" style="width:64px"></div>
+                    <div>Fight</div>
+                </button>
+                <button class="btn btn-success btn-lg mb-1 btnActions" title="Use an item." [disabled]="this.game.awaitTurn">
+                    <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2a/Green_Shulker_Box.png" style="width:64px"></div>
+                    <div>Item</div>
+                </button>
+                <button class="btn btn-primary btn-lg mb-1 btnActions" title="Scout information." [disabled]="this.game.awaitTurn">
+                    <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c1/Spyglass_JE2_BE1.png" style="width:64px"></div>
+                    <div>Analyze</div>
+                </button>
+                <button class="btn btn-warning btn-lg mb-1 btnActions" title="Try and escape." [disabled]="this.game.awaitTurn">
+                    <div><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/51/Netherite_Boots_(item)_JE1.png" style="width:64px"></div>
+                    <div>Run</div>
+                </button>
+            </div>
+    
+    
+            <div class="bottomTab">
+                <h1 class="selectionMsg">{{this.selectionMsg}}</h1>
+            </div>
+    
+            <div class="enemy-container">
+                <ng-container>
+                    <ng-container *ngFor="let enemy of this.game.combatEnemies; let i = index">
+                        <img *ngIf="!enemy.enemyDefeated; else enemyDefeated" src="{{enemy.enemyPicture}}" (click)="selectEnemy(i)" class="{{enemy.enemySize}}" [ngClass]="awaitingSelection ? 'selectTarget enemyImg' : 'enemyImg'" title="{{enemy.enemyName}} [{{i}}]&#013;&#013;Health: [??]&#013;Defense: [??]&#013;Speed: [??]">
+                        <ng-template #enemyDefeated>
+                            <img src="{{enemy.enemyPicture}}" class="defeatedEnemy {{enemy.enemySize}}">
+                        </ng-template>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
+            </div>
         </div>
     </div>
-</div>

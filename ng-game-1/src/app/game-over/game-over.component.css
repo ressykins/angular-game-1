@@ -1,0 +1,11 @@
+.centered {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.btn-outline-danger:hover {
+    color: rgb(46, 46, 46);
+}

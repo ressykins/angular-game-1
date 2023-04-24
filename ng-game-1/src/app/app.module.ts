@@ -8,6 +8,7 @@ import { MenuComponent } from './menu/menu.component';
 import { TitleScreenComponent } from './title-screen/title-screen.component';
 import { OverworldComponent } from './overworld/overworld.component';
 import { CombatComponent } from './combat/combat.component';
+import { GameOverComponent } from './game-over/game-over.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CombatComponent } from './combat/combat.component';
     TitleScreenComponent,
     OverworldComponent,
     CombatComponent,
+    GameOverComponent,
   ],
   imports: [
     BrowserModule,

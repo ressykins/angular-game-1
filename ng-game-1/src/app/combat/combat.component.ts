@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class CombatComponent {
 
-  public sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   public awaitingSelection: boolean = false;
   public selectionMsg: string = "";
   public selectionIntent: string = "";
+  public isDead: boolean = false;
 
   constructor(public game: GameService, public router: Router){}
 
@@ -36,12 +36,18 @@ export class CombatComponent {
     }
   }
 
-  public selectEnemy(index: number): boolean {
+  public async selectEnemy(index: number): Promise<boolean> {
     if (this.selectionIntent) {
       this.game.startTurn(index, this.selectionIntent);
+      if (this.game.playerStatus.statusName == 'Dead') {
+
+      }
       this.awaitingSelection = false;
       this.selectionIntent = '';
       this.selectionMsg = '';
+      if (this.game.combatVictory) {
+        
+      }
       return true;
     } 
     else return false;

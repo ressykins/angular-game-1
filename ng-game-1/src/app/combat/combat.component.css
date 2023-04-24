@@ -15,15 +15,21 @@
 }
 
 .enemyImg {
-    max-height: 200px;
-    max-width: 200px;
     margin: 40px;
     transition: 0.3s;
 }
 
-.defeatedEnemy {
+.mediumEnemy {
     max-height: 200px;
     max-width: 200px;
+}
+
+.smallEnemy {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.defeatedEnemy {
     margin: 40px;
     opacity: 0.3;
 }

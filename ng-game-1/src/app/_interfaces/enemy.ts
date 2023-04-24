@@ -7,10 +7,14 @@ export interface Enemy {
     enemyDamage: number,
     enemyDefense: number,
     enemySpeed: number,
+
     enemyDrops: [Item, number][],
     enemyPicture: string,
+    enemySize: string,
     enemyDesc: string,
     enemyType: string,
     enemyActions: [string, number][],
-    enemyDefeated?: boolean
+
+    enemyDefeated?: boolean,
+    summoningSickness?: boolean,
 }
