@@ -294,6 +294,11 @@ export class OverworldComponent implements OnInit {
     this.currentStage.canRepair = false;
   }
 
+
+
+
+
+  // events
   public startEvent(event: minezEvent): void {
     switch(event.eventType) {
       case 'Battle':

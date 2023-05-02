@@ -381,9 +381,10 @@ export class GameService {
     this.combatLog.push(['msgConsole', 'Awaiting your action...']);
   }
 
-  // check the health of enemies and player
+  // check the health of enemies 
   public async combatStatus() {
     for (let i = 0; i < this.combatEnemies.length; i++) {
+      // enemy was defeated
       if (this.combatEnemies[i].enemyHealth < 1 && !this.combatEnemies[i].enemyDefeated) {
         await this.sleep(1000);
         this.combatLog.push(['msgConsole', this.combatEnemies[i].enemyName + ' [' + i + '] was defeated!']);
@@ -393,12 +394,23 @@ export class GameService {
     if (this.combatEnemies.filter((enemy: Enemy) => !enemy.enemyDefeated).length < 1) {
       this.combatLog.push(['msgConsole', '!!! VICTORY !!!']);
       this.combatVictory = true;
+
+      // calculate drops
+      for (let enemy of this.combatEnemies) {
+        let dropRoll: number = Math.floor(Math.random() * 101);
+        for (let item of enemy.enemyDrops) {
+          if (dropRoll < item[1]) {
+            this.itemDrops.push(item[0]);
+          }
+        }
+      }
     }
   }
 
   // begin a turn
   public async startTurn(target: number, intent: string): Promise<boolean> {
     this.awaitTurn = true;
+
     // setup turn order
     let turnOrder: [number,number][] = [];
     let playerTurn: [number,number] = (this.equippedWeapon && this.equippedWeapon.weapon! == 'Crossbow') ? [-1, -1] : [-1, this.currentSpeed];
@@ -412,13 +424,9 @@ export class GameService {
     // start turn
     console.log('Turn Order:', turnOrder);
     for (let turn of turnOrder) {
-      // player dies in combat
-      if (this.playerStatus.statusName == 'Dead') {
-        this.combatLog.push(['msgConsole', this.playerName + ' collapsed and fell...']);
-        return false;
-      }
+
       // player action
-      else if (turn[0] == -1) {
+      if (turn[0] == -1) {
         console.log('Player Turn!');
         switch(intent) {
           case 'fight':
@@ -428,11 +436,20 @@ export class GameService {
             break;
         }
       }
+
+      // enemy action
       else {
         console.log('Enemy Turn!', turn[0]);
         if(!this.combatEnemies[turn[0]].enemyDefeated && !this.combatEnemies[turn[0]].summoningSickness) await this.enemyAction(turn[0]);
         this.combatEnemies[turn[0]].summoningSickness = false;
       } 
+
+      // player dies in combat
+      if (this.playerStatus.statusName == 'Dead') {
+        this.combatLog.push(['msgConsole', this.playerName + ' collapsed and fell...']);
+        await this.sleep(1000);
+        return false;
+      }
       await this.sleep(1000);
     }
     this.awaitTurn = false;
@@ -514,6 +531,7 @@ export class GameService {
     else {
       switch(this.equippedWeapon.weapon) {
         case 'Sword':
+          // calculate if attack will miss
           var missRoll: number = Math.floor(Math.random() * 101);
           var speedDiff: number = (this.combatEnemies[index].enemySpeed - this.currentSpeed) < 0 ? 0 : (this.combatEnemies[index].enemySpeed - this.currentSpeed);
           if (missRoll < (10 + speedDiff)) {
@@ -521,12 +539,22 @@ export class GameService {
             return true;
           }
 
+          // calculate attack damage and if it will crit
           var critRoll: number = Math.floor(Math.random() * 101);
           var damage: number = this.currentDamage;
           var enchantCrit = this.equippedWeapon.name.includes('Enchanted') ? 10 : 0;
-
           if (critRoll < (10 + enchantCrit)) damage *= 1.5;
+
+          // take enemy armor into account
           damage = Math.floor(damage * (1 - (this.combatEnemies[index].enemyDefense * 0.008)));
+          
+          // diamond sword exception
+          if (this.equippedWeapon.name == "Diamond Sword") {
+            var killRoll: number = Math.floor(Math.random() * 101);
+            if (killRoll < 5) damage = 9999;
+          }
+
+          // register attack
           damage < 1 ? this.combatEnemies[index].enemyHealth -= 1 : this.combatEnemies[index].enemyHealth -= damage;
 
           if (critRoll < (10 + enchantCrit)) this.combatLog.push(['msgPlayer', this.playerName + ' swings their sword! CRITICAL HIT! Dealt *' + damage + '* damage to ' + this.combatEnemies[index].enemyName + ' [' + index + ']!']);

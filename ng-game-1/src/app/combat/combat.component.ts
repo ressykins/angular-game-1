@@ -37,16 +37,18 @@ export class CombatComponent {
   }
 
   public async selectEnemy(index: number): Promise<boolean> {
+    this.awaitingSelection = false;
     if (this.selectionIntent) {
-      this.game.startTurn(index, this.selectionIntent);
-      if (this.game.playerStatus.statusName == 'Dead') {
-
+      let anotherTurn = await this.game.startTurn(index, this.selectionIntent);
+      if (!anotherTurn) {
+        alert('You died...');
+        this.game.inCombat = false;
+        this.router.navigate(['/hub']);
       }
-      this.awaitingSelection = false;
       this.selectionIntent = '';
       this.selectionMsg = '';
       if (this.game.combatVictory) {
-        
+        console.log(this.game.itemDrops);
       }
       return true;
     } 
